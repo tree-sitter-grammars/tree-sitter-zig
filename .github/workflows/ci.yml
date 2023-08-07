@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: ["*"]
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+  pull_request:
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test parser
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-14]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up the repo
+        uses: tree-sitter/setup-action/cli@v1
+      - name: Set up examples
+        run: |-
+          git clone https://github.com/ziglang/zig examples/zig --single-branch --depth=1 --filter=blob:none
+      - name: Run tests
+        uses: tree-sitter/parser-test-action@v2
+        with:
+          test-rust: ${{runner.os == 'Linux'}}
+      - name: Parse examples
+        uses: tree-sitter/parse-action@v4
+        with:
+          files: |
+            examples/**/*.kt
+          invalid-files: |
+            examples/zig/doc/langref/var_must_be_initialized.zig
+            examples/zig/test/cases/compile_errors/const_is_a_statement_not_an_expression.zig
+            examples/zig/test/cases/compile_errors/empty_char_lit.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-block_expr.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-block_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-comptime_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-comptime_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-defer.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-for_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-for_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if-else-if-else_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if-else-if-else_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if-else-if_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if-else-if_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if-else_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if-else_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-if_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-test_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-test_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-while-continue_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-while-continue_statement.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-while_expression.zig
+            examples/zig/test/cases/compile_errors/implicit_semicolon-while_statement.zig
+            examples/zig/test/cases/compile_errors/invalid_empty_unicode_escape.zig
+            examples/zig/test/cases/compile_errors/invalid_exponent_in_float_literal-1.zig
+            examples/zig/test/cases/compile_errors/invalid_exponent_in_float_literal-2.zig
+            examples/zig/test/cases/compile_errors/invalid_float_literal.zig
+            examples/zig/test/cases/compile_errors/invalid_legacy_unicode_escape.zig
+            examples/zig/test/cases/compile_errors/invalid_number_literals.zig
+            examples/zig/test/cases/compile_errors/invalid_pointer_syntax.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-10.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-11.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-12.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-13.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-14.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-2.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-3.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-4.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-5.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-6.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-7.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_float_literal-9.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_int_literal-1.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_int_literal-2.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_int_literal-3.zig
+            examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_int_literal-4.zig
+            examples/zig/test/cases/compile_errors/invalid_unicode_escape.zig
+            examples/zig/test/cases/compile_errors/missing_digit_after_base.zig
+            examples/zig/test/cases/compile_errors/non-extern_function_with_var_args.zig
+            examples/zig/test/cases/compile_errors/normal_string_with_newline.zig

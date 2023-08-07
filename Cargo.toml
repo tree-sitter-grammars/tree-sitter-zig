@@ -1,0 +1,27 @@
+[package]
+name = "tree-sitter-zig"
+description = "Zig grammar for tree-sitter"
+version = "1.0.0"
+authors = ["Amaan Qureshi <amaanq12@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+keywords = ["incremental", "parsing", "tree-sitter", "zig"]
+categories = ["parsing", "text-editors"]
+repository = "https://github.com/tree-sitter-grammars/tree-sitter-zig"
+edition = "2021"
+autoexamples = false
+
+build = "bindings/rust/build.rs"
+include = ["bindings/rust/*", "grammar.js", "queries/*", "src/*"]
+
+[lib]
+path = "bindings/rust/lib.rs"
+
+[dependencies]
+tree-sitter-language = "0.1.0"
+
+[build-dependencies]
+cc = "1.1.7"
+
+[dev-dependencies]
+tree-sitter = "0.23"
