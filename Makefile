@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
 $(error Windows is not supported)
 endif
 
-VERSION := 1.0.1
+VERSION := 1.0.2
 
 LANGUAGE_NAME := tree-sitter-zig
 
