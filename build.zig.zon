@@ -1,0 +1,17 @@
+.{
+    .name = "tree_sitter_zig",
+
+    .version = "1.0.2",
+
+    .dependencies = .{},
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "bindings/c",
+        "src",
+        "queries",
+        "LICENSE",
+        "README.md",
+    },
+}
