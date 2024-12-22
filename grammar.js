@@ -63,14 +63,15 @@ module.exports = grammar({
 
     [$.comptime_type_expression, $.expression],
     [$.comptime_type_expression, $.parameter],
-
-    [$._reserved_identifier, $.primary_type_expression],
-    [$._reserved_identifier, $.boolean],
   ],
 
   extras: $ => [
     $.comment,
     /\s/,
+  ],
+
+  inline: $ => [
+    $._reserved_identifier,
   ],
 
   precedences: $ => [
@@ -92,13 +93,11 @@ module.exports = grammar({
     _container_members: $ => choice(
       seq(
         repeat1(choice(
-          choice(
-            $.test_declaration,
-            $.comptime_declaration,
-            $.variable_declaration,
-            $.function_declaration,
-            $.using_namespace_declaration,
-          ),
+          $.test_declaration,
+          $.comptime_declaration,
+          $.variable_declaration,
+          $.function_declaration,
+          $.using_namespace_declaration,
           seq($.container_field, ','),
         )),
         optional($.container_field),
@@ -122,7 +121,7 @@ module.exports = grammar({
     container_field: $ => prec.right(prec.dynamic(1, seq(
       optional('comptime'),
       optional(seq(
-        field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
+        field('name', choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier))),
         ':',
       )),
       field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
@@ -844,7 +843,7 @@ module.exports = grammar({
 
     builtin_identifier: _ => /@[A-Za-z_][A-Za-z0-9_]*/,
 
-    identifier: $ => choice($._identifier, $._reserved_identifier, seq('@', $.string)),
+    identifier: $ => choice($._identifier, seq('@', $.string)),
     _identifier: _ => /[A-Za-z_][A-Za-z0-9_]*/,
     _reserved_identifier: _ => choice(
       'undefined',
@@ -863,8 +862,7 @@ module.exports = grammar({
  *
  * @param {RuleOrLiteral} rule
  *
- * @return {ChoiceRule}
- *
+ * @returns {ChoiceRule}
  */
 function optionalCommaSep(rule) {
   return optional(optionalCommaSep1(rule));
@@ -876,8 +874,7 @@ function optionalCommaSep(rule) {
  *
  * @param {RuleOrLiteral} rule
  *
- * @return {SeqRule}
- *
+ * @returns {SeqRule}
  */
 function optionalCommaSep1(rule) {
   return seq(commaSep1(rule), optional(','));
@@ -888,8 +885,7 @@ function optionalCommaSep1(rule) {
  *
  * @param {RuleOrLiteral} rule
  *
- * @return {SeqRule}
- *
+ * @returns {SeqRule}
  */
 function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
