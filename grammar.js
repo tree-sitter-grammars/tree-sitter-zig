@@ -120,11 +120,14 @@ module.exports = grammar({
 
     container_field: $ => prec.right(prec.dynamic(1, seq(
       optional('comptime'),
-      optional(seq(
-        field('name', choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier))),
-        ':',
-      )),
-      field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+      choice(
+        seq(
+          field('name', choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier))),
+          ':',
+          field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+        ),
+        field('name', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+      ),
       optional($.byte_alignment),
       optional(seq('=', $.expression)),
     ))),
