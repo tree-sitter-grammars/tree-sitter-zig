@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "zig",
   "word": "_identifier",
   "rules": {
@@ -26,29 +27,24 @@
                 "type": "CHOICE",
                 "members": [
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "test_declaration"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "comptime_declaration"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "variable_declaration"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "function_declaration"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "using_namespace_declaration"
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "test_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "comptime_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "variable_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "function_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "using_namespace_declaration"
                   },
                   {
                     "type": "SEQ",
@@ -199,6 +195,10 @@
                             "name": "identifier"
                           },
                           {
+                            "type": "SYMBOL",
+                            "name": "_reserved_identifier"
+                          },
+                          {
                             "type": "ALIAS",
                             "content": {
                               "type": "SYMBOL",
@@ -213,34 +213,52 @@
                     {
                       "type": "STRING",
                       "value": ":"
+                    },
+                    {
+                      "type": "FIELD",
+                      "name": "type",
+                      "content": {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "primary_type_expression"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "if_type_expression"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "comptime_type_expression"
+                          }
+                        ]
+                      }
                     }
                   ]
                 },
                 {
-                  "type": "BLANK"
+                  "type": "FIELD",
+                  "name": "name",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "primary_type_expression"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "if_type_expression"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "comptime_type_expression"
+                      }
+                    ]
+                  }
                 }
               ]
-            },
-            {
-              "type": "FIELD",
-              "name": "type",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "primary_type_expression"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "if_type_expression"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "comptime_type_expression"
-                  }
-                ]
-              }
             },
             {
               "type": "CHOICE",
@@ -4064,6 +4082,18 @@
                 "type": "BLANK"
               }
             ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
@@ -4200,6 +4230,18 @@
     "switch_expression": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "block_label"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "STRING",
           "value": "switch"
@@ -6413,10 +6455,6 @@
           "name": "_identifier"
         },
         {
-          "type": "SYMBOL",
-          "name": "_reserved_identifier"
-        },
-        {
           "type": "SEQ",
           "members": [
             {
@@ -6505,14 +6543,6 @@
     [
       "comptime_type_expression",
       "parameter"
-    ],
-    [
-      "_reserved_identifier",
-      "primary_type_expression"
-    ],
-    [
-      "_reserved_identifier",
-      "boolean"
     ]
   ],
   "precedences": [
@@ -6528,7 +6558,9 @@
     ]
   ],
   "externals": [],
-  "inline": [],
+  "inline": [
+    "_reserved_identifier"
+  ],
   "supertypes": [
     "statement",
     "expression",

@@ -1070,17 +1070,33 @@
     "fields": {
       "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "comptime_type_expression",
             "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "primary_type_expression",
+            "named": true
+          },
+          {
+            "type": "true",
+            "named": false
           }
         ]
       },
       "type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "comptime_type_expression",
@@ -1117,11 +1133,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "break_label",
+          "named": true
+        },
+        {
+          "type": "expression",
           "named": true
         }
       ]
@@ -2110,6 +2130,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -2269,6 +2290,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "block_label",
+          "named": true
+        },
         {
           "type": "expression",
           "named": true
