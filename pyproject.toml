@@ -9,11 +9,11 @@ version = "1.0.2"
 keywords = ["incremental", "parsing", "tree-sitter", "zig"]
 classifiers = [
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Topic :: Software Development :: Compilers",
   "Topic :: Text Processing :: Linguistic",
   "Typing :: Typed",
 ]
+authors = [{ name = "Amaan Qureshi", email = "amaanq12@gmail.com" }]
 requires-python = ">=3.9"
 license.text = "MIT"
 readme = "README.md"
