@@ -541,7 +541,11 @@ module.exports = grammar({
 
     nosuspend_expression: $ => prec.right(seq('nosuspend', $.expression)),
 
-    continue_expression: $ => prec.right(seq('continue', optional($.break_label))),
+    continue_expression: $ => prec.right(seq(
+      'continue',
+      optional($.break_label),
+      optional($.expression),
+    )),
 
     resume_expression: $ => prec.right(seq('resume', $.expression)),
 
@@ -563,6 +567,7 @@ module.exports = grammar({
     )),
 
     switch_expression: $ => seq(
+      optional($.block_label),
       'switch',
       '(', $.expression, ')',
       '{',
