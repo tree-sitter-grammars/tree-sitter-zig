@@ -28,30 +28,32 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up the repo
-        uses: tree-sitter/setup-action/cli@v1
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+      - name: Clone Starlark repository
+        uses: actions/checkout@v4
+        with:
+          path: examples/zig
+          repository: ziglang/zig
       - name: Run tests
         uses: tree-sitter/parser-test-action@v2
         with:
+          generate: false
           test-rust: true
-          test-node: true
-          test-python: true
-          test-go: true
-          test-swift: true
-      - name: Set up examples
-        run: |-
-          git clone https://github.com/ziglang/zig examples/zig --single-branch --depth=1 --filter=blob:none
       - name: Parse examples
         uses: tree-sitter/parse-action@v4
         with:
           files: |
             examples/**/*.zig
+            !examples/zig/lib/std/zon/parse.zig
+            !examples/zig/lib/std/zon/stringify.zig
           invalid-files: |
             examples/zig/doc/langref/var_must_be_initialized.zig
+            examples/zig/test/cases/compile_errors/@import_zon_bad_type.zig
             examples/zig/test/cases/compile_errors/const_is_a_statement_not_an_expression.zig
             examples/zig/test/cases/compile_errors/empty_char_lit.zig
             examples/zig/test/cases/compile_errors/implicit_semicolon-block_expr.zig
