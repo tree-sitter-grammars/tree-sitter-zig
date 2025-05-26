@@ -9,7 +9,7 @@ project(tree-sitter-zig
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(TREE_SITTER_REUSE_ALLOCATOR "Reuse the library allocator" OFF)
 
-set(TREE_SITTER_ABI_VERSION 14 CACHE STRING "Tree-sitter ABI version")
+set(TREE_SITTER_ABI_VERSION 15 CACHE STRING "Tree-sitter ABI version")
 if(NOT ${TREE_SITTER_ABI_VERSION} MATCHES "^[0-9]+$")
     unset(TREE_SITTER_ABI_VERSION CACHE)
     message(FATAL_ERROR "TREE_SITTER_ABI_VERSION must be an integer")
@@ -28,7 +28,10 @@ add_library(tree-sitter-zig src/parser.c)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/scanner.c)
   target_sources(tree-sitter-zig PRIVATE src/scanner.c)
 endif()
-target_include_directories(tree-sitter-zig PRIVATE src)
+target_include_directories(tree-sitter-zig
+                           PRIVATE src
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bindings/c>
+                                     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_definitions(tree-sitter-zig PRIVATE
                            $<$<BOOL:${TREE_SITTER_REUSE_ALLOCATOR}>:TREE_SITTER_REUSE_ALLOCATOR>
@@ -46,12 +49,17 @@ configure_file(bindings/c/tree-sitter-zig.pc.in
 
 include(GNUInstallDirs)
 
-install(FILES bindings/c/tree-sitter-zig.h
-        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/tree_sitter")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bindings/c/tree_sitter"
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+        FILES_MATCHING PATTERN "*.h")
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-zig.pc"
         DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig")
 install(TARGETS tree-sitter-zig
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+
+file(GLOB QUERIES queries/*.scm)
+install(FILES ${QUERIES}
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/tree-sitter/queries/zig")
 
 add_custom_target(ts-test "${TREE_SITTER_CLI}" test
                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
