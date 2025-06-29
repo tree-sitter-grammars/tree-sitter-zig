@@ -6494,27 +6494,92 @@
         }
       ]
     },
-    "comment": {
-      "type": "TOKEN",
+    "container_doc_comment": {
+      "type": "PREC",
+      "value": 3,
       "content": {
         "type": "SEQ",
         "members": [
           {
             "type": "STRING",
-            "value": "//"
+            "value": "//!"
           },
           {
-            "type": "PATTERN",
-            "value": ".*"
+            "type": "SYMBOL",
+            "name": "doc_comment_content"
           }
         ]
       }
+    },
+    "doc_comment": {
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "///"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "doc_comment_content"
+          }
+        ]
+      }
+    },
+    "comment": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PREC",
+          "value": 1,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "//"
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
+          }
+        },
+        {
+          "type": "PREC",
+          "value": 4,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "////"
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
+          }
+        }
+      ]
     }
   },
   "extras": [
     {
       "type": "SYMBOL",
       "name": "comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "container_doc_comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "doc_comment"
     },
     {
       "type": "PATTERN",
@@ -6557,7 +6622,16 @@
       }
     ]
   ],
-  "externals": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "doc_comment_content"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_error_sentinel"
+    }
+  ],
   "inline": [
     "_reserved_identifier"
   ],
@@ -6566,5 +6640,6 @@
     "expression",
     "type_expression",
     "primary_type_expression"
-  ]
+  ],
+  "reserved": {}
 }

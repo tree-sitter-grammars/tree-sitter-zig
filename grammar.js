@@ -54,6 +54,8 @@ const builtinTypes = [
 module.exports = grammar({
   name: 'zig',
 
+  externals: ($) => [$.doc_comment_content, $._error_sentinel],
+
   conflicts: $ => [
     [$.for_expression],
     [$.while_expression],
@@ -67,6 +69,8 @@ module.exports = grammar({
 
   extras: $ => [
     $.comment,
+    $.container_doc_comment,
+    $.doc_comment,
     /\s/,
   ],
 
@@ -860,7 +864,19 @@ module.exports = grammar({
       'false',
     ),
 
-    comment: _ => token(seq('//', /.*/)),
+    /* Comments */
+
+    container_doc_comment: ($) => prec(3, seq('//!', $.doc_comment_content)),
+
+    doc_comment: ($) => prec(2, seq('///', $.doc_comment_content)),
+
+    comment: ($) =>
+      choice(
+        prec(1, seq('//', /.*/)),
+
+        // `//// ...` looks like a `container_doc_comment`, but it is not
+        prec(4, seq('////', /.*/)),
+      ),
   },
 });
 

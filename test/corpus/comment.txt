@@ -1,0 +1,24 @@
+================================================================================
+Comments
+================================================================================
+
+///// regular comment
+
+//// regular comment
+
+//! module doc comment
+
+/// statement doc comment
+
+// regular comment
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (container_doc_comment
+    (doc_comment_content))
+  (doc_comment
+    (doc_comment_content))
+  (comment))

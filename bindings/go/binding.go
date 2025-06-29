@@ -2,6 +2,7 @@ package tree_sitter_zig
 
 // #cgo CFLAGS: -std=c11 -fPIC
 // #include "../../src/parser.c"
+// #include "../../src/scanner.c"
 import "C"
 
 import "unsafe"

@@ -11,7 +11,7 @@ Zig grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).
 
 ## References
 
-- [Zig Grammar](https://github.com/ziglang/zig-spec/blob/master/grammar/grammar.y)
+- [Zig Grammar](https://github.com/ziglang/zig-spec/blob/master/grammar/grammar.peg)
 
 [ci]: https://img.shields.io/github/actions/workflow/status/tree-sitter-grammars/tree-sitter-zig/ci.yml?logo=github&label=CI
 [discord]: https://img.shields.io/discord/1063097320771698699?logo=discord&label=discord
