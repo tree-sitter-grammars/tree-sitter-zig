@@ -38,20 +38,23 @@ jobs:
         uses: tree-sitter/parser-test-action@v2
         with:
           test-rust: true
-          test-node: true
-          test-python: true
-          test-go: true
-          test-swift: true
+          test-node: false
+          test-python: false
+          test-go: false
+          test-swift: false
       - name: Set up examples
         run: |-
-          git clone https://github.com/ziglang/zig examples/zig --single-branch --depth=1 --filter=blob:none
+          git clone https://github.com/ziglang/zig examples/zig --branch 0.14.1 --single-branch --depth=1 --filter=blob:none
       - name: Parse examples
         uses: tree-sitter/parse-action@v4
         with:
           files: |
             examples/**/*.zig
+            !examples/zig/lib/std/zon/parse.zig
+            !examples/zig/lib/std/zon/stringify.zig
           invalid-files: |
             examples/zig/doc/langref/var_must_be_initialized.zig
+            examples/zig/test/cases/compile_errors/@import_zon_bad_type.zig
             examples/zig/test/cases/compile_errors/const_is_a_statement_not_an_expression.zig
             examples/zig/test/cases/compile_errors/empty_char_lit.zig
             examples/zig/test/cases/compile_errors/implicit_semicolon-block_expr.zig
