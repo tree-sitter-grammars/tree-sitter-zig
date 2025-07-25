@@ -8,10 +8,6 @@
         "named": true
       },
       {
-        "type": "assignment_expression",
-        "named": true
-      },
-      {
         "type": "async_expression",
         "named": true
       },
@@ -502,110 +498,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "assignment_expression",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "%=",
-            "named": false
-          },
-          {
-            "type": "&=",
-            "named": false
-          },
-          {
-            "type": "*%=",
-            "named": false
-          },
-          {
-            "type": "*=",
-            "named": false
-          },
-          {
-            "type": "*|=",
-            "named": false
-          },
-          {
-            "type": "+%=",
-            "named": false
-          },
-          {
-            "type": "+=",
-            "named": false
-          },
-          {
-            "type": "+|=",
-            "named": false
-          },
-          {
-            "type": "-%=",
-            "named": false
-          },
-          {
-            "type": "-=",
-            "named": false
-          },
-          {
-            "type": "-|=",
-            "named": false
-          },
-          {
-            "type": "/=",
-            "named": false
-          },
-          {
-            "type": "<<=",
-            "named": false
-          },
-          {
-            "type": "<<|=",
-            "named": false
-          },
-          {
-            "type": "=",
-            "named": false
-          },
-          {
-            "type": ">>=",
-            "named": false
-          },
-          {
-            "type": "^=",
-            "named": false
-          },
-          {
-            "type": "|=",
-            "named": false
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -1377,17 +1269,24 @@
   {
     "type": "field_initializer",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -2443,6 +2342,84 @@
     "type": "variable_declaration",
     "named": true,
     "fields": {
+      "operator": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "%=",
+            "named": false
+          },
+          {
+            "type": "&=",
+            "named": false
+          },
+          {
+            "type": "*%=",
+            "named": false
+          },
+          {
+            "type": "*=",
+            "named": false
+          },
+          {
+            "type": "*|=",
+            "named": false
+          },
+          {
+            "type": "+%=",
+            "named": false
+          },
+          {
+            "type": "+=",
+            "named": false
+          },
+          {
+            "type": "+|=",
+            "named": false
+          },
+          {
+            "type": "-%=",
+            "named": false
+          },
+          {
+            "type": "-=",
+            "named": false
+          },
+          {
+            "type": "-|=",
+            "named": false
+          },
+          {
+            "type": "/=",
+            "named": false
+          },
+          {
+            "type": "<<=",
+            "named": false
+          },
+          {
+            "type": "<<|=",
+            "named": false
+          },
+          {
+            "type": "=",
+            "named": false
+          },
+          {
+            "type": ">>=",
+            "named": false
+          },
+          {
+            "type": "^=",
+            "named": false
+          },
+          {
+            "type": "|=",
+            "named": false
+          }
+        ]
+      },
       "type": {
         "multiple": true,
         "required": false,
@@ -2925,7 +2902,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "comptime",

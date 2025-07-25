@@ -58,8 +58,7 @@
 ; Fields
 
 (field_initializer
-  .
-  (identifier) @variable.member)
+  name: (identifier) @variable.member)
 
 (field_expression
   (_)
@@ -67,12 +66,6 @@
 
 (container_field
   name: (identifier) @variable.member)
-
-(initializer_list
-  (assignment_expression
-      left: (field_expression
-              .
-              member: (identifier) @variable.member)))
 
 ; Functions
 

@@ -156,11 +156,11 @@ module.exports = grammar({
         $.expression,
         choice(
           seq(
-            choice(
+            field('operator', choice(
               '=', '*=', '*%=', '*|=', '/=', '%=',
               '+=', '+%=', '+|=', '-=', '-%=', '-|=',
               '<<=', '<<|=', '>>=', '&=', '^=', '|=',
-            ),
+            )),
             $.expression,
           ),
           seq(
@@ -409,7 +409,6 @@ module.exports = grammar({
       $.if_expression,
       $.for_expression,
       $.while_expression,
-      $.assignment_expression,
       $.unary_expression,
       $.binary_expression,
       $.comptime_expression,
@@ -476,16 +475,6 @@ module.exports = grammar({
       $._while_prefix,
       $.expression,
       optional(seq('else', optional($.payload), $.expression)),
-    )),
-
-    assignment_expression: $ => prec.right(seq(
-      field('left', $.expression),
-      field('operator', choice(
-        '=', '*=', '*%=', '*|=', '/=', '%=',
-        '+=', '+%=', '+|=', '-=', '-%=', '-|=',
-        '<<=', '<<|=', '>>=', '&=', '^=', '|=',
-      )),
-      field('right', $.expression),
     )),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
@@ -749,7 +738,7 @@ module.exports = grammar({
 
     field_initializer: $ => seq(
       '.',
-      $.identifier,
+      field('name', $.identifier),
       '=',
       $.expression,
     ),

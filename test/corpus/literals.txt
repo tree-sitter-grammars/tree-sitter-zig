@@ -1,0 +1,73 @@
+================================================================================
+Initializers
+================================================================================
+
+const init = Struct{
+  .foo = bar,
+  .@"5" = 2 + 2,
+};
+fn print123() void {
+  print(.{1, 2, 3});
+}
+fn init(self: *SomeStruct) void {
+  self.* = .{
+    .foo = bar,
+    .@"5" = 2 + 2,
+  };
+}
+
+-------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (struct_initializer
+      (identifier)
+      (initializer_list
+        (field_initializer
+          (identifier)
+          (identifier))
+        (field_initializer
+          (identifier
+            (string
+              (string_content)))
+          (binary_expression
+            (integer)
+                (integer))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (expression_statement
+        (call_expression
+          (identifier)
+          (anonymous_struct_initializer
+            (initializer_list
+              (integer)
+              (integer)
+              (integer)))))))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (pointer_type
+          (identifier))))
+    (builtin_type)
+    (block
+      (variable_declaration
+        (dereference_expression
+          (identifier))
+        (anonymous_struct_initializer
+          (initializer_list
+            (field_initializer
+              (identifier)
+              (identifier))
+            (field_initializer
+              (identifier
+                (string
+                  (string_content)))
+              (binary_expression
+                (integer)
+                (integer)))))))))
