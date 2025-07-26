@@ -76,6 +76,7 @@ module.exports = grammar({
 
   precedences: $ => [
     [$.container_field, $.type_expression],
+    [$._variable_declaration_expression_statement, $.assignment_expression],
   ],
 
   supertypes: $ => [
@@ -156,11 +157,7 @@ module.exports = grammar({
         $.expression,
         choice(
           seq(
-            choice(
-              '=', '*=', '*%=', '*|=', '/=', '%=',
-              '+=', '+%=', '+|=', '-=', '-%=', '-|=',
-              '<<=', '<<|=', '>>=', '&=', '^=', '|=',
-            ),
+            $.assignment_operator,
             $.expression,
           ),
           seq(
@@ -320,7 +317,7 @@ module.exports = grammar({
 
     _block_expr_statement: $ => prec(1, choice(
       seq(optional($.block_label), $.block),
-      $.expression_statement,
+      seq(choice($.expression, $.assignment_expression), ';'),
     )),
 
     block_expression: $ => prec(1, seq(optional($.block_label), $.block)),
@@ -380,7 +377,7 @@ module.exports = grammar({
       field('condition', $.expression),
       ')',
       optional($.payload),
-      optional(seq(':', '(', $.expression, ')')),
+      optional(seq(':', '(', choice($.expression, $.assignment_expression), ')')),
     ),
 
     _conditional_body: $ => choice(
@@ -389,7 +386,7 @@ module.exports = grammar({
         optional($.else_clause),
       ),
       seq(
-        field('body', $.expression),
+        field('body', choice($.expression, $.assignment_expression)),
         choice(';', $.else_clause),
       ),
     ),
@@ -409,7 +406,6 @@ module.exports = grammar({
       $.if_expression,
       $.for_expression,
       $.while_expression,
-      $.assignment_expression,
       $.unary_expression,
       $.binary_expression,
       $.comptime_expression,
@@ -478,15 +474,20 @@ module.exports = grammar({
       optional(seq('else', optional($.payload), $.expression)),
     )),
 
-    assignment_expression: $ => prec.right(seq(
-      field('left', $.expression),
-      field('operator', choice(
-        '=', '*=', '*%=', '*|=', '/=', '%=',
-        '+=', '+%=', '+|=', '-=', '-%=', '-|=',
-        '<<=', '<<|=', '>>=', '&=', '^=', '|=',
-      )),
-      field('right', $.expression),
-    )),
+    assignment_expression: $ => seq(
+      $.expression,
+      choice(
+        seq(
+          $.assignment_operator,
+          $.expression,
+        ),
+        seq(
+          repeat1(seq(',', $.expression)),
+          '=',
+          $.expression,
+        ),
+      ),
+    ),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', choice('!', '~', '-', '-%', '&')),
@@ -581,7 +582,7 @@ module.exports = grammar({
       $._switch_case_exp,
       '=>',
       optional($.payload),
-      choice($.expression),
+      choice($.expression, alias($._single_assignment_expression, $.assignment_expression)),
     ),
     _switch_case_exp: $ => seq(
       optional('inline'),
@@ -590,6 +591,7 @@ module.exports = grammar({
         'else',
       ),
     ),
+    _single_assignment_expression: $ => seq($.expression, $.assignment_operator, $.expression),
 
     type_expression: $ => prec.right(choice(
       $.anonymous_struct_initializer,
@@ -749,7 +751,7 @@ module.exports = grammar({
 
     field_initializer: $ => seq(
       '.',
-      $.identifier,
+      field('name', $.identifier),
       '=',
       $.expression,
     ),
@@ -773,6 +775,12 @@ module.exports = grammar({
     break_label: $ => seq(':', $.identifier),
 
     arguments: $ => seq('(', optionalCommaSep($.expression), ')'),
+
+    assignment_operator: $ => choice(
+      '=', '*=', '*%=', '*|=', '/=', '%=',
+      '+=', '+%=', '+|=', '-=', '-%=', '-|=',
+      '<<=', '<<|=', '>>=', '&=', '^=', '|=',
+    ),
 
     builtin_function: $ => seq(
       $.builtin_identifier,

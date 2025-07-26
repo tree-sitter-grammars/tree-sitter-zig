@@ -8,10 +8,6 @@
         "named": true
       },
       {
-        "type": "assignment_expression",
-        "named": true
-      },
-      {
         "type": "async_expression",
         "named": true
       },
@@ -507,106 +503,26 @@
   {
     "type": "assignment_expression",
     "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "%=",
-            "named": false
-          },
-          {
-            "type": "&=",
-            "named": false
-          },
-          {
-            "type": "*%=",
-            "named": false
-          },
-          {
-            "type": "*=",
-            "named": false
-          },
-          {
-            "type": "*|=",
-            "named": false
-          },
-          {
-            "type": "+%=",
-            "named": false
-          },
-          {
-            "type": "+=",
-            "named": false
-          },
-          {
-            "type": "+|=",
-            "named": false
-          },
-          {
-            "type": "-%=",
-            "named": false
-          },
-          {
-            "type": "-=",
-            "named": false
-          },
-          {
-            "type": "-|=",
-            "named": false
-          },
-          {
-            "type": "/=",
-            "named": false
-          },
-          {
-            "type": "<<=",
-            "named": false
-          },
-          {
-            "type": "<<|=",
-            "named": false
-          },
-          {
-            "type": "=",
-            "named": false
-          },
-          {
-            "type": ">>=",
-            "named": false
-          },
-          {
-            "type": "^=",
-            "named": false
-          },
-          {
-            "type": "|=",
-            "named": false
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_operator",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
     }
+  },
+  {
+    "type": "assignment_operator",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "async_expression",
@@ -1031,7 +947,7 @@
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "assignment_expression",
           "named": true
         },
         {
@@ -1039,7 +955,7 @@
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         },
         {
@@ -1156,7 +1072,7 @@
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "assignment_expression",
           "named": true
         },
         {
@@ -1164,7 +1080,7 @@
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         }
       ]
@@ -1259,7 +1175,7 @@
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "assignment_expression",
           "named": true
         },
         {
@@ -1267,7 +1183,7 @@
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         },
         {
@@ -1377,17 +1293,24 @@
   {
     "type": "field_initializer",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -1424,6 +1347,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "assignment_expression",
+            "named": true
+          },
           {
             "type": "block_expression",
             "named": true
@@ -1642,6 +1569,10 @@
         "required": true,
         "types": [
           {
+            "type": "assignment_expression",
+            "named": true
+          },
+          {
             "type": "block_expression",
             "named": true
           },
@@ -1852,7 +1783,7 @@
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "assignment_expression",
           "named": true
         },
         {
@@ -1860,7 +1791,7 @@
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         }
       ]
@@ -2249,7 +2180,7 @@
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "assignment_expression",
           "named": true
         },
         {
@@ -2257,7 +2188,7 @@
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         }
       ]
@@ -2271,6 +2202,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
         {
           "type": "expression",
           "named": true
@@ -2471,6 +2406,10 @@
           "named": true
         },
         {
+          "type": "assignment_operator",
+          "named": true
+        },
+        {
           "type": "byte_alignment",
           "named": true
         },
@@ -2513,6 +2452,10 @@
       "required": true,
       "types": [
         {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
           "type": "block_label",
           "named": true
         },
@@ -2535,6 +2478,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "assignment_expression",
+            "named": true
+          },
           {
             "type": "block_expression",
             "named": true
@@ -2560,6 +2507,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
         {
           "type": "else_clause",
           "named": true
