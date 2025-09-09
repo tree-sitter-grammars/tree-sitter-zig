@@ -14,10 +14,10 @@
   (if_type_expression)
   (function_signature)
   (parameters)
+  (call_expression)
   (struct_declaration)
   (opaque_declaration)
   (enum_declaration)
   (union_declaration)
   (error_set_declaration)
 ] @fold
-
