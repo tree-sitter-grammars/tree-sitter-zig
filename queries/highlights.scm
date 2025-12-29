@@ -254,6 +254,8 @@
 
 (escape_sequence) @string.escape
 
+"\\\\" @string.special.symbol
+
 ; Punctuation
 [
   "["
