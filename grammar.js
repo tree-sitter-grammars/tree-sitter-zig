@@ -203,7 +203,7 @@ module.exports = grammar({
     _function_prototype: $ => seq(
       'fn',
       optional(field('name', $.identifier)),
-      $.parameters,
+      field('parameters', $.parameters),
       optional($.byte_alignment),
       optional($.address_space),
       optional($.link_section),
