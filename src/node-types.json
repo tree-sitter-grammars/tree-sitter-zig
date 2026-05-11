@@ -1478,66 +1478,12 @@
           }
         ]
       },
-      "type": {
+      "parameters": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "comptime_type_expression",
-            "named": true
-          },
-          {
-            "type": "if_type_expression",
-            "named": true
-          },
-          {
-            "type": "type_expression",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "address_space",
-          "named": true
-        },
-        {
-          "type": "byte_alignment",
-          "named": true
-        },
-        {
-          "type": "calling_convention",
-          "named": true
-        },
-        {
-          "type": "link_section",
-          "named": true
-        },
-        {
-          "type": "parameters",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "function_signature",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
+            "type": "parameters",
             "named": true
           }
         ]
@@ -1563,7 +1509,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "address_space",
@@ -1582,7 +1528,73 @@
           "named": true
         },
         {
-          "type": "parameters",
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_signature",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "parameters",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "comptime_type_expression",
+            "named": true
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "type_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "address_space",
+          "named": true
+        },
+        {
+          "type": "byte_alignment",
+          "named": true
+        },
+        {
+          "type": "calling_convention",
+          "named": true
+        },
+        {
+          "type": "link_section",
           "named": true
         }
       ]
