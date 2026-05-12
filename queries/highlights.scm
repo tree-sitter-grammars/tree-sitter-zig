@@ -86,6 +86,15 @@
 (function_declaration
   name: (identifier) @function)
 
+; function declaration, nested types in parameters
+(function_declaration
+  name: (identifier)
+  (parameters
+    (parameter
+      type: (field_expression
+        object: (field_expression)*
+        member: (identifier) @type))))
+
 ; Modules
 (variable_declaration
   (identifier) @module
