@@ -419,6 +419,8 @@ module.exports = grammar({
       $.break_expression,
       $.try_expression,
       $.catch_expression,
+      $.anonymous_struct_initializer,
+      $.struct_initializer,
       $._suffix_expression,
       $.labeled_block_expression,
       $.block,
@@ -591,8 +593,6 @@ module.exports = grammar({
     ),
 
     type_expression: $ => prec.right(choice(
-      $.anonymous_struct_initializer,
-      $.struct_initializer,
       $.nullable_type,
       $.anyframe_type,
       $.slice_type,
