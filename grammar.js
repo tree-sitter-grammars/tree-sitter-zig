@@ -60,6 +60,7 @@ module.exports = grammar({
     [$.while_expression],
 
     [$.expression, $._function_prototype],
+    [$.expression, $.type_expression],
     [$.expression, $.if_type_expression],
 
     [$.comptime_type_expression, $.expression],
@@ -67,6 +68,7 @@ module.exports = grammar({
     [$.comptime_declaration, $._block_expr_statement],
     [$.variable_declaration, $._variable_declaration_expression_statement],
     [$.container_field, $.expression],
+    [$.container_field, $._suffix_expression],
     [$.comptime_declaration, $._block_expr_statement, $.expression]
   ],
 
@@ -87,7 +89,7 @@ module.exports = grammar({
     $.statement,
     $.expression,
     // $.type_expression,
-    // $.primary_expr,
+    // $.primary_type_expression,
   ],
 
   word: $ => $._identifier,
@@ -129,9 +131,9 @@ module.exports = grammar({
         seq(
           field('name', choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier))),
           ':',
-          field('type', choice($.primary_expr, $.if_type_expression, $.comptime_type_expression)),
+          field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
         ),
-        field('name', choice($.primary_expr, $.if_type_expression, $.comptime_type_expression)),
+        field('name', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
       ),
       optional($.byte_alignment),
       optional(seq('=', $.expression)),
@@ -414,7 +416,7 @@ module.exports = grammar({
       $.break_expression,
       $.try_expression,
       $.catch_expression,
-      $.primary_expr,
+      $._suffix_expression,
       $.block,
     )),
 
@@ -587,27 +589,21 @@ module.exports = grammar({
     type_expression: $ => prec.right(choice(
       $.anonymous_struct_initializer,
       $.struct_initializer,
-      $.labeled_type_expression,
-      $.error_set_declaration,
-      $.parenthesized_expression,
-      $.primary_expr,
-    )),
-
-    primary_expr: $ => choice(
       $.nullable_type,
       $.anyframe_type,
       $.slice_type,
       $.pointer_type,
       $.array_type,
       $.error_union_type,
+      $.labeled_type_expression,
+      $.error_set_declaration,
+      $.parenthesized_expression,
+      $._suffix_expression,
+    )),
+
+    primary_type_expression: $ => choice(
       $.builtin_function,
       $.character,
-      $.field_expression,
-      $.index_expression,
-      $.dereference_expression,
-      $.null_coercion_expression,
-      $.range_expression,
-      $.call_expression,
       prec.right(alias($._function_prototype, $.function_signature)),
       $.identifier,
       $.float,
@@ -626,6 +622,16 @@ module.exports = grammar({
       $.enum_declaration,
       $.union_declaration,
       $.switch_expression,
+    ),
+
+    _suffix_expression: $ => choice(
+      $.primary_type_expression,
+      $.field_expression,
+      $.index_expression,
+      $.dereference_expression,
+      $.null_coercion_expression,
+      $.range_expression,
+      $.call_expression,
     ),
 
     nullable_type: $ => prec(1, seq(
@@ -727,7 +733,7 @@ module.exports = grammar({
 
     anonymous_struct_initializer: $ => seq('.', $.initializer_list),
 
-    struct_initializer: $ => prec(-1, seq($.primary_expr, $.initializer_list)),
+    struct_initializer: $ => prec(-1, seq($.primary_type_expression, $.initializer_list)),
 
     initializer_list: $ => seq(
       '{',
