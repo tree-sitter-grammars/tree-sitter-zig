@@ -69,6 +69,7 @@ module.exports = grammar({
     [$.variable_declaration, $._variable_declaration_expression_statement],
     [$.container_field, $.expression],
     [$.container_field, $._suffix_expression],
+    [$.labeled_block_expression, $.labeled_type_expression],
     [$.comptime_declaration, $._block_expr_statement, $.expression]
   ],
 
@@ -320,6 +321,8 @@ module.exports = grammar({
 
     block_expression: $ => prec(1, seq(optional($.block_label), $.block)),
 
+    labeled_block_expression: $ => seq($.block_label, $.block),
+
     labeled_statement: $ => prec(1, seq(
       optional($.block_label),
       choice($.block, $.for_statement, $.while_statement),
@@ -417,6 +420,7 @@ module.exports = grammar({
       $.try_expression,
       $.catch_expression,
       $._suffix_expression,
+      $.labeled_block_expression,
       $.block,
     )),
 
