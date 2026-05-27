@@ -69,6 +69,8 @@ module.exports = grammar({
     [$.variable_declaration, $._variable_declaration_expression_statement],
     [$.container_field, $.expression],
     [$.container_field, $._suffix_expression],
+    [$._container_field_body, $._suffix_expression],
+    [$._container_field_body, $.expression],
     [$.labeled_block_expression, $.labeled_type_expression],
     [$.comptime_declaration, $._block_expr_statement, $.expression]
   ],
@@ -89,8 +91,8 @@ module.exports = grammar({
   supertypes: $ => [
     $.statement,
     $.expression,
-    // $.type_expression,
-    // $.primary_type_expression,
+    $.type_expression,
+    $.primary_type_expression,
   ],
 
   word: $ => $._identifier,
@@ -126,19 +128,23 @@ module.exports = grammar({
       $.block,
     )),
 
-    container_field: $ => prec.right(prec.dynamic(1, seq(
-      optional('comptime'),
+    container_field: $ => prec.right(prec.dynamic(1, choice(
+      seq('comptime', $._container_field_body),
+      $._container_field_body,
+    ))),
+
+    _container_field_body: $ => seq(
       choice(
         seq(
           field('name', choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier))),
           ':',
-          field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+          field('type', choice($.type_expression, $.if_type_expression)),
         ),
-        field('name', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+        field('type', choice($.type_expression, $.if_type_expression)),
       ),
       optional($.byte_alignment),
       optional(seq('=', $.expression)),
-    ))),
+    ),
 
     variable_declaration: $ => seq(
       optional('pub'),
