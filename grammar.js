@@ -601,7 +601,6 @@ module.exports = grammar({
       $.array_type,
       $.error_union_type,
       $.labeled_type_expression,
-      $.error_set_declaration,
       $._suffix_expression,
     )),
 
@@ -613,6 +612,7 @@ module.exports = grammar({
       $.float,
       $.integer,
       $.boolean,
+      $.error_set_declaration,
       $.error_type,
       'anyframe',
       'unreachable',
