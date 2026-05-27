@@ -15,15 +15,28 @@
 ((identifier) @type
   (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*"))
 
-(variable_declaration
-  (identifier) @type
-  "="
-  [
-    (struct_declaration)
-    (enum_declaration)
-    (union_declaration)
-    (opaque_declaration)
-  ])
+[
+  (variable_declaration
+    .
+    (identifier) @type
+    "="
+    [
+      (struct_declaration)
+      (enum_declaration)
+      (union_declaration)
+      (opaque_declaration)
+    ])
+  (local_variable_declaration
+    .
+    (identifier) @type
+    "="
+    [
+      (struct_declaration)
+      (enum_declaration)
+      (union_declaration)
+      (opaque_declaration)
+    ])
+]
 
 [
   (builtin_type)
@@ -67,12 +80,6 @@
 (container_field
   name: (identifier) @variable.member)
 
-(initializer_list
-  (assignment_expression
-    left: (field_expression
-      .
-      member: (identifier) @variable.member)))
-
 ; Functions
 (builtin_identifier) @function.builtin
 
@@ -87,11 +94,20 @@
   name: (identifier) @function)
 
 ; Modules
-(variable_declaration
-  (identifier) @module
-  (builtin_function
-    (builtin_identifier) @keyword.import
-    (#any-of? @keyword.import "@import" "@cImport")))
+[
+  (variable_declaration
+    .
+    (identifier) @module
+    (builtin_function
+      (builtin_identifier) @keyword.import
+      (#any-of? @keyword.import "@import" "@cImport")))
+  (local_variable_declaration
+    .
+    (identifier) @module
+    (builtin_function
+      (builtin_identifier) @keyword.import
+      (#any-of? @keyword.import "@import" "@cImport")))
+]
 
 ; Builtins
 [

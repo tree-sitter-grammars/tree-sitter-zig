@@ -5,12 +5,25 @@
 (parameter
   name: (identifier) @local.definition.parameter)
 
-(variable_declaration
-  (identifier) @local.definition.var)
+[
+  (variable_declaration
+    .
+    (identifier) @local.definition.var)
+  (local_variable_declaration
+    .
+    (identifier) @local.definition.var)
+]
 
-(variable_declaration
-  (identifier) @local.definition.type
-  (enum_declaration))
+[
+  (variable_declaration
+    .
+    (identifier) @local.definition.type
+    (enum_declaration))
+  (local_variable_declaration
+    .
+    (identifier) @local.definition.type
+    (enum_declaration))
+]
 
 (container_field
   type: (identifier) @local.definition.field)
@@ -19,9 +32,16 @@
   (function_declaration
     name: (identifier) @local.definition.method))
 
-(variable_declaration
-  (identifier) @local.definition.type
-  (struct_declaration))
+[
+  (variable_declaration
+    .
+    (identifier) @local.definition.type
+    (struct_declaration))
+  (local_variable_declaration
+    .
+    (identifier) @local.definition.type
+    (struct_declaration))
+]
 
 (struct_declaration
   (function_declaration
@@ -30,9 +50,16 @@
 (container_field
   name: (identifier) @local.definition.field)
 
-(variable_declaration
-  (identifier) @local.definition.type
-  (union_declaration))
+[
+  (variable_declaration
+    .
+    (identifier) @local.definition.type
+    (union_declaration))
+  (local_variable_declaration
+    .
+    (identifier) @local.definition.type
+    (union_declaration))
+]
 
 (union_declaration
   (function_declaration
