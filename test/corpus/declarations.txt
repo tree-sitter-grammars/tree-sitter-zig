@@ -1,0 +1,243 @@
+==================
+Function declaration
+==================
+
+pub export fn add(noalias lhs: i32, comptime rhs: i32, rest: anytype, ...) align(4) addrspace(.generic) linksection(".text") callconv(.C) i32 {
+    return lhs + rhs;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (builtin_type))
+      (parameter
+        (identifier)
+        (builtin_type))
+      (parameter
+        (identifier)
+        (builtin_type))
+      (parameter))
+    (byte_alignment
+      (integer))
+    (address_space
+      (field_expression
+        (identifier)))
+    (link_section
+      (string
+        (string_content)))
+    (calling_convention
+      (field_expression
+        (identifier)))
+    (builtin_type)
+    (block
+      (expression_statement
+        (return_expression
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+==================
+Test declaration
+==================
+
+test "decls" {
+    const p = Point{ .x = 1, .y = 2 };
+}
+
+---
+
+(source_file
+  (test_declaration
+    (string
+      (string_content))
+    (block
+      (variable_declaration
+        (identifier)
+        (struct_initializer
+          (identifier)
+          (initializer_list
+            (assignment_expression
+              (field_expression
+                (identifier))
+              (integer))
+            (assignment_expression
+              (field_expression
+                (identifier))
+              (integer))))))))
+
+==================
+Using namespace declaration (deprecated)
+==================
+
+pub usingnamespace Mixin;
+
+---
+
+(source_file
+  (using_namespace_declaration
+    (identifier)))
+
+==================
+Comptime declaration
+==================
+
+pub comptime {
+    const n = 1;
+}
+
+---
+
+(source_file
+  (comptime_declaration
+    (block
+      (variable_declaration
+        (identifier)
+        (integer)))))
+
+==================
+Variable declaration
+==================
+
+pub extern "c" threadlocal var global: [4:0]u8 align(4) addrspace(.generic) linksection(".data") = .{ 1, 2, 3, 0 };
+
+---
+
+(source_file
+  (variable_declaration
+    (string
+      (string_content))
+    (identifier)
+    (array_type
+      (integer)
+      (integer)
+      (builtin_type))
+    (byte_alignment
+      (integer))
+    (address_space
+      (field_expression
+        (identifier)))
+    (link_section
+      (string
+        (string_content)))
+    (anonymous_struct_initializer
+      (initializer_list
+        (integer)
+        (integer)
+        (integer)
+        (integer)))))
+
+==================
+Struct declaration
+==================
+
+const Point = struct {
+    x: i32 align(4) = 0,
+    y: i32,
+    comptime z: ?*const u8 = null,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (struct_declaration
+      (container_field
+        (identifier)
+        (builtin_type)
+        (byte_alignment
+          (integer))
+        (integer))
+      (container_field
+        (identifier)
+        (builtin_type))
+      (container_field
+        (identifier)
+        (nullable_type
+          (pointer_type
+            (builtin_type)))))))
+
+==================
+Enum declaration
+==================
+
+const Color = enum(u8) {
+    red,
+    green = 2,
+    blue,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (enum_declaration
+      (builtin_type)
+      (container_field
+        (identifier))
+      (container_field
+        (identifier)
+        (integer))
+      (container_field
+        (identifier)))))
+
+==================
+Union declaration
+==================
+
+const Payload = union(enum(u8)) {
+    none,
+    int: i32,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (union_declaration
+      (builtin_type)
+      (container_field
+        (identifier))
+      (container_field
+        (identifier)
+        (builtin_type)))))
+
+==================
+Opaque declaration
+==================
+
+const Hidden = opaque {
+    token: u8,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (opaque_declaration
+      (container_field
+        (identifier)
+        (builtin_type)))))
+
+==================
+Error set declaration
+==================
+
+const FileError = error{ NotFound, Denied };
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (error_set_declaration
+      (identifier)
+      (identifier))))

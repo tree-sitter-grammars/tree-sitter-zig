@@ -1,0 +1,194 @@
+==================
+Function signature type
+==================
+
+const Handler = fn (i32, anytype) void;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (function_signature
+      (parameters
+        (parameter
+          (builtin_type))
+        (parameter
+          (builtin_type)))
+      (builtin_type))))
+
+==================
+Anyframe type
+==================
+
+const Frame = anyframe->void;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (anyframe_type
+      (builtin_type))))
+
+==================
+Error union type
+==================
+
+const ErrorUnion = error{ A }!u8;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (error_union_type
+      (error_set_declaration
+        (identifier))
+      (builtin_type))))
+
+==================
+Pointer types
+==================
+
+const ManyPtr = [*:0]const u8;
+const ManyPtrC = [*c]allowzero volatile u8;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (pointer_type
+      (integer)
+      (builtin_type)))
+  (variable_declaration
+    (identifier)
+    (pointer_type
+      (builtin_type))))
+
+==================
+Slice type
+==================
+
+const Slice = [:0]align(4) addrspace(.generic) const u8;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (slice_type
+      (integer)
+      (byte_alignment
+        (integer))
+      (address_space
+        (field_expression
+          (identifier)))
+      (builtin_type))))
+
+==================
+Array type
+==================
+
+const Array = [4:0]u8;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (array_type
+      (integer)
+      (integer)
+      (builtin_type))))
+
+==================
+Conditional type expression
+==================
+
+const conditional_value: if (cond) u8 else u16 = 0;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (if_type_expression
+      (identifier)
+      (builtin_type)
+      (builtin_type))
+    (integer)))
+
+==================
+Comptime type expression
+==================
+
+const computed_value: comptime u8 = 0;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (comptime_type_expression
+      (builtin_type))
+    (integer)))
+
+==================
+Anonymous list initializer
+==================
+
+const anon = .{ 1, 2, 3 };
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (anonymous_struct_initializer
+      (initializer_list
+        (integer)
+        (integer)
+        (integer)))))
+
+==================
+Anonymous field initializer
+==================
+
+const fields = .{ .x = 1, .y = 2 };
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (anonymous_struct_initializer
+      (initializer_list
+        (field_initializer
+          (identifier)
+          (integer))
+        (field_initializer
+          (identifier)
+          (integer))))))
+
+==================
+Struct field initializer
+==================
+
+const typed = Point{ .x = 1, .y = 2 };
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (struct_initializer
+      (identifier)
+      (initializer_list
+        (field_initializer
+          (identifier)
+          (integer))
+        (field_initializer
+          (identifier)
+          (integer))))))

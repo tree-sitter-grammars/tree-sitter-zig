@@ -1,0 +1,394 @@
+==================
+Builtin call expression
+==================
+
+fn expressions() void {
+    const builtin = @as(i32, 1);
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (builtin_function
+          (builtin_identifier)
+          (arguments
+            (builtin_type)
+            (integer)))))))
+
+==================
+Parenthesized and binary expressions
+==================
+
+fn expressions() void {
+    const grouped = (1 + 2) * 3;
+    const combined = flag and other or third;
+    const shifted = bits << 2;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (parenthesized_expression
+            (binary_expression
+              (integer)
+              (integer)))
+          (integer)))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (identifier)
+          (integer))))))
+
+==================
+Unary expressions
+==================
+
+fn expressions() void {
+    const negated = -value;
+    const inverted = ~mask;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (unary_expression
+          (identifier))))))
+
+==================
+Call field index and postfix expressions
+==================
+
+fn expressions() void {
+    const call = foo(bar, 1);
+    const member = call.items[0:sentinel].field.*.?;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (call_expression
+          (identifier)
+          (arguments
+            (identifier)
+            (integer))))
+      (variable_declaration
+        (identifier)
+        (null_coercion_expression
+          (dereference_expression
+            (field_expression
+              (index_expression
+                (field_expression
+                  (identifier)
+                  (identifier))
+                (integer)
+                (identifier))
+              (identifier))))))))
+
+==================
+Range expressions
+==================
+
+fn expressions() void {
+    const ranged = 0..10;
+    const open_range = 0..;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (range_expression
+          (integer)
+          (integer)))
+      (variable_declaration
+        (identifier)
+        (range_expression
+          (integer))))))
+
+==================
+Error and fallible expressions
+==================
+
+fn expressions() void {
+    const err = error.NotFound;
+    const recovered = fallible() catch |e| 0;
+    const tried = try fallible();
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (error_type
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (catch_expression
+          (call_expression
+            (identifier)
+            (arguments))
+          (payload
+            (identifier))
+          (integer)))
+      (variable_declaration
+        (identifier)
+        (try_expression
+          (call_expression
+            (identifier)
+            (arguments)))))))
+
+==================
+Async await nosuspend and comptime expressions
+==================
+
+fn expressions(frame: anyframe) void {
+    const task = async run();
+    const done = await frame;
+    const quiet = nosuspend await frame;
+    const comp = comptime @as(u8, 1);
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)))
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (async_expression
+          (call_expression
+            (identifier)
+            (arguments))))
+      (variable_declaration
+        (identifier)
+        (await_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (nosuspend_expression
+          (await_expression
+            (identifier))))
+      (variable_declaration
+        (identifier)
+        (comptime_expression
+          (builtin_function
+            (builtin_identifier)
+            (arguments
+              (builtin_type)
+              (integer))))))))
+
+==================
+For and while expressions
+==================
+
+fn expressions(items: []const i32) void {
+    const picked = for (items) |item| item else 0;
+    const waited = while (next()) |item| item else 0;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (slice_type
+          (builtin_type))))
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (for_expression
+          (identifier)
+          (payload
+            (identifier))
+          (identifier)
+          (integer)))
+      (variable_declaration
+        (identifier)
+        (while_expression
+          (call_expression
+            (identifier)
+            (arguments))
+          (payload
+            (identifier))
+          (identifier)
+          (integer))))))
+
+==================
+Labeled type expression
+==================
+
+fn expressions() void {
+    const lab = label: { break :label 1; };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (labeled_type_expression
+          (block_label
+            (identifier))
+          (block
+            (expression_statement
+              (break_expression
+                (break_label
+                  (identifier))
+                (integer)))))))))
+
+==================
+Literals
+==================
+
+// Leading comments are named extras.
+fn expressions() void {
+    const yes = true;
+    const pi = 3.14;
+    const letter = 'a';
+    const newline = '\n';
+    const quote = "a\n{b}";
+    const multi =
+        \\hello
+        \\world
+    ;
+}
+
+---
+
+(source_file
+  (comment)
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (boolean))
+      (variable_declaration
+        (identifier)
+        (float))
+      (variable_declaration
+        (identifier)
+        (character
+          (character_content)))
+      (variable_declaration
+        (identifier)
+        (character
+          (escape_sequence)))
+      (variable_declaration
+        (identifier)
+        (string
+          (string_content)
+          (escape_sequence)
+          (string_content)))
+      (variable_declaration
+        (identifier)
+        (multiline_string)))))
+
+==================
+Asm expression
+==================
+
+fn expressions(code: usize) void {
+    asm volatile ("syscall" : [ret] "={rax}" (-> usize) : [number] "{rax}" (code) : "rcx", "r11");
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (builtin_type)))
+    (builtin_type)
+    (block
+      (expression_statement
+        (asm_expression
+          (string
+            (string_content))
+          (asm_output
+            (asm_output_item
+              (identifier)
+              (string
+                (string_content))
+              (builtin_type))
+            (asm_input
+              (asm_input_item
+                (identifier)
+                (string
+                  (string_content))
+                (identifier))
+              (asm_clobbers
+                (string
+                  (string_content))
+                (string
+                  (string_content))))))))))

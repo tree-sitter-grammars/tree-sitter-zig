@@ -1,0 +1,62 @@
+==================
+Return statement fragment
+==================
+
+return 1;
+
+---
+
+(source_file
+  (fragment
+    (expression_statement
+      (return_expression
+        (integer)))))
+
+==================
+If statement fragment
+==================
+
+if (ok) call();
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (arguments)))))
+
+==================
+Local declaration fragment
+==================
+
+var x = 1;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (integer)))
+
+==================
+Multiple statement fragment
+==================
+
+defer cleanup();
+return;
+
+---
+
+(source_file
+  (fragment
+    (defer_statement
+      (expression_statement
+        (call_expression
+          (identifier)
+          (arguments)))))
+  (fragment
+    (expression_statement
+      (return_expression))))
