@@ -67,9 +67,6 @@ module.exports = grammar({
     [$.comptime_type_expression, $.parameter],
     [$.comptime_declaration, $._block_expr_statement],
     [$.variable_declaration, $._variable_declaration_expression_statement],
-    [$.container_field, $.expression],
-    [$.container_field, $._suffix_expression],
-    [$._container_field_body, $._suffix_expression],
     [$._container_field_body, $.expression],
     [$.labeled_block_expression, $.labeled_type_expression],
     [$.comptime_declaration, $._block_expr_statement, $.expression]
