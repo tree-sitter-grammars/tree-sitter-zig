@@ -148,33 +148,19 @@ module.exports = grammar({
       ';',
     ),
 
-    _variable_declaration_expression_statement: $ => choice(
-      seq(
-        $._variable_declaration_header,
-        repeat(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))),
-        '=',
-        $.expression,
-        ';',
-      ),
-      seq(
-        $.expression,
-        choice(
-          seq(
-            choice(
-              '=', '*=', '*%=', '*|=', '/=', '%=',
-              '+=', '+%=', '+|=', '-=', '-%=', '-|=',
-              '<<=', '<<|=', '>>=', '&=', '^=', '|=',
-            ),
-            $.expression,
-          ),
-          seq(
-            repeat1(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))),
-            '=',
-            $.expression,
-          ),
-        ),
-        ';',
-      ),
+    _variable_declaration_expression_statement: $ => seq(
+      $._variable_declaration_header,
+      '=',
+      $.expression,
+      ';',
+    ),
+
+    _destructuring_multiple_assignment_statement: $ => seq(
+      choice($._variable_declaration_header, $.expression),
+      repeat1(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))),
+      '=',
+      $.expression,
+      ';',
     ),
 
     _variable_declaration_header: $ => prec(1, seq(
@@ -299,6 +285,7 @@ module.exports = grammar({
       $.errdefer_statement,
       $.expression_statement,
       $.assignment_statement,
+      alias($._destructuring_multiple_assignment_statement, $.multiple_declaration),
       alias($._variable_declaration_expression_statement, $.variable_declaration),
       $.if_statement,
       $.for_statement,
