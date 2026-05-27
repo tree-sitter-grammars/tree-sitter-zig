@@ -7,8 +7,25 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_container_members"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "statement"
+                },
+                "named": true,
+                "value": "fragment"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_container_members"
+            }
+          ]
         },
         {
           "type": "BLANK"
@@ -61,24 +78,8 @@
                   }
                 ]
               }
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "container_field"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
             }
           ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "container_field"
         }
       ]
     },
@@ -5660,7 +5661,7 @@
                 },
                 {
                   "type": "PATTERN",
-                  "value": "x[0-9a-fA-F]{2,}"
+                  "value": "x[0-9a-fA-F]{2}"
                 },
                 {
                   "type": "PATTERN",
@@ -6372,7 +6373,11 @@
         },
         {
           "type": "PATTERN",
-          "value": "(i|u)[1-9][0-9]*"
+          "value": "i[1-9][0-9]*"
+        },
+        {
+          "type": "PATTERN",
+          "value": "u[0-9]+"
         }
       ]
     },
@@ -6493,6 +6498,19 @@
     [
       "comptime_type_expression",
       "parameter"
+    ],
+    [
+      "comptime_declaration",
+      "_block_expr_statement"
+    ],
+    [
+      "variable_declaration",
+      "_variable_declaration_expression_statement"
+    ],
+    [
+      "comptime_declaration",
+      "_block_expr_statement",
+      "expression"
     ]
   ],
   "precedences": [

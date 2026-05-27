@@ -2145,6 +2145,10 @@
           "named": true
         },
         {
+          "type": "fragment",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },

@@ -48,7 +48,8 @@ const builtinTypes = [
   'c_longlong',
   'c_ulonglong',
   'c_longdouble',
-  /(i|u)[1-9][0-9]*/,
+  /i[1-9][0-9]*/,
+  /u[0-9]+/,
 ];
 
 module.exports = grammar({
@@ -63,6 +64,9 @@ module.exports = grammar({
 
     [$.comptime_type_expression, $.expression],
     [$.comptime_type_expression, $.parameter],
+    [$.comptime_declaration, $._block_expr_statement],
+    [$.variable_declaration, $._variable_declaration_expression_statement],
+    [$.comptime_declaration, $._block_expr_statement, $.expression]
   ],
 
   extras: $ => [
@@ -88,7 +92,9 @@ module.exports = grammar({
   word: $ => $._identifier,
 
   rules: {
-    source_file: $ => optional($._container_members),
+    source_file: $ => optional(choice(
+      repeat1(alias($.statement, $.fragment)),
+      $._container_members)),
 
     _container_members: $ => choice(
       seq(
@@ -100,9 +106,7 @@ module.exports = grammar({
           $.using_namespace_declaration,
           seq($.container_field, ','),
         )),
-        optional($.container_field),
       ),
-      $.container_field,
     ),
 
     test_declaration: $ => seq(
@@ -793,7 +797,7 @@ module.exports = grammar({
       choice(
         /[^xuU]/,
         /\d{2,3}/,
-        /x[0-9a-fA-F]{2,}/,
+        /x[0-9a-fA-F]{2}/,
         /u\{[0-9a-fA-F]{1,6}\}/,
       ),
     ))),
