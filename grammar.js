@@ -419,6 +419,7 @@ module.exports = grammar({
       $.break_expression,
       $.try_expression,
       $.catch_expression,
+      $.parenthesized_expression,
       $.anonymous_struct_initializer,
       $.struct_initializer,
       $._suffix_expression,
@@ -601,7 +602,6 @@ module.exports = grammar({
       $.error_union_type,
       $.labeled_type_expression,
       $.error_set_declaration,
-      $.parenthesized_expression,
       $._suffix_expression,
     )),
 
