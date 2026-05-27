@@ -1361,7 +1361,7 @@
             "name": "_variable_declaration_expression_statement"
           },
           "named": true,
-          "value": "variable_declaration"
+          "value": "local_variable_declaration"
         },
         {
           "type": "SYMBOL",
@@ -1410,7 +1410,7 @@
                 "name": "_variable_declaration_expression_statement"
               },
               "named": true,
-              "value": "variable_declaration"
+              "value": "local_variable_declaration"
             }
           ]
         }

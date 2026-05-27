@@ -56,7 +56,7 @@ test "decls" {
     (string
       (string_content))
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (struct_initializer
           (identifier)
@@ -93,7 +93,7 @@ pub comptime {
 (source_file
   (comptime_declaration
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (integer)))))
 

@@ -14,7 +14,7 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (builtin_function
           (builtin_identifier)
@@ -40,7 +40,7 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (binary_expression
           (parenthesized_expression
@@ -48,14 +48,14 @@ fn expressions() void {
               (integer)
               (integer)))
           (integer)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (binary_expression
           (binary_expression
             (identifier)
             (identifier))
           (identifier)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (binary_expression
           (identifier)
@@ -78,11 +78,11 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (unary_expression
           (identifier)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (unary_expression
           (identifier))))))
@@ -104,14 +104,14 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (call_expression
           (identifier)
           (arguments
             (identifier)
             (integer))))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (null_coercion_expression
           (dereference_expression
@@ -141,12 +141,12 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (range_expression
           (integer)
           (integer)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (range_expression
           (integer))))))
@@ -169,11 +169,11 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (error_type
           (identifier)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (catch_expression
           (call_expression
@@ -182,7 +182,7 @@ fn expressions() void {
           (payload
             (identifier))
           (integer)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (try_expression
           (call_expression
@@ -210,22 +210,22 @@ fn expressions(frame: anyframe) void {
         (identifier)))
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (async_expression
           (call_expression
             (identifier)
             (arguments))))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (await_expression
           (identifier)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (nosuspend_expression
           (await_expression
             (identifier))))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (comptime_expression
           (builtin_function
@@ -255,7 +255,7 @@ fn expressions(items: []const i32) void {
           (builtin_type))))
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (for_expression
           (identifier)
@@ -263,7 +263,7 @@ fn expressions(items: []const i32) void {
             (identifier))
           (identifier)
           (integer)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (while_expression
           (call_expression
@@ -290,7 +290,7 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (labeled_type_expression
           (block_label
@@ -328,27 +328,27 @@ fn expressions() void {
     (parameters)
     (builtin_type)
     (block
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (boolean))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (float))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (character
           (character_content)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (character
           (escape_sequence)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (string
           (string_content)
           (escape_sequence)
           (string_content)))
-      (variable_declaration
+      (local_variable_declaration
         (identifier)
         (multiline_string)))))
 

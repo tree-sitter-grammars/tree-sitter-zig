@@ -465,7 +465,7 @@ static const char * const ts_symbol_names[] = {
   [sym_container_field] = "container_field",
   [sym__container_field_body] = "_container_field_body",
   [sym_variable_declaration] = "variable_declaration",
-  [sym__variable_declaration_expression_statement] = "variable_declaration",
+  [sym__variable_declaration_expression_statement] = "local_variable_declaration",
   [sym__destructuring_multiple_assignment_statement] = "multiple_declaration",
   [sym__variable_declaration_header] = "_variable_declaration_header",
   [sym_function_declaration] = "function_declaration",
@@ -749,7 +749,7 @@ static const TSSymbol ts_symbol_map[] = {
   [sym_container_field] = sym_container_field,
   [sym__container_field_body] = sym__container_field_body,
   [sym_variable_declaration] = sym_variable_declaration,
-  [sym__variable_declaration_expression_statement] = sym_variable_declaration,
+  [sym__variable_declaration_expression_statement] = sym__variable_declaration_expression_statement,
   [sym__destructuring_multiple_assignment_statement] = sym__destructuring_multiple_assignment_statement,
   [sym__variable_declaration_header] = sym__variable_declaration_header,
   [sym_function_declaration] = sym_function_declaration,
@@ -6616,8 +6616,8 @@ static const TSSymbol ts_supertype_symbols[SUPERTYPE_COUNT] = {
 static const TSMapSlice ts_supertype_map_slices[] = {
   [sym_expression] = {.index = 0, .length = 29},
   [sym_primary_type_expression] = {.index = 29, .length = 21},
-  [sym_statement] = {.index = 50, .length = 15},
-  [sym_type_expression] = {.index = 65, .length = 14},
+  [sym_statement] = {.index = 50, .length = 14},
+  [sym_type_expression] = {.index = 64, .length = 14},
 };
 
 static const TSSymbol ts_supertype_map_entries[] = {
@@ -6687,9 +6687,8 @@ static const TSSymbol ts_supertype_map_entries[] = {
     sym_nosuspend_statement,
     sym_suspend_statement,
     sym_switch_expression,
-    sym_variable_declaration,
     sym_while_statement,
-  [65] =
+  [64] =
     sym_anyframe_type,
     sym_array_type,
     sym_call_expression,

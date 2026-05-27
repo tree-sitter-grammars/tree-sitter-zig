@@ -20,11 +20,11 @@ fn statements() void {
     (block
       (comptime_statement
         (block
-          (variable_declaration
+          (local_variable_declaration
             (identifier)
             (integer))))
       (comptime_statement
-        (variable_declaration
+        (local_variable_declaration
           (identifier)
           (integer))))))
 
@@ -209,7 +209,7 @@ fn statements(maybe: ?i32) void {
         (block_label
           (identifier))
         (block
-          (variable_declaration
+          (local_variable_declaration
             (identifier)
             (if_expression
               (identifier)

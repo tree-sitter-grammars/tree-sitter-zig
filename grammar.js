@@ -293,7 +293,7 @@ module.exports = grammar({
       $.expression_statement,
       $.assignment_statement,
       alias($._destructuring_multiple_assignment_statement, $.multiple_declaration),
-      alias($._variable_declaration_expression_statement, $.variable_declaration),
+      alias($._variable_declaration_expression_statement, $.local_variable_declaration),
       $.if_statement,
       $.for_statement,
       $.while_statement,
@@ -305,7 +305,7 @@ module.exports = grammar({
       'comptime',
       choice(
         $._block_expr_statement,
-        alias($._variable_declaration_expression_statement, $.variable_declaration),
+        alias($._variable_declaration_expression_statement, $.local_variable_declaration),
       ),
     ),
 

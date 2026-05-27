@@ -151,3 +151,44 @@ const anon = .{ 1, 2, 3 };
         (integer)
         (integer)
         (integer)))))
+
+==================
+Anonymous field initializer
+==================
+
+const fields = .{ .x = 1, .y = 2 };
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (anonymous_struct_initializer
+      (initializer_list
+        (field_initializer
+          (identifier)
+          (integer))
+        (field_initializer
+          (identifier)
+          (integer))))))
+
+==================
+Struct field initializer
+==================
+
+const typed = Point{ .x = 1, .y = 2 };
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (struct_initializer
+      (identifier)
+      (initializer_list
+        (field_initializer
+          (identifier)
+          (integer))
+        (field_initializer
+          (identifier)
+          (integer))))))

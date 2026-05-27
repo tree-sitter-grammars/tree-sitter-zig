@@ -248,6 +248,10 @@
         "named": true
       },
       {
+        "type": "local_variable_declaration",
+        "named": true
+      },
+      {
         "type": "multiple_declaration",
         "named": true
       },
@@ -261,10 +265,6 @@
       },
       {
         "type": "switch_expression",
-        "named": true
-      },
-      {
-        "type": "variable_declaration",
         "named": true
       },
       {
@@ -1079,7 +1079,7 @@
           "named": true
         },
         {
-          "type": "variable_declaration",
+          "type": "local_variable_declaration",
           "named": true
         }
       ]
@@ -1869,6 +1869,56 @@
       "types": [
         {
           "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "local_variable_declaration",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "comptime_type_expression",
+            "named": true
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "type_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "address_space",
+          "named": true
+        },
+        {
+          "type": "byte_alignment",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "link_section",
           "named": true
         }
       ]
