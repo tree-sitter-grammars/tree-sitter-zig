@@ -66,6 +66,7 @@ module.exports = grammar({
     [$.comptime_type_expression, $.parameter],
     [$.comptime_declaration, $._block_expr_statement],
     [$.variable_declaration, $._variable_declaration_expression_statement],
+    [$.container_field, $.expression],
     [$.comptime_declaration, $._block_expr_statement, $.expression]
   ],
 
@@ -85,8 +86,8 @@ module.exports = grammar({
   supertypes: $ => [
     $.statement,
     $.expression,
-    $.type_expression,
-    $.primary_type_expression,
+    // $.type_expression,
+    // $.primary_expr,
   ],
 
   word: $ => $._identifier,
@@ -128,9 +129,9 @@ module.exports = grammar({
         seq(
           field('name', choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier))),
           ':',
-          field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+          field('type', choice($.primary_expr, $.if_type_expression, $.comptime_type_expression)),
         ),
-        field('name', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+        field('name', choice($.primary_expr, $.if_type_expression, $.comptime_type_expression)),
       ),
       optional($.byte_alignment),
       optional(seq('=', $.expression)),
@@ -413,7 +414,7 @@ module.exports = grammar({
       $.break_expression,
       $.try_expression,
       $.catch_expression,
-      $.type_expression,
+      $.primary_expr,
       $.block,
     )),
 
@@ -589,10 +590,10 @@ module.exports = grammar({
       $.labeled_type_expression,
       $.error_set_declaration,
       $.parenthesized_expression,
-      $.primary_type_expression,
+      $.primary_expr,
     )),
 
-    primary_type_expression: $ => choice(
+    primary_expr: $ => choice(
       $.nullable_type,
       $.anyframe_type,
       $.slice_type,
@@ -726,7 +727,7 @@ module.exports = grammar({
 
     anonymous_struct_initializer: $ => seq('.', $.initializer_list),
 
-    struct_initializer: $ => prec(-1, seq($.primary_type_expression, $.initializer_list)),
+    struct_initializer: $ => prec(-1, seq($.primary_expr, $.initializer_list)),
 
     initializer_list: $ => seq(
       '{',
