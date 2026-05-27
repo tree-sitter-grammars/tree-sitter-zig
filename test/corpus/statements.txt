@@ -174,7 +174,7 @@ fn statements(xs: []const i32) void {
             (identifier))
           (block_expression
             (block
-              (variable_declaration
+              (assignment_statement
                 (identifier)
                 (binary_expression
                   (identifier)

@@ -61,13 +61,11 @@ test "decls" {
         (struct_initializer
           (identifier)
           (initializer_list
-            (assignment_expression
-              (field_expression
-                (identifier))
+            (field_initializer
+              (identifier)
               (integer))
-            (assignment_expression
-              (field_expression
-                (identifier))
+            (field_initializer
+              (identifier)
               (integer))))))))
 
 ==================

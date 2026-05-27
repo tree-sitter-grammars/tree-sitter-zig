@@ -4,11 +4,11 @@
     "named": true,
     "subtypes": [
       {
-        "type": "asm_expression",
+        "type": "anonymous_struct_initializer",
         "named": true
       },
       {
-        "type": "assignment_expression",
+        "type": "asm_expression",
         "named": true
       },
       {
@@ -32,6 +32,10 @@
         "named": true
       },
       {
+        "type": "call_expression",
+        "named": true
+      },
+      {
         "type": "catch_expression",
         "named": true
       },
@@ -44,6 +48,14 @@
         "named": true
       },
       {
+        "type": "dereference_expression",
+        "named": true
+      },
+      {
+        "type": "field_expression",
+        "named": true
+      },
+      {
         "type": "for_expression",
         "named": true
       },
@@ -52,7 +64,31 @@
         "named": true
       },
       {
+        "type": "index_expression",
+        "named": true
+      },
+      {
+        "type": "labeled_block_expression",
+        "named": true
+      },
+      {
         "type": "nosuspend_expression",
+        "named": true
+      },
+      {
+        "type": "null_coercion_expression",
+        "named": true
+      },
+      {
+        "type": "parenthesized_expression",
+        "named": true
+      },
+      {
+        "type": "primary_type_expression",
+        "named": true
+      },
+      {
+        "type": "range_expression",
         "named": true
       },
       {
@@ -61,6 +97,10 @@
       },
       {
         "type": "return_expression",
+        "named": true
+      },
+      {
+        "type": "struct_initializer",
         "named": true
       },
       {
@@ -90,14 +130,6 @@
         "named": false
       },
       {
-        "type": "anyframe_type",
-        "named": true
-      },
-      {
-        "type": "array_type",
-        "named": true
-      },
-      {
         "type": "boolean",
         "named": true
       },
@@ -110,15 +142,7 @@
         "named": true
       },
       {
-        "type": "call_expression",
-        "named": true
-      },
-      {
         "type": "character",
-        "named": true
-      },
-      {
-        "type": "dereference_expression",
         "named": true
       },
       {
@@ -126,15 +150,11 @@
         "named": true
       },
       {
+        "type": "error_set_declaration",
+        "named": true
+      },
+      {
         "type": "error_type",
-        "named": true
-      },
-      {
-        "type": "error_union_type",
-        "named": true
-      },
-      {
-        "type": "field_expression",
         "named": true
       },
       {
@@ -150,10 +170,6 @@
         "named": true
       },
       {
-        "type": "index_expression",
-        "named": true
-      },
-      {
         "type": "integer",
         "named": true
       },
@@ -166,27 +182,7 @@
         "named": false
       },
       {
-        "type": "null_coercion_expression",
-        "named": true
-      },
-      {
-        "type": "nullable_type",
-        "named": true
-      },
-      {
         "type": "opaque_declaration",
-        "named": true
-      },
-      {
-        "type": "pointer_type",
-        "named": true
-      },
-      {
-        "type": "range_expression",
-        "named": true
-      },
-      {
-        "type": "slice_type",
         "named": true
       },
       {
@@ -220,6 +216,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "assignment_statement",
+        "named": true
+      },
+      {
         "type": "comptime_statement",
         "named": true
       },
@@ -245,6 +245,10 @@
       },
       {
         "type": "labeled_statement",
+        "named": true
+      },
+      {
+        "type": "multiple_declaration",
         "named": true
       },
       {
@@ -274,11 +278,31 @@
     "named": true,
     "subtypes": [
       {
-        "type": "anonymous_struct_initializer",
+        "type": "anyframe_type",
         "named": true
       },
       {
-        "type": "error_set_declaration",
+        "type": "array_type",
+        "named": true
+      },
+      {
+        "type": "call_expression",
+        "named": true
+      },
+      {
+        "type": "dereference_expression",
+        "named": true
+      },
+      {
+        "type": "error_union_type",
+        "named": true
+      },
+      {
+        "type": "field_expression",
+        "named": true
+      },
+      {
+        "type": "index_expression",
         "named": true
       },
       {
@@ -286,7 +310,15 @@
         "named": true
       },
       {
-        "type": "parenthesized_expression",
+        "type": "null_coercion_expression",
+        "named": true
+      },
+      {
+        "type": "nullable_type",
+        "named": true
+      },
+      {
+        "type": "pointer_type",
         "named": true
       },
       {
@@ -294,7 +326,11 @@
         "named": true
       },
       {
-        "type": "struct_initializer",
+        "type": "range_expression",
+        "named": true
+      },
+      {
+        "type": "slice_type",
         "named": true
       }
     ]
@@ -505,7 +541,7 @@
     }
   },
   {
-    "type": "assignment_expression",
+    "type": "assignment_statement",
     "named": true,
     "fields": {
       "left": {
@@ -1070,44 +1106,40 @@
     "fields": {
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
-          {
-            "type": "comptime_type_expression",
-            "named": true
-          },
           {
             "type": "false",
             "named": false
           },
           {
-            "type": "if_type_expression",
+            "type": "identifier",
             "named": true
           },
           {
-            "type": "primary_type_expression",
-            "named": true
+            "type": "null",
+            "named": false
           },
           {
             "type": "true",
+            "named": false
+          },
+          {
+            "type": "undefined",
             "named": false
           }
         ]
       },
       "type": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
-          {
-            "type": "comptime_type_expression",
-            "named": true
-          },
           {
             "type": "if_type_expression",
             "named": true
           },
           {
-            "type": "primary_type_expression",
+            "type": "type_expression",
             "named": true
           }
         ]
@@ -1763,6 +1795,25 @@
     }
   },
   {
+    "type": "labeled_block_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "block_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "labeled_statement",
     "named": true,
     "fields": {},
@@ -1827,6 +1878,56 @@
     "type": "multiline_string",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "multiple_declaration",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "comptime_type_expression",
+            "named": true
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "type_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "address_space",
+          "named": true
+        },
+        {
+          "type": "byte_alignment",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "link_section",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "nosuspend_expression",
@@ -2448,7 +2549,7 @@
     "named": true,
     "fields": {
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
