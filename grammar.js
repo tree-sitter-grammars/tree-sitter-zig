@@ -298,6 +298,7 @@ module.exports = grammar({
       $.defer_statement,
       $.errdefer_statement,
       $.expression_statement,
+      $.assignment_statement,
       alias($._variable_declaration_expression_statement, $.variable_declaration),
       $.if_statement,
       $.for_statement,
@@ -413,7 +414,6 @@ module.exports = grammar({
       $.if_expression,
       $.for_expression,
       $.while_expression,
-      $.assignment_expression,
       $.unary_expression,
       $.binary_expression,
       $.comptime_expression,
@@ -482,7 +482,7 @@ module.exports = grammar({
       optional(seq('else', optional($.payload), $.expression)),
     )),
 
-    assignment_expression: $ => prec.right(seq(
+    assignment_statement: $ => prec.right(seq(
       field('left', $.expression),
       field('operator', choice(
         '=', '*=', '*%=', '*|=', '/=', '%=',
@@ -490,6 +490,7 @@ module.exports = grammar({
         '<<=', '<<|=', '>>=', '&=', '^=', '|=',
       )),
       field('right', $.expression),
+      ';',
     )),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
