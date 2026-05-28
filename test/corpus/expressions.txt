@@ -93,7 +93,7 @@ Call field index and postfix expressions
 
 fn expressions() void {
     const call = foo(bar, 1);
-    const member = call.items[0:sentinel].field.*.?;
+    const member = call.items[0..].field.*.?;
 }
 
 ---
@@ -120,8 +120,8 @@ fn expressions() void {
                 (field_expression
                   (identifier)
                   (identifier))
-                (integer)
-                (identifier))
+                (range_expression
+                  (integer)))
               (identifier))))))))
 
 ==================

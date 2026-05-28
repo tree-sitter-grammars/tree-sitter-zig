@@ -137,3 +137,18 @@ errdefer |*err| handle(err);
                 (arguments
                   (identifier))))))))
 
+===========================
+Index sentinel without slice :error
+===========================
+
+const x = a[0:sentinel];
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (index_expression
+      (identifier)
+      (integer)
+      (ERROR))))

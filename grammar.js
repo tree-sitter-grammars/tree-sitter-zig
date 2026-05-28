@@ -794,8 +794,13 @@ module.exports = grammar({
     index_expression: $ => prec(PREC.MEMBER, seq(
       field('object', $.expression),
       '[',
-      field('index', $.expression),
-      optional(seq(':', field('sentinel', $.expression))),
+      choice(
+        field('index', $.expression),
+        seq(
+          field('index', $.range_expression),
+          optional(seq(':', field('sentinel', $.expression))),
+        ),
+      ),
       ']',
     )),
 
