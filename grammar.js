@@ -767,7 +767,7 @@ module.exports = grammar({
 
     anonymous_struct_initializer: $ => seq('.', $.initializer_list),
 
-    struct_initializer: $ => prec(-1, seq($.primary_type_expression, $.initializer_list)),
+    struct_initializer: $ => prec(-1, seq($.type_expression, $.initializer_list)),
 
     initializer_list: $ => seq(
       '{',

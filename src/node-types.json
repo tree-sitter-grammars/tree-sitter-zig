@@ -2544,7 +2544,7 @@
           "named": true
         },
         {
-          "type": "primary_type_expression",
+          "type": "type_expression",
           "named": true
         }
       ]

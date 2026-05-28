@@ -5229,7 +5229,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "primary_type_expression"
+            "name": "type_expression"
           },
           {
             "type": "SYMBOL",

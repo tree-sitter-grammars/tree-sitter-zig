@@ -60,3 +60,24 @@ return;
   (fragment
     (expression_statement
       (return_expression))))
+
+====================
+Curly Array Fragment
+====================
+
+const values = [_]u32{ 0, 1, 0x1234_5678, 0xffff_ffff };
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (struct_initializer
+      (array_type
+        (identifier)
+        (builtin_type))
+      (initializer_list
+        (integer)
+        (integer)
+        (integer)
+        (integer)))))
