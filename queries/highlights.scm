@@ -293,7 +293,10 @@
   "|" @punctuation.bracket)
 
 ; Comments
+[
+  (top_doc_comment)
+  (doc_comment)
+] @comment.documentation
+
 (comment) @comment @spell
 
-((comment) @comment.documentation
-  (#lua-match? @comment.documentation "^//!"))

@@ -1133,7 +1133,18 @@
   {
     "type": "comptime_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": true,
@@ -1210,6 +1221,16 @@
     "type": "container_field",
     "named": true,
     "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1333,6 +1354,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "doc_comment",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "else_clause",
@@ -1645,6 +1671,16 @@
         "types": [
           {
             "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment",
             "named": true
           }
         ]
@@ -2269,6 +2305,16 @@
     "type": "parameter",
     "named": true,
     "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": false,
@@ -2477,7 +2523,18 @@
     "type": "source_file",
     "named": true,
     "root": true,
-    "fields": {},
+    "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "top_doc_comment",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
@@ -2666,7 +2723,18 @@
   {
     "type": "test_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -2685,6 +2753,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "top_doc_comment",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "try_expression",
@@ -2805,7 +2878,18 @@
   {
     "type": "using_namespace_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": true,
@@ -2821,6 +2905,16 @@
     "type": "variable_declaration",
     "named": true,
     "fields": {
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "doc_comment",
+            "named": true
+          }
+        ]
+      },
       "type": {
         "multiple": false,
         "required": false,

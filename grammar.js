@@ -146,9 +146,13 @@ module.exports = grammar({
   word: $ => $._identifier,
 
   rules: {
-    source_file: $ => optional(choice(
-      repeat1(alias($.statement, $.fragment)),
-      $._container_members)),
+    source_file: $ => seq(
+      field('doc', optional($.top_doc_comment)),
+      optional(choice(
+        repeat1(alias($.statement, $.fragment)),
+        $._container_members,
+      )),
+    ),
 
     _container_members: $ => choice(
       seq(
@@ -166,19 +170,21 @@ module.exports = grammar({
     ),
 
     test_declaration: $ => seq(
+      optional(field('doc', $.doc_comment)),
       'test',
       optional(choice($.string, $.identifier)),
       $.block,
     ),
 
     comptime_declaration: $ => prec(1, seq(
+      optional(field('doc', $.doc_comment)),
       'comptime',
       $.block,
     )),
 
     container_field: $ => prec.right(prec.dynamic(1, choice(
-      seq('comptime', $._container_field_body),
-      $._container_field_body,
+      seq(optional(field('doc', $.doc_comment)), 'comptime', $._container_field_body),
+      seq(optional(field('doc', $.doc_comment)), $._container_field_body),
     ))),
 
     _container_field_body: $ => seq(
@@ -192,6 +198,7 @@ module.exports = grammar({
     ),
 
     variable_declaration: $ => seq(
+      optional(field('doc', $.doc_comment)),
       optional('pub'),
       optional(choice(
         'export',
@@ -231,6 +238,7 @@ module.exports = grammar({
     )),
 
     function_declaration: $ => seq(
+      optional(field('doc', $.doc_comment)),
       optional('pub'),
       choice(
         seq(
@@ -273,6 +281,7 @@ module.exports = grammar({
     ),
 
     parameter: $ => prec(1, seq(
+      optional(field('doc', $.doc_comment)),
       optional(choice('noalias', 'comptime')),
       optional(seq(
         field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
@@ -282,6 +291,7 @@ module.exports = grammar({
     )),
 
     using_namespace_declaration: $ => seq(
+      optional(field('doc', $.doc_comment)),
       optional('pub'),
       'usingnamespace',
       $.expression,
@@ -1006,6 +1016,14 @@ module.exports = grammar({
       'true',
       'false',
     ),
+
+    top_doc_comment: $ => repeat1($._top_doc_comment_line),
+
+    _top_doc_comment_line: _ => token(seq('//!', /.*/)),
+
+    doc_comment: $ => repeat1($._doc_comment_line),
+
+    _doc_comment_line: _ => token(seq('///', /.*/)),
 
     comment: _ => token(seq('//', /.*/)),
   },
