@@ -1686,6 +1686,23 @@
         }
       ]
     },
+    "_for_else_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "else"
+        },
+        {
+          "type": "FIELD",
+          "name": "alternative",
+          "content": {
+            "type": "SYMBOL",
+            "name": "statement"
+          }
+        }
+      ]
+    },
     "for_statement": {
       "type": "SEQ",
       "members": [
@@ -1707,7 +1724,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_conditional_body"
+          "name": "_for_conditional_body"
         }
       ]
     },
@@ -2058,6 +2075,72 @@
                 {
                   "type": "SYMBOL",
                   "name": "else_clause"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "_for_conditional_body": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "body",
+              "content": {
+                "type": "SYMBOL",
+                "name": "block_expression"
+              }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_for_else_clause"
+                  },
+                  "named": true,
+                  "value": "else_clause"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "body",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_assign_expr"
+              }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ";"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_for_else_clause"
+                  },
+                  "named": true,
+                  "value": "else_clause"
                 }
               ]
             }

@@ -1,0 +1,58 @@
+===========================
+Multiple assignment switch :error
+===========================
+
+switch (x) {
+    0 => a, b = next(),
+}
+
+---
+
+(source_file
+  (fragment
+    (switch_expression
+      (identifier)
+      (switch_case
+        (integer)
+        (identifier))
+      (ERROR
+        (call_expression
+          (identifier)
+          (ERROR)
+          (arguments))))))
+
+===========================
+For else payload :error
+===========================
+
+fn f(xs: []u8) void {
+    for (xs) |x| {} else |bad| {}
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (slice_type
+          (builtin_type))))
+    (builtin_type)
+    (block
+      (labeled_statement
+        (for_statement
+          (identifier)
+          (payload
+            (identifier))
+          (block_expression
+            (block))
+          (else_clause
+            (ERROR)
+            (expression_statement
+              (binary_expression
+                (identifier)
+                (block))
+              (MISSING ";"))))))))
+
