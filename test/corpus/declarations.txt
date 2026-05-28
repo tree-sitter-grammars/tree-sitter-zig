@@ -239,3 +239,35 @@ const FileError = error{ NotFound, Denied };
     (error_set_declaration
       (identifier)
       (identifier))))
+
+====================
+Multi Defer Stmt
+====================
+
+fn peek() Grapheme {
+    const cache = .{ buf, cp_iter};
+    defer buf, cp_iter = cache;
+    return;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (identifier)
+    (block
+      (local_variable_declaration
+        (identifier)
+        (anonymous_struct_initializer
+          (initializer_list
+            (identifier)
+            (identifier))))
+      (defer_statement
+        (assignment_statement
+          (identifier)
+          (identifier)
+          (identifier)))
+      (expression_statement
+        (return_expression)))))

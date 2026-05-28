@@ -67,6 +67,7 @@ module.exports = grammar({
     [$.comptime_type_expression, $.parameter],
     [$.comptime_declaration, $._block_expr_statement],
     [$.variable_declaration, $._variable_declaration_expression_statement],
+    [$._destructuring_multiple_assignment_statement, $.assignment_statement],
     [$._container_field_body, $.expression],
     [$.labeled_block_expression, $.labeled_type_expression],
     [$.comptime_declaration, $._block_expr_statement, $.expression]
@@ -387,20 +388,20 @@ module.exports = grammar({
     ),
 
     continue_clause: $ => choice(
-      alias($._assign_expr, $.continue_assignment),
+      $._assign_expr,
       $.block_expression,
     ),
 
-    _assign_expr: $ => choice(
+    _assign_expr: $ => prec.left(choice(
       $.expression,
-      $._assignment_expr,
+      $.assignment_expression,
       seq(
         $.expression,
         repeat1(prec(1, seq(',', $.expression))),
         '=',
         $.expression,
       ),
-    ),
+    )),
 
     _conditional_body: $ => choice(
       seq(
@@ -501,11 +502,19 @@ module.exports = grammar({
     )),
 
     assignment_statement: $ => prec.right(seq(
-      $._assignment_expr,
+      choice(
+        alias($.assignment_expression, 'assignment'),
+        field('left', seq(
+          $.expression,
+          repeat1(prec(1, seq(',', $.expression)))),
+          '=',
+          field('right', $.expression),
+        ),
+      ),
       ';',
     )),
 
-    _assignment_expr: $ => seq(
+    assignment_expression: $ => seq(
       field('left', $.expression),
       field('operator', choice(
         '=', '*=', '*%=', '*|=', '/=', '%=',
@@ -608,7 +617,7 @@ module.exports = grammar({
       $._switch_case_exp,
       '=>',
       optional($.payload),
-      choice($.expression),
+      $._assign_expr,
     ),
     _switch_case_exp: $ => seq(
       optional('inline'),

@@ -118,10 +118,9 @@ fn statements() void {
           (payload
             (identifier))
           (continue_clause
-            (continue_assignment
-              (call_expression
-                (identifier)
-                (arguments))))
+            (call_expression
+              (identifier)
+              (arguments)))
           (block_expression
             (block
               (if_statement
@@ -311,9 +310,29 @@ While with Increment
       (while_statement
         (boolean)
         (continue_clause
-          (continue_assignment
+          (assignment_expression
             (identifier)
             (integer)))
         (block_expression
           (block
             (comment)))))))
+
+====================
+Assignment Expression-ish
+====================
+
+switch (i) {
+   0 => i = 2,
+}
+
+---
+
+(source_file
+  (fragment
+    (switch_expression
+      (identifier)
+      (switch_case
+        (integer)
+        (assignment_expression
+          (identifier)
+          (integer))))))
