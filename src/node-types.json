@@ -2312,6 +2312,10 @@
         "required": false,
         "types": [
           {
+            "type": "anytype",
+            "named": true
+          },
+          {
             "type": "comptime_type_expression",
             "named": true
           },
@@ -3239,7 +3243,7 @@
   },
   {
     "type": "anytype",
-    "named": false
+    "named": true
   },
   {
     "type": "asm",

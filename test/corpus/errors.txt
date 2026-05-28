@@ -240,3 +240,44 @@ extern "c" fn f() void {}
     (struct_initializer
       (builtin_type)
       (initializer_list))))
+
+
+===========================
+Anytype value expression :error
+===========================
+
+const T = anytype;
+
+---
+
+
+
+===========================
+Anytype type annotation :error
+===========================
+
+const U: anytype = undefined;
+
+---
+
+
+
+===========================
+While keyword type :error
+===========================
+
+const W: while = undefined;
+
+---
+
+
+
+===========================
+Keyword field access :error
+===========================
+
+const T = foo.while;
+
+---
+
+

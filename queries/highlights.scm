@@ -43,6 +43,8 @@
   "anyframe"
 ] @type.builtin
 
+(anytype) @keyword
+
 ; Constants
 ((identifier) @constant
   (#lua-match? @constant "^[A-Z][A-Z_0-9]+$"))

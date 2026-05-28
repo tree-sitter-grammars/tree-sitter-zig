@@ -1,4 +1,4 @@
-pub export fn add(noalias lhs: i32, comptime rhs: i32) i32 {
+pub export fn add(noalias lhs: i32, comptime rhs: i32, rest: anytype) i32 {
 // <- keyword.modifier
 //  ^ keyword.import
 //         ^ keyword.function
@@ -9,7 +9,9 @@ pub export fn add(noalias lhs: i32, comptime rhs: i32) i32 {
 //                                  ^ keyword.modifier
 //                                           ^ constant
 //                                                ^ type.builtin
-//                                                     ^ type.builtin
+//                                                     ^ constant
+//                                                           ^ keyword
+//                                                                    ^ type.builtin
     return lhs + rhs;
 //  ^ keyword.return
 //         ^ constant

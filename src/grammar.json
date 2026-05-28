@@ -898,6 +898,15 @@
                   {
                     "type": "SYMBOL",
                     "name": "comptime_type_expression"
+                  },
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "STRING",
+                      "value": "anytype"
+                    },
+                    "named": true,
+                    "value": "anytype"
                   }
                 ]
               }
@@ -6583,10 +6592,6 @@
         {
           "type": "STRING",
           "value": "anyopaque"
-        },
-        {
-          "type": "STRING",
-          "value": "anytype"
         },
         {
           "type": "STRING",

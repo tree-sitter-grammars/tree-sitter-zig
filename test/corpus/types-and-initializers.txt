@@ -14,7 +14,7 @@ const Handler = fn (i32, anytype) void;
         (parameter
           (builtin_type))
         (parameter
-          (builtin_type)))
+          (anytype)))
       (builtin_type))))
 
 ==================
