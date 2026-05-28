@@ -289,3 +289,12 @@ fn f(x: anytype) void {}
         (anytype)))
     (builtin_type)
     (block)))
+
+====================
+Tuple Declaration
+====================
+
+const Value = struct { a: asn1.Oid, b: i32 };
+
+---
+

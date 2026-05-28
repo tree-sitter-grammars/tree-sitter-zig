@@ -357,7 +357,7 @@ Asm expression
 ==================
 
 fn expressions(code: usize) void {
-    asm volatile ("syscall" : [ret] "={rax}" (-> usize) : [number] "{rax}" (code) : "rcx", "r11");
+    asm volatile ("syscall" : [ret] "={rax}" (-> usize) : [number] "{rax}" (code) : .{ .rcx = true, .r11 = true });
 }
 
 ---
@@ -388,10 +388,14 @@ fn expressions(code: usize) void {
                   (string_content))
                 (identifier))
               (asm_clobbers
-                (string
-                  (string_content))
-                (string
-                  (string_content))))))))))
+                (anonymous_struct_initializer
+                  (initializer_list
+                    (field_initializer
+                      (identifier)
+                      (boolean))
+                    (field_initializer
+                      (identifier)
+                      (boolean))))))))))))
 
 ====================
 Errdefer Expression

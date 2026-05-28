@@ -322,3 +322,23 @@ fn f(x: i32, ..., y: T) void {}
     (builtin_type)
     (block)))
 
+
+===========================
+Empty asm lists :error
+===========================
+
+fn f() void { asm volatile ("" : : :); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (expression_statement
+        (asm_expression
+          (string)
+          (ERROR))))))
+

@@ -421,15 +421,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
         {
-          "type": "multiline_string",
-          "named": true
-        },
-        {
-          "type": "string",
+          "type": "expression",
           "named": true
         }
       ]
@@ -460,7 +456,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "asm_clobbers",
@@ -506,7 +502,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "asm_input",
