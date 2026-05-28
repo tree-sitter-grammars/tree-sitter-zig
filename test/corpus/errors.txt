@@ -301,3 +301,24 @@ const T = foo.while;
     (identifier)
     (ERROR)))
 
+
+===========================
+Variadic function body :error
+===========================
+
+fn f(x: i32, ..., y: T) void {}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (builtin_type))
+      (parameter)
+      (ERROR))
+    (builtin_type)
+    (block)))
+

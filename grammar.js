@@ -63,7 +63,6 @@ module.exports = grammar({
     [$.expression, $.if_type_expression],
 
     [$.comptime_type_expression, $.expression],
-    [$.comptime_type_expression, $.parameter],
     [$.comptime_declaration, $._block_expr_statement],
     [$.variable_declaration, $._variable_declaration_expression_statement],
     [$._destructuring_multiple_assignment_statement, $.assignment_statement],
@@ -262,19 +261,25 @@ module.exports = grammar({
       field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression)),
     ),
 
-    parameters: $ => seq('(', optionalCommaSep($.parameter), ')'),
-
-    parameter: $ => choice(
-      seq(
-        optional(choice('noalias', 'comptime')),
-        optional(seq(
-          field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
-          ':',
-        )),
-        field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression, alias('anytype', $.anytype))),
-      ),
-      '...',
+    parameters: $ => seq(
+      '(',
+      optional(seq(
+        commaSep1($.parameter),
+        optional(seq(',', alias('...', $.parameter))),
+        optional(','),
+      )),
+      optional(alias('...', $.parameter)),
+      ')',
     ),
+
+    parameter: $ => prec(1, seq(
+      optional(choice('noalias', 'comptime')),
+      optional(seq(
+        field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
+        ':',
+      )),
+      field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression, alias('anytype', $.anytype))),
+    )),
 
     using_namespace_declaration: $ => seq(
       optional('pub'),
