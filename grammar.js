@@ -355,10 +355,15 @@ module.exports = grammar({
       field('alternative', $.statement),
     ),
 
+    _for_else_clause: $ => seq(
+      'else',
+      field('alternative', $.statement),
+    ),
+
     for_statement: $ => seq(
       optional('inline'),
       $._for_prefix,
-      $._conditional_body,
+      $._for_conditional_body,
     ),
 
     _for_prefix: $ => seq(
@@ -415,6 +420,17 @@ module.exports = grammar({
       seq(
         field('body', $._assign_expr),
         choice(';', $.else_clause),
+      ),
+    ),
+
+    _for_conditional_body: $ => choice(
+      seq(
+        field('body', $.block_expression),
+        optional(alias($._for_else_clause, $.else_clause)),
+      ),
+      seq(
+        field('body', $._assign_expr),
+        choice(';', alias($._for_else_clause, $.else_clause)),
       ),
     ),
 
