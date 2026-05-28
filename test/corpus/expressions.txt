@@ -493,3 +493,38 @@ fn finalize() (OOM || std.Io.Writer.Error)!void {
             (identifier)
             (identifier))
           (boolean))))))
+
+====================
+If Suffix Else Suffix
+====================
+
+var differ = if (T == u8) BytesDiffer{
+    .terminal_mode = terminal_mode,
+} else SliceDiffer(T){
+    .terminal_mode = terminal_mode,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (if_expression
+      (binary_expression
+        (identifier)
+        (builtin_type))
+      (struct_initializer
+        (identifier)
+        (initializer_list
+          (field_initializer
+            (identifier)
+            (identifier))))
+      (struct_initializer
+        (call_expression
+          (identifier)
+          (arguments
+            (identifier)))
+        (initializer_list
+          (field_initializer
+            (identifier)
+            (identifier)))))))

@@ -212,7 +212,7 @@ fn statements(maybe: ?i32) void {
         (block
           (local_variable_declaration
             (identifier)
-            (if_type_expression
+            (if_expression
               (identifier)
               (payload
                 (identifier))
