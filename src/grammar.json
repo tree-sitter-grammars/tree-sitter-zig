@@ -1944,7 +1944,7 @@
     },
     "_assign_expr": {
       "type": "PREC_LEFT",
-      "value": 0,
+      "value": 1,
       "content": {
         "type": "CHOICE",
         "members": [
@@ -2032,7 +2032,7 @@
               "name": "body",
               "content": {
                 "type": "SYMBOL",
-                "name": "expression"
+                "name": "_assign_expr"
               }
             },
             {
@@ -2896,27 +2896,36 @@
                 "type": "SEQ",
                 "members": [
                   {
-                    "type": "SYMBOL",
-                    "name": "expression"
-                  },
-                  {
-                    "type": "REPEAT1",
+                    "type": "FIELD",
+                    "name": "left",
                     "content": {
-                      "type": "PREC",
-                      "value": 1,
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "STRING",
-                            "value": ","
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "expression"
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "expression"
+                        },
+                        {
+                          "type": "REPEAT1",
+                          "content": {
+                            "type": "PREC",
+                            "value": 1,
+                            "content": {
+                              "type": "SEQ",
+                              "members": [
+                                {
+                                  "type": "STRING",
+                                  "value": ","
+                                },
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "expression"
+                                }
+                              ]
+                            }
                           }
-                        ]
-                      }
+                        }
+                      ]
                     }
                   },
                   {
@@ -2924,8 +2933,12 @@
                     "value": "="
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "expression"
+                    "type": "FIELD",
+                    "name": "right",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "expression"
+                    }
                   }
                 ]
               }

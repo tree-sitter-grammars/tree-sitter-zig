@@ -392,7 +392,7 @@ module.exports = grammar({
       $.block_expression,
     ),
 
-    _assign_expr: $ => prec.left(choice(
+    _assign_expr: $ => prec.left(1, choice(
       $.expression,
       $.assignment_expression,
       seq(
@@ -409,7 +409,7 @@ module.exports = grammar({
         optional($.else_clause),
       ),
       seq(
-        field('body', $.expression),
+        field('body', $._assign_expr),
         choice(';', $.else_clause),
       ),
     ),
@@ -504,9 +504,11 @@ module.exports = grammar({
     assignment_statement: $ => prec.right(seq(
       choice(
         alias($.assignment_expression, 'assignment'),
-        field('left', seq(
-          $.expression,
-          repeat1(prec(1, seq(',', $.expression)))),
+        seq(
+          field('left', seq(
+            $.expression,
+            repeat1(prec(1, seq(',', $.expression))),
+          )),
           '=',
           field('right', $.expression),
         ),

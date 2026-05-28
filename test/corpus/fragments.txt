@@ -81,3 +81,57 @@ const values = [_]u32{ 0, 1, 0x1234_5678, 0xffff_ffff };
         (integer)
         (integer)
         (integer)))))
+
+===================
+If Assign
+===================
+
+if (a)
+    b = c
+else
+    b = d;
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      (identifier)
+      (assignment_expression
+        (identifier)
+        (identifier))
+      (else_clause
+        (assignment_statement
+          (identifier)
+          (identifier))))))
+
+===================
+If Assign w. Cascade
+===================
+
+if (a)
+    b = c
+else if (b)
+        b = d
+     else
+        b = e;
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      (identifier)
+      (assignment_expression
+        (identifier)
+        (identifier))
+      (else_clause
+        (if_statement
+          (identifier)
+          (assignment_expression
+            (identifier)
+            (identifier))
+          (else_clause
+            (assignment_statement
+              (identifier)
+              (identifier))))))))
