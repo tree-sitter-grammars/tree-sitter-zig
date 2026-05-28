@@ -56,3 +56,24 @@ fn f(xs: []u8) void {
                 (block))
               (MISSING ";"))))))))
 
+===========================
+Switch index pointer payload :error
+===========================
+
+switch (x) {
+    0 => |*value, *index| value,
+}
+
+---
+
+(source_file
+  (fragment
+    (switch_expression
+      (identifier)
+      (switch_case
+        (integer)
+        (payload
+          (identifier)
+          (ERROR)
+          (identifier))
+        (identifier)))))

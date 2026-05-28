@@ -436,6 +436,13 @@ module.exports = grammar({
 
     payload: $ => seq('|', optionalCommaSep1(seq(optional('*'), $.identifier)), '|'),
 
+    _switch_payload: $ => seq(
+      '|',
+      seq(optional('*'), $.identifier),
+      optional(seq(',', $.identifier)),
+      '|',
+    ),
+
     byte_alignment: $ => seq('align', '(', $.expression, ')'),
 
     address_space: $ => seq('addrspace', '(', $.expression, ')'),
@@ -638,7 +645,7 @@ module.exports = grammar({
     switch_case: $ => seq(
       $._switch_case_exp,
       '=>',
-      optional($.payload),
+      optional(alias($._switch_payload, $.payload)),
       $._single_assign_expr,
     ),
     _switch_case_exp: $ => seq(
