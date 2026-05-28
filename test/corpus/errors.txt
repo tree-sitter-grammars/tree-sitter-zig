@@ -77,3 +77,63 @@ switch (x) {
           (ERROR)
           (identifier))
         (identifier)))))
+
+===========================
+If multi payload :error
+===========================
+
+if (maybe) |a, b| a;
+
+---
+
+    (source_file
+      (fragment
+        (if_statement
+          (identifier)
+          (payload
+            (identifier)
+            (ERROR))
+          (identifier))))
+
+===========================
+While multi payload :error
+===========================
+
+while (next()) |a, b| {}
+
+---
+
+    (source_file
+      (fragment
+        (labeled_statement
+          (while_statement
+            (call_expression
+              (identifier)
+              (arguments))
+            (payload
+              (identifier)
+              (ERROR))
+            (block_expression
+              (block))))))
+
+===========================
+Errdefer pointer payload :error
+===========================
+
+errdefer |*err| handle(err);
+
+---
+
+    (source_file
+      (fragment
+        (errdefer_statement
+          (ERROR)
+          (expression_statement
+            (binary_expression
+              (pointer_type
+                (identifier))
+              (call_expression
+                (identifier)
+                (arguments
+                  (identifier))))))))
+

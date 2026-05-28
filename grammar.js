@@ -346,7 +346,7 @@ module.exports = grammar({
       '(',
       field('condition', $.expression),
       ')',
-      optional($.payload),
+      optional(alias($._ptr_payload, $.payload)),
     ),
 
     else_clause: $ => seq(
@@ -374,7 +374,7 @@ module.exports = grammar({
         optional(seq('..', $.expression)),
       )),
       ')',
-      $.payload,
+      alias($._ptr_list_payload, $.payload),
     ),
 
     while_statement: $ => seq(
@@ -388,7 +388,7 @@ module.exports = grammar({
       '(',
       field('condition', $.expression),
       ')',
-      optional($.payload),
+      optional(alias($._ptr_payload, $.payload)),
       optional(seq(':', '(', field('continue', $.continue_clause), ')')),
     ),
 
@@ -434,7 +434,18 @@ module.exports = grammar({
       ),
     ),
 
-    payload: $ => seq('|', optionalCommaSep1(seq(optional('*'), $.identifier)), '|'),
+    payload: $ => seq('|', $.identifier, '|'),
+
+    _ptr_payload: $ => seq('|', optional('*'), $.identifier, '|'),
+
+    _ptr_list_payload: $ => seq(
+      '|',
+      optional('*'),
+      $.identifier,
+      repeat(seq(',', optional('*'), $.identifier)),
+      optional(','),
+      '|',
+    ),
 
     _switch_payload: $ => seq(
       '|',
