@@ -1,0 +1,21 @@
+==================
+Slice of conditional type
+==================
+
+fn f(x: []if (b) A else B) void {}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (slice_type
+          (if_type_expression
+            condition: (identifier)
+            (identifier)
+            (identifier)))))
+    type: (builtin_type)
+    body: (block)))

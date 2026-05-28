@@ -22,10 +22,11 @@ if (ok) call();
 
 (source_file
   (fragment
-    (if_statement
-      (identifier)
+    (expression_statement
       (call_expression
-        (identifier)
+        (if_type_expression
+          (identifier)
+          (identifier))
         (arguments)))))
 
 ==================

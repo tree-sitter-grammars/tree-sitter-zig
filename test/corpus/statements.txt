@@ -212,7 +212,7 @@ fn statements(maybe: ?i32) void {
         (block
           (local_variable_declaration
             (identifier)
-            (if_expression
+            (if_type_expression
               (identifier)
               (payload
                 (identifier))
@@ -359,4 +359,3 @@ return ret[0 .. ret.len - 1 :s];
                 (identifier))
               (integer)))
           (identifier))))))
-

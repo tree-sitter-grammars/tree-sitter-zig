@@ -185,7 +185,7 @@ module.exports = grammar({
       field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
       optional(seq(
         ':',
-        field('type', choice($.type_expression, $.if_type_expression)),
+        field('type', $.type_expression),
       )),
       optional($.byte_alignment),
       optional(seq('=', $.expression)),
@@ -223,7 +223,7 @@ module.exports = grammar({
       $.identifier,
       optional(seq(
         ':',
-        field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression)),
+        field('type', choice($.type_expression, $.comptime_type_expression)),
       )),
       optional($.byte_alignment),
       optional($.address_space),
@@ -258,7 +258,7 @@ module.exports = grammar({
       optional($.address_space),
       optional($.link_section),
       optional($.calling_convention),
-      field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression)),
+      field('type', choice($.type_expression, $.comptime_type_expression)),
     ),
 
     parameters: $ => seq(
@@ -278,7 +278,7 @@ module.exports = grammar({
         field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
         ':',
       )),
-      field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression, alias('anytype', $.anytype))),
+      field('type', choice($.type_expression, $.comptime_type_expression, alias('anytype', $.anytype))),
     )),
 
     using_namespace_declaration: $ => seq(
@@ -310,7 +310,7 @@ module.exports = grammar({
       '}',
     ),
 
-    _tuple_declaration_list: $ => optionalCommaSep1(field('type', choice($.type_expression, $.if_type_expression))),
+    _tuple_declaration_list: $ => optionalCommaSep1(field('type', $.type_expression)),
 
     opaque_declaration: $ => seq(
       optional(choice('extern', 'packed')),
@@ -730,6 +730,7 @@ module.exports = grammar({
     ),
 
     type_expression: $ => prec.right(choice(
+      $.if_type_expression,
       $.nullable_type,
       $.anyframe_type,
       $.slice_type,
@@ -781,7 +782,7 @@ module.exports = grammar({
 
     nullable_type: $ => prec(1, seq(
       '?',
-      choice($.type_expression, $.if_type_expression, $.comptime_type_expression),
+      choice($.type_expression, $.comptime_type_expression),
     )),
 
     anyframe_type: $ => prec(1, seq(
