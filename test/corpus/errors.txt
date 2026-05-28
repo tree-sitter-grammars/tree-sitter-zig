@@ -250,6 +250,12 @@ const T = anytype;
 
 ---
 
+(source_file
+  (variable_declaration
+    (identifier)
+    (ERROR
+      (anytype))))
+
 
 
 ===========================
@@ -260,6 +266,11 @@ const U: anytype = undefined;
 
 ---
 
+(source_file
+  (variable_declaration
+    (identifier)
+    (ERROR
+      (anytype))))
 
 
 ===========================
@@ -270,6 +281,10 @@ const W: while = undefined;
 
 ---
 
+(source_file
+  (variable_declaration
+    (identifier)
+    (ERROR)))
 
 
 ===========================
@@ -280,4 +295,9 @@ const T = foo.while;
 
 ---
 
+(source_file
+  (variable_declaration
+    (identifier)
+    (identifier)
+    (ERROR)))
 
