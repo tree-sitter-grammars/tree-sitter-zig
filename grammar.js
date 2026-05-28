@@ -115,14 +115,12 @@ module.exports = grammar({
     ),
 
     test_declaration: $ => seq(
-      optional('pub'),
       'test',
       optional(choice($.string, $.identifier)),
       $.block,
     ),
 
     comptime_declaration: $ => prec(1, seq(
-      optional('pub'),
       'comptime',
       $.block,
     )),

@@ -177,3 +177,33 @@ fn f() void {
             (identifier))
           (block_expression
             (block)))))))
+
+===========================
+Pub test declaration :error
+===========================
+
+pub test "x" {}
+
+---
+
+(source_file
+  (ERROR)
+  (test_declaration
+    (string
+      (string_content))
+    (block)))
+
+===========================
+Pub comptime declaration :error
+===========================
+
+pub comptime {}
+
+---
+
+(source_file
+  (ERROR)
+  (fragment
+    (comptime_statement
+      (block))))
+

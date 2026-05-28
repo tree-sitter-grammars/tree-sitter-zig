@@ -84,7 +84,7 @@ pub usingnamespace Mixin;
 Comptime declaration
 ==================
 
-pub comptime {
+comptime {
     const n = 1;
 }
 
