@@ -208,6 +208,10 @@
         "named": true
       },
       {
+        "type": "tuple_declaration",
+        "named": true
+      },
+      {
         "type": "union_declaration",
         "named": true
       }
@@ -1238,33 +1242,17 @@
     "fields": {
       "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
-          {
-            "type": "false",
-            "named": false
-          },
           {
             "type": "identifier",
             "named": true
-          },
-          {
-            "type": "null",
-            "named": false
-          },
-          {
-            "type": "true",
-            "named": false
-          },
-          {
-            "type": "undefined",
-            "named": false
           }
         ]
       },
       "type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "if_type_expression",
@@ -2717,6 +2705,26 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "tuple_declaration",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "type_expression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {

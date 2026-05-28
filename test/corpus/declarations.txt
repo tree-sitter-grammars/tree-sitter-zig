@@ -310,3 +310,34 @@ const Value = struct { a: asn1.Oid, b: i32 };
       (container_field
         (identifier)
         (builtin_type)))))
+
+====================
+Async Enum and Field
+====================
+
+pub const UwTable = enum(u32) {
+    none,
+    sync,
+    async,
+
+    pub const default = UwTable.async;
+};
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (enum_declaration
+      (builtin_type)
+      (container_field
+        (identifier))
+      (container_field
+        (identifier))
+      (container_field
+        (identifier))
+      (variable_declaration
+        (identifier)
+        (field_expression
+          (identifier)
+          (identifier))))))
