@@ -80,10 +80,6 @@
         "named": true
       },
       {
-        "type": "range_expression",
-        "named": true
-      },
-      {
         "type": "resume_expression",
         "named": true
       },
@@ -329,10 +325,6 @@
       },
       {
         "type": "primary_type_expression",
-        "named": true
-      },
-      {
-        "type": "range_expression",
         "named": true
       },
       {
@@ -1615,6 +1607,10 @@
         {
           "type": "payload",
           "named": true
+        },
+        {
+          "type": "range_expression",
+          "named": true
         }
       ]
     }
@@ -1664,6 +1660,10 @@
         },
         {
           "type": "payload",
+          "named": true
+        },
+        {
+          "type": "range_expression",
           "named": true
         }
       ]
@@ -1940,7 +1940,7 @@
     "fields": {
       "index": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "expression",
@@ -1968,6 +1968,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "range_expression",
+          "named": true
+        }
+      ]
     }
   },
   {

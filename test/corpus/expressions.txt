@@ -128,9 +128,11 @@ fn expressions() void {
 Range expressions
 ==================
 
-fn expressions() void {
-    const ranged = 0..10;
-    const open_range = 0..;
+fn expressions(items: []u8, start: usize, end: usize, sentinel: u8) void {
+    const closed = items[start..end];
+    const open = items[start..];
+    const sentineled = items[start..end :sentinel];
+    for (0..end, items) |i, item| {}
 }
 
 ---
@@ -138,18 +140,82 @@ fn expressions() void {
 (source_file
   (function_declaration
     (identifier)
-    (parameters)
+    (parameters
+      (parameter
+        (identifier)
+        (slice_type
+          (builtin_type)))
+      (parameter
+        (identifier)
+        (builtin_type))
+      (parameter
+        (identifier)
+        (builtin_type))
+      (parameter
+        (identifier)
+        (builtin_type)))
     (builtin_type)
     (block
       (local_variable_declaration
         (identifier)
-        (range_expression
-          (integer)
-          (integer)))
+        (index_expression
+          (identifier)
+          (range_expression
+            (identifier)
+            (identifier))))
       (local_variable_declaration
         (identifier)
-        (range_expression
-          (integer))))))
+        (index_expression
+          (identifier)
+          (range_expression
+            (identifier))))
+      (local_variable_declaration
+        (identifier)
+        (index_expression
+          (identifier)
+          (range_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (labeled_statement
+        (for_statement
+          (range_expression
+            (integer)
+            (identifier))
+          (identifier)
+          (payload
+            (identifier)
+            (identifier))
+          (block_expression
+            (block)))))))
+
+==================
+Switch expression with range
+==================
+
+fn expressions(tag: u8) void {
+    switch (tag) { 1...3 => {}, else => {} }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (builtin_type)))
+    (builtin_type)
+    (block
+      (switch_expression
+        (identifier)
+        (switch_case
+          (integer)
+          (integer)
+          (block))
+        (switch_case
+          (block))))))
 
 ==================
 Error and fallible expressions

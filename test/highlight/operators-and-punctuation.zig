@@ -11,10 +11,12 @@ fn punctuation(xs: []const i32) void {
 //                    ^ operator
     const maybe = ptr.?;
 //                   ^ operator
-    const range = 0..10;
-//                ^ number
-//                 ^ operator
+    const range = xs[0..10];
+//                  ^ punctuation.bracket
 //                   ^ number
+//                    ^ operator
+//                      ^ number
+//                        ^ punctuation.bracket
     switch (range) {
 //  ^ keyword.conditional
 //         ^ punctuation.bracket

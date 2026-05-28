@@ -428,12 +428,14 @@ module.exports = grammar({
     _for_prefix: $ => seq(
       'for',
       '(',
-      optionalCommaSep1(seq(
-        $.expression,
-        optional(seq('..', $.expression)),
-      )),
+      optionalCommaSep1($._for_item),
       ')',
       alias($._ptr_list_payload, $.payload),
+    ),
+
+    _for_item: $ => choice(
+      $.range_expression,
+      $.expression,
     ),
 
     while_statement: $ => seq(
@@ -772,7 +774,6 @@ module.exports = grammar({
       $.index_expression,
       $.dereference_expression,
       $.null_coercion_expression,
-      $.range_expression,
       $.call_expression,
     ),
 
@@ -854,11 +855,11 @@ module.exports = grammar({
       field('object', $.expression),
       '[',
       choice(
-        field('index', $.expression),
         seq(
-          field('index', $.range_expression),
+          $.range_expression,
           optional(seq(':', field('sentinel', $.expression))),
         ),
+        field('index', $.expression),
       ),
       ']',
     )),

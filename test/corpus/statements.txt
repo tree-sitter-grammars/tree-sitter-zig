@@ -336,3 +336,27 @@ switch (i) {
         (assignment_expression
           (identifier)
           (integer))))))
+
+====================
+Sliced Sentinel Return
+====================
+
+return ret[0 .. ret.len - 1 :s];
+
+---
+
+(source_file
+  (fragment
+    (expression_statement
+      (return_expression
+        (index_expression
+          (identifier)
+          (range_expression
+            (integer)
+            (binary_expression
+              (field_expression
+                (identifier)
+                (identifier))
+              (integer)))
+          (identifier))))))
+

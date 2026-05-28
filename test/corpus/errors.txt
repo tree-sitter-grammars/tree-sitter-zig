@@ -340,3 +340,19 @@ fn f() void { asm volatile ("" : : :); }
         (asm_expression
           (string)
           (ERROR))))))
+
+
+===========================
+Standalone range expression :error
+===========================
+
+const r = 0..10;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (ERROR
+      (integer))
+    (integer)))
