@@ -393,14 +393,18 @@ module.exports = grammar({
     ),
 
     _assign_expr: $ => prec.left(1, choice(
-      $.expression,
-      $.assignment_expression,
+      $._single_assign_expr,
       seq(
         $.expression,
         repeat1(prec(1, seq(',', $.expression))),
         '=',
         $.expression,
       ),
+    )),
+
+    _single_assign_expr: $ => prec.left(1, choice(
+      $.expression,
+      $.assignment_expression,
     )),
 
     _conditional_body: $ => choice(
@@ -619,7 +623,7 @@ module.exports = grammar({
       $._switch_case_exp,
       '=>',
       optional($.payload),
-      $._assign_expr,
+      $._single_assign_expr,
     ),
     _switch_case_exp: $ => seq(
       optional('inline'),

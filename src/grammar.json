@@ -1950,11 +1950,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "expression"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "assignment_expression"
+            "name": "_single_assign_expr"
           },
           {
             "type": "SEQ",
@@ -1992,6 +1988,23 @@
                 "name": "expression"
               }
             ]
+          }
+        ]
+      }
+    },
+    "_single_assign_expr": {
+      "type": "PREC_LEFT",
+      "value": 1,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "assignment_expression"
           }
         ]
       }
@@ -4411,7 +4424,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_assign_expr"
+          "name": "_single_assign_expr"
         }
       ]
     },
