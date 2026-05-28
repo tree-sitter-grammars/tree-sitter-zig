@@ -563,7 +563,7 @@ module.exports = grammar({
       optional($.asm_output),
       ')',
     ),
-    asm_output: $ => seq(':', optionalCommaSep1($.asm_output_item), optional($.asm_input)),
+    asm_output: $ => seq(':', optionalCommaSep($.asm_output_item), optional($.asm_input)),
     asm_output_item: $ => seq(
       '[',
       $.identifier,
@@ -573,7 +573,7 @@ module.exports = grammar({
       choice(seq('->', $.type_expression), $.identifier),
       ')',
     ),
-    asm_input: $ => seq(':', optionalCommaSep1($.asm_input_item), optional($.asm_clobbers)),
+    asm_input: $ => seq(':', optionalCommaSep($.asm_input_item), optional($.asm_clobbers)),
     asm_input_item: $ => seq(
       '[',
       $.identifier,

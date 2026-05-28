@@ -339,6 +339,8 @@ fn f() void { asm volatile ("" : : :); }
       (expression_statement
         (asm_expression
           (string)
+          (asm_output
+            (asm_input))
           (ERROR))))))
 
 
