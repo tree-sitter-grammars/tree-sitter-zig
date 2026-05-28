@@ -256,13 +256,12 @@ fn expressions() void {
             (arguments)))))))
 
 ==================
-Async await nosuspend and comptime expressions
+Await call, nosuspend, and comptime expressions
 ==================
 
 fn expressions(frame: anyframe) void {
-    const task = async run();
-    const done = await frame;
-    const quiet = nosuspend await frame;
+    const done = await(ev, future, result, result_alignment);
+    const quiet = nosuspend frame;
     const comp = comptime @as(u8, 1);
 }
 
@@ -278,19 +277,17 @@ fn expressions(frame: anyframe) void {
     (block
       (local_variable_declaration
         (identifier)
-        (async_expression
-          (call_expression
+        (call_expression
+          (identifier)
+          (arguments
             (identifier)
-            (arguments))))
-      (local_variable_declaration
-        (identifier)
-        (await_expression
-          (identifier)))
+            (identifier)
+            (identifier)
+            (identifier))))
       (local_variable_declaration
         (identifier)
         (nosuspend_expression
-          (await_expression
-            (identifier))))
+          (identifier)))
       (local_variable_declaration
         (identifier)
         (comptime_expression

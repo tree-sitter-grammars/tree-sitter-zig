@@ -2566,14 +2566,6 @@
           },
           {
             "type": "SYMBOL",
-            "name": "async_expression"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "await_expression"
-          },
-          {
-            "type": "SYMBOL",
             "name": "nosuspend_expression"
           },
           {
@@ -4311,40 +4303,6 @@
           {
             "type": "STRING",
             "value": "comptime"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expression"
-          }
-        ]
-      }
-    },
-    "async_expression": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "async"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expression"
-          }
-        ]
-      }
-    },
-    "await_expression": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "await"
           },
           {
             "type": "SYMBOL",

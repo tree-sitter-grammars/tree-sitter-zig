@@ -538,8 +538,6 @@ module.exports = grammar({
       $.unary_expression,
       $.binary_expression,
       $.comptime_expression,
-      $.async_expression,
-      $.await_expression,
       $.nosuspend_expression,
       $.continue_expression,
       $.resume_expression,
@@ -681,10 +679,6 @@ module.exports = grammar({
     },
 
     comptime_expression: $ => prec.right(seq('comptime', $.expression)),
-
-    async_expression: $ => prec.right(seq('async', $.expression)),
-
-    await_expression: $ => prec.right(seq('await', $.expression)),
 
     nosuspend_expression: $ => prec.right(seq('nosuspend', $.expression)),
 
