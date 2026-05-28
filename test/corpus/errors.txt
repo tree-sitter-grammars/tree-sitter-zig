@@ -207,3 +207,36 @@ pub comptime {}
     (comptime_statement
       (block))))
 
+===========================
+Extern function body :error
+===========================
+
+extern fn f() void {}
+
+---
+
+(source_file
+  (ERROR
+    (identifier)
+    (parameters)
+    (struct_initializer
+      (builtin_type)
+      (initializer_list))))
+
+===========================
+Extern string function body :error
+===========================
+
+extern "c" fn f() void {}
+
+---
+
+(source_file
+  (ERROR
+    (string
+      (string_content))
+    (identifier)
+    (parameters)
+    (struct_initializer
+      (builtin_type)
+      (initializer_list))))

@@ -184,16 +184,21 @@ module.exports = grammar({
 
     function_declaration: $ => seq(
       optional('pub'),
-      optional(choice(
-        'export',
-        seq('extern', optional($.string)),
-        'inline',
-        'noinline',
-      )),
-      $._function_prototype,
       choice(
-        ';',
-        field('body', $.block),
+        seq(
+          optional(choice('export', 'inline', 'noinline')),
+          $._function_prototype,
+          choice(
+            ';',
+            field('body', $.block),
+          ),
+        ),
+        seq(
+          'extern',
+          optional($.string),
+          $._function_prototype,
+          ';',
+        ),
       ),
     ),
 
