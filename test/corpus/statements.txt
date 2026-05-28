@@ -117,9 +117,11 @@ fn statements() void {
             (arguments))
           (payload
             (identifier))
-          (call_expression
-            (identifier)
-            (arguments))
+          (continue_clause
+            (continue_assignment
+              (call_expression
+                (identifier)
+                (arguments))))
           (block_expression
             (block
               (if_statement
@@ -256,3 +258,62 @@ fn statements(b: i32) void {
             (integer))
           (switch_case
             (integer)))))))
+
+=========================
+Dotted Fn Signatures
+=========================
+
+fn appendU32(allocator: std.mem.Allocator, buffer: *std.ArrayList(u8), value: u32) OOM!void {}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (field_expression
+          (field_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (parameter
+        (identifier)
+        (call_expression
+          (field_expression
+            (pointer_type
+              (identifier))
+            (identifier))
+          (arguments
+            (builtin_type))))
+      (parameter
+        (identifier)
+        (builtin_type)))
+    (error_union_type
+      (identifier)
+      (builtin_type))
+    (block)))
+
+====
+While with Increment
+====
+
+  while (true) : (len += 1) {
+      // Comment
+  }
+
+---
+
+(source_file
+  (fragment
+    (labeled_statement
+      (while_statement
+        (boolean)
+        (continue_clause
+          (continue_assignment
+            (identifier)
+            (integer)))
+        (block_expression
+          (block
+            (comment)))))))

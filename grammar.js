@@ -89,6 +89,7 @@ module.exports = grammar({
     $.statement,
     $.expression,
     $.type_expression,
+    $.primary_expression,
     $.primary_type_expression,
   ],
 
@@ -319,6 +320,7 @@ module.exports = grammar({
 
     _block_expr_statement: $ => prec(1, choice(
       seq(optional($.block_label), $.block),
+      $.assignment_statement,
       $.expression_statement,
     )),
 
@@ -381,7 +383,23 @@ module.exports = grammar({
       field('condition', $.expression),
       ')',
       optional($.payload),
-      optional(seq(':', '(', $.expression, ')')),
+      optional(seq(':', '(', field('continue', $.continue_clause), ')')),
+    ),
+
+    continue_clause: $ => choice(
+      alias($._assign_expr, $.continue_assignment),
+      $.block_expression,
+    ),
+
+    _assign_expr: $ => choice(
+      $.expression,
+      $._assignment_expr,
+      seq(
+        $.expression,
+        repeat1(prec(1, seq(',', $.expression))),
+        '=',
+        $.expression,
+      ),
     ),
 
     _conditional_body: $ => choice(
@@ -423,7 +441,6 @@ module.exports = grammar({
       $.try_expression,
       $.catch_expression,
       $.type_expression,
-      $.parenthesized_expression,
       $.anonymous_struct_initializer,
       $.struct_initializer,
       $._suffix_expression,
@@ -484,6 +501,11 @@ module.exports = grammar({
     )),
 
     assignment_statement: $ => prec.right(seq(
+      $._assignment_expr,
+      ';',
+    )),
+
+    _assignment_expr: $ => seq(
       field('left', $.expression),
       field('operator', choice(
         '=', '*=', '*%=', '*|=', '/=', '%=',
@@ -491,8 +513,7 @@ module.exports = grammar({
         '<<=', '<<|=', '>>=', '&=', '^=', '|=',
       )),
       field('right', $.expression),
-      ';',
-    )),
+    ),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', choice('!', '~', '-', '-%', '&')),
@@ -605,18 +626,29 @@ module.exports = grammar({
       $.array_type,
       $.error_union_type,
       $.labeled_type_expression,
+      $.primary_type_expression,
       $._suffix_expression,
     )),
 
     primary_type_expression: $ => choice(
+      prec.right(alias($._function_prototype, $.function_signature)),
+      $.primary_expression,
+      $.error_set_declaration,
+      $.struct_declaration,
+      $.opaque_declaration,
+      $.enum_declaration,
+      $.union_declaration,
+      $.switch_expression,
+    ),
+
+    primary_expression: $ => choice(
       $.builtin_function,
       $.character,
-      prec.right(alias($._function_prototype, $.function_signature)),
       $.identifier,
       $.float,
+      $.parenthesized_expression,
       $.integer,
       $.boolean,
-      $.error_set_declaration,
       $.error_type,
       'anyframe',
       'unreachable',
@@ -625,15 +657,9 @@ module.exports = grammar({
       $.string,
       $.multiline_string,
       $.builtin_type,
-      $.struct_declaration,
-      $.opaque_declaration,
-      $.enum_declaration,
-      $.union_declaration,
-      $.switch_expression,
     ),
 
     _suffix_expression: $ => choice(
-      $.primary_type_expression,
       $.field_expression,
       $.index_expression,
       $.dereference_expression,

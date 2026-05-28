@@ -392,3 +392,37 @@ fn expressions(code: usize) void {
                   (string_content))
                 (string
                   (string_content))))))))))
+
+====================
+Errdefer Expression
+====================
+
+fn finalize() (OOM || std.Io.Writer.Error)!void {
+    errdefer builder.finalize_failed = true;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (error_union_type
+      (parenthesized_expression
+        (binary_expression
+          (identifier)
+          (field_expression
+            (field_expression
+              (field_expression
+                (identifier)
+                (identifier))
+              (identifier))
+            (identifier))))
+      (builtin_type))
+    (block
+      (errdefer_statement
+        (assignment_statement
+          (field_expression
+            (identifier)
+            (identifier))
+          (boolean))))))
