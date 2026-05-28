@@ -152,3 +152,28 @@ const x = a[0:sentinel];
       (identifier)
       (integer)
       (ERROR))))
+
+===========================
+Empty for input list :error
+===========================
+
+fn f() void {
+    for () |x| {}
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (labeled_statement
+        (for_statement
+          (identifier
+            (MISSING _identifier))
+          (payload
+            (identifier))
+          (block_expression
+            (block)))))))

@@ -369,7 +369,7 @@ module.exports = grammar({
     _for_prefix: $ => seq(
       'for',
       '(',
-      optionalCommaSep(seq(
+      optionalCommaSep1(seq(
         $.expression,
         optional(seq('..', $.expression)),
       )),
