@@ -231,15 +231,14 @@ extern "c" fn f() void {}
 
 ---
 
-(source_file
-  (ERROR
-    (string
-      (string_content))
-    (identifier)
-    (parameters)
-    (struct_initializer
-      (builtin_type)
-      (initializer_list))))
+(ERROR
+  (string
+    (string_content))
+  (identifier)
+  (parameters)
+  (struct_initializer
+    (builtin_type)
+    (initializer_list)))
 
 
 ===========================
@@ -341,4 +340,3 @@ fn f() void { asm volatile ("" : : :); }
         (asm_expression
           (string)
           (ERROR))))))
-

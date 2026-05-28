@@ -298,3 +298,15 @@ const Value = struct { a: asn1.Oid, b: i32 };
 
 ---
 
+(source_file
+  (variable_declaration
+    (identifier)
+    (struct_declaration
+      (container_field
+        (identifier)
+        (field_expression
+          (identifier)
+          (identifier)))
+      (container_field
+        (identifier)
+        (builtin_type)))))
