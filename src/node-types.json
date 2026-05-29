@@ -60,7 +60,7 @@
         "named": true
       },
       {
-        "type": "labeled_block_expression",
+        "type": "labeled_block",
         "named": true
       },
       {
@@ -948,25 +948,6 @@
     }
   },
   {
-    "type": "block_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "block",
-          "named": true
-        },
-        {
-          "type": "block_label",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "block_label",
     "named": true,
     "fields": {},
@@ -1184,7 +1165,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -1196,11 +1177,11 @@
           "named": true
         },
         {
-          "type": "block_label",
+          "type": "expression_statement",
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "labeled_block",
           "named": true
         },
         {
@@ -1298,10 +1279,6 @@
           "named": true
         },
         {
-          "type": "block_expression",
-          "named": true
-        },
-        {
           "type": "expression",
           "named": true
         }
@@ -1337,7 +1314,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -1349,11 +1326,11 @@
           "named": true
         },
         {
-          "type": "block_label",
+          "type": "expression_statement",
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "labeled_block",
           "named": true
         }
       ]
@@ -1466,11 +1443,11 @@
           "named": true
         },
         {
-          "type": "block_label",
+          "type": "expression_statement",
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "labeled_block",
           "named": true
         },
         {
@@ -1655,10 +1632,6 @@
           },
           {
             "type": "assignment_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
             "named": true
           },
           {
@@ -1937,10 +1910,6 @@
             "named": true
           },
           {
-            "type": "block_expression",
-            "named": true
-          },
-          {
             "type": "expression",
             "named": true
           }
@@ -2073,7 +2042,7 @@
     }
   },
   {
-    "type": "labeled_block_expression",
+    "type": "labeled_block",
     "named": true,
     "fields": {},
     "children": {
@@ -2307,7 +2276,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -2319,11 +2288,11 @@
           "named": true
         },
         {
-          "type": "block_label",
+          "type": "expression_statement",
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "labeled_block",
           "named": true
         }
       ]
@@ -2790,7 +2759,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -2802,11 +2771,11 @@
           "named": true
         },
         {
-          "type": "block_label",
+          "type": "expression_statement",
           "named": true
         },
         {
-          "type": "expression_statement",
+          "type": "labeled_block",
           "named": true
         }
       ]
@@ -3218,10 +3187,6 @@
           },
           {
             "type": "assignment_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
             "named": true
           },
           {

@@ -186,8 +186,7 @@ fn expressions(items: []u8, start: usize, end: usize, sentinel: u8) void {
           (payload
             (identifier)
             (identifier))
-          (block_expression
-            (block)))))))
+          (block))))))
 
 ==================
 Switch expression with range

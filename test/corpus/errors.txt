@@ -46,8 +46,7 @@ fn f(xs: []u8) void {
           (identifier)
           (payload
             (identifier))
-          (block_expression
-            (block))
+          (block)
           (else_clause
             (ERROR)
             (expression_statement
@@ -113,8 +112,7 @@ while (next()) |a, b| {}
         (payload
           (identifier)
           (ERROR))
-        (block_expression
-          (block))))))
+        (block)))))
 
 ===========================
 Errdefer pointer payload :error
@@ -175,8 +173,7 @@ fn f() void {
             (MISSING _identifier))
           (payload
             (identifier))
-          (block_expression
-            (block)))))))
+          (block))))))
 
 ===========================
 Pub test declaration :error

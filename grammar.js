@@ -111,11 +111,11 @@ module.exports = grammar({
     [$.expression, $.if_type_expression],
 
     [$.comptime_type_expression, $.expression],
-    [$.comptime_declaration, $._block_expr_statement],
+    [$.comptime_declaration, $._block_expression],
     [$.variable_declaration, $._variable_declaration_expression_statement],
     [$._destructuring_multiple_assignment_statement, $.assignment_statement],
     [$._container_field_body, $.primary_expression],
-    [$.labeled_block_expression, $.labeled_type_expression],
+    [$.labeled_block, $.labeled_type_expression],
   ],
 
   extras: $ => [
@@ -396,14 +396,17 @@ module.exports = grammar({
     errdefer_statement: $ => seq('errdefer', optional($.payload), $._block_expr_statement),
 
     _block_expr_statement: $ => prec(1, choice(
-      seq(optional($.block_label), $.block),
+      $._block_expression,
       $.assignment_statement,
       $.expression_statement,
     )),
 
-    block_expression: $ => prec(1, seq(optional($.block_label), $.block)),
+    _block_expression: $ => prec(1, choice(
+      $.labeled_block,
+      $.block,
+    )),
 
-    labeled_block_expression: $ => seq($.block_label, $.block),
+    labeled_block: $ => seq($.block_label, $.block),
 
     labeled_statement: $ => prec(1, seq(
       optional($.block_label),
@@ -472,7 +475,7 @@ module.exports = grammar({
 
     continue_clause: $ => choice(
       $._assign_expr,
-      $.block_expression,
+      $._block_expression,
     ),
 
     _assign_expr: $ => prec.left(1, choice(
@@ -492,7 +495,7 @@ module.exports = grammar({
 
     _while_conditional_body: $ => choice(
       seq(
-        field('do', $.block_expression),
+        field('do', $._block_expression),
         optional($.else_clause),
       ),
       seq(
@@ -503,7 +506,7 @@ module.exports = grammar({
 
     _conditional_body: $ => choice(
       seq(
-        field('then', $.block_expression),
+        field('then', $._block_expression),
         optional($.else_clause),
       ),
       seq(
@@ -514,7 +517,7 @@ module.exports = grammar({
 
     _for_conditional_body: $ => choice(
       seq(
-        field('body', $.block_expression),
+        field('body', $._block_expression),
         optional(alias($._for_else_clause, $.else_clause)),
       ),
       seq(
@@ -572,7 +575,7 @@ module.exports = grammar({
       $.literal_struct_value,
       $.struct_initializer,
       $._suffix_expression,
-      $.labeled_block_expression,
+      $.labeled_block,
       $.block,
     )),
 

@@ -121,27 +121,25 @@ fn statements() void {
             (call_expression
               (identifier)
               (arguments)))
-          (block_expression
-            (block
-              (if_statement
-                (binary_expression
-                  (identifier)
-                  (integer))
-                (block_expression
+          (block
+            (if_statement
+              (binary_expression
+                (identifier)
+                (integer))
+              (block
+                (expression_statement
+                  (break_expression
+                    (break_label
+                      (identifier))
+                    (identifier))))
+              (else_clause
+                (labeled_statement
                   (block
                     (expression_statement
-                      (break_expression
+                      (continue_expression
                         (break_label
                           (identifier))
-                        (identifier)))))
-                (else_clause
-                  (labeled_statement
-                    (block
-                      (expression_statement
-                        (continue_expression
-                          (break_label
-                            (identifier))
-                          (integer))))))))))))))
+                        (integer)))))))))))))
 
 ==================
 For statement
@@ -173,13 +171,12 @@ fn statements(xs: []const i32) void {
           (payload
             (identifier)
             (identifier))
-          (block_expression
-            (block
-              (assignment_statement
+          (block
+            (assignment_statement
+              (identifier)
+              (binary_expression
                 (identifier)
-                (binary_expression
-                  (identifier)
-                  (identifier)))))
+                (identifier))))
           (else_clause
             (labeled_statement
               (block))))))))
@@ -313,9 +310,8 @@ While with Increment
           (assignment_expression
             (identifier)
             (integer)))
-        (block_expression
-          (block
-            (comment)))))))
+        (block
+          (comment))))))
 
 ====================
 Assignment Expression-ish
@@ -372,8 +368,7 @@ if (a) {} else unreachable;
   (fragment
     (if_statement
       (identifier)
-      (block_expression
-        (block))
+      (block)
       (else_clause
         (expression_statement
           (unreachable))))))

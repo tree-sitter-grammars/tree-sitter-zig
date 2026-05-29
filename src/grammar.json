@@ -1805,25 +1805,8 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "block_label"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              },
-              {
-                "type": "SYMBOL",
-                "name": "block"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_block_expression"
           },
           {
             "type": "SYMBOL",
@@ -1836,23 +1819,15 @@
         ]
       }
     },
-    "block_expression": {
+    "_block_expression": {
       "type": "PREC",
       "value": 1,
       "content": {
-        "type": "SEQ",
+        "type": "CHOICE",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "block_label"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "labeled_block"
           },
           {
             "type": "SYMBOL",
@@ -1861,7 +1836,7 @@
         ]
       }
     },
-    "labeled_block_expression": {
+    "labeled_block": {
       "type": "SEQ",
       "members": [
         {
@@ -2250,7 +2225,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "block_expression"
+          "name": "_block_expression"
         }
       ]
     },
@@ -2332,7 +2307,7 @@
               "name": "do",
               "content": {
                 "type": "SYMBOL",
-                "name": "block_expression"
+                "name": "_block_expression"
               }
             },
             {
@@ -2388,7 +2363,7 @@
               "name": "then",
               "content": {
                 "type": "SYMBOL",
-                "name": "block_expression"
+                "name": "_block_expression"
               }
             },
             {
@@ -2444,7 +2419,7 @@
               "name": "body",
               "content": {
                 "type": "SYMBOL",
-                "name": "block_expression"
+                "name": "_block_expression"
               }
             },
             {
@@ -2841,7 +2816,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "labeled_block_expression"
+            "name": "labeled_block"
           },
           {
             "type": "SYMBOL",
@@ -7308,7 +7283,7 @@
     ],
     [
       "comptime_declaration",
-      "_block_expr_statement"
+      "_block_expression"
     ],
     [
       "variable_declaration",
@@ -7323,7 +7298,7 @@
       "primary_expression"
     ],
     [
-      "labeled_block_expression",
+      "labeled_block",
       "labeled_type_expression"
     ]
   ],
