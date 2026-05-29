@@ -15,6 +15,7 @@ const s = "a\nb";
 //          ^ string.escape
 const m =
     \\hello
-//  ^ string
+    //    ^ string
+//  ^ string.special.symbol
 ;
 // <- punctuation.delimiter

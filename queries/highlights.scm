@@ -270,6 +270,10 @@
 
 (escape_sequence) @string.escape
 
+("\\\\" @string.special.symbol
+ ; ZLS gets priority 125, so this lets our definition 'win'
+ (#set! "priority" 130))
+
 ; Punctuation
 [
   "["
