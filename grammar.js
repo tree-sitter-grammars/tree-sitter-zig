@@ -444,9 +444,9 @@ module.exports = grammar({
 
     _for_prefix: $ => seq(
       'for',
-      '(',
-      optionalCommaSep1($._for_item),
-      ')',
+      seq('(',
+      field('iterable', optionalCommaSep1($._for_item)),
+      ')'),
       alias($._ptr_list_payload, $.payload),
     ),
 
@@ -604,7 +604,7 @@ module.exports = grammar({
       optional('inline'),
       $._for_prefix,
       $.expression,
-      optional(seq('else', $.expression)),
+      optional(seq('else', field('else', $.expression))),
     )),
 
     while_expression: $ => prec.right(seq(
@@ -726,10 +726,10 @@ module.exports = grammar({
       '}',
     ),
     switch_case: $ => seq(
-      $._switch_case_exp,
+      field('case', $._switch_case_exp),
       '=>',
       optional(alias($._switch_payload, $.payload)),
-      $._single_assign_expr,
+      field('then', $._single_assign_expr),
     ),
     _switch_case_exp: $ => seq(
       optional('inline'),
@@ -823,7 +823,7 @@ module.exports = grammar({
         seq(
           '[',
           '*',
-          optional(choice('c', seq(':', $.expression))),
+          optional(choice('c', seq(':', field('sentinel', $.expression)))),
           ']',
         ),
       ),
@@ -846,7 +846,7 @@ module.exports = grammar({
     array_type: $ => prec(1, seq(
       '[',
       $.expression,
-      optional(seq(':', $.expression)),
+      optional(seq(':', field('sentinel', $.expression))),
       ']',
       $.type_expression,
     )),
@@ -881,9 +881,9 @@ module.exports = grammar({
     null_coercion_expression: $ => prec(PREC.MEMBER, seq($.expression, '.?')),
 
     range_expression: $ => prec.right(PREC.MEMBER, seq(
-      field('left', $.expression),
+      field('from', $.expression),
       '..',
-      optional(field('right', $.expression)),
+      optional(field('to', $.expression)),
     )),
 
     call_expression: $ => prec(PREC.MEMBER, seq(

@@ -400,7 +400,18 @@
   {
     "type": "array_type",
     "named": true,
-    "fields": {},
+    "fields": {
+      "sentinel": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1589,7 +1600,36 @@
   {
     "type": "for_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "else": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "iterable": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "range_expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1604,10 +1644,6 @@
         },
         {
           "type": "payload",
-          "named": true
-        },
-        {
-          "type": "range_expression",
           "named": true
         }
       ]
@@ -1642,6 +1678,24 @@
             "named": true
           }
         ]
+      },
+      "iterable": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "range_expression",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -1653,15 +1707,7 @@
           "named": true
         },
         {
-          "type": "expression",
-          "named": true
-        },
-        {
           "type": "payload",
-          "named": true
-        },
-        {
-          "type": "range_expression",
           "named": true
         }
       ]
@@ -2419,7 +2465,18 @@
   {
     "type": "pointer_type",
     "named": true,
-    "fields": {},
+    "fields": {
+      "sentinel": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -2447,7 +2504,7 @@
     "type": "range_expression",
     "named": true,
     "fields": {
-      "left": {
+      "from": {
         "multiple": false,
         "required": true,
         "types": [
@@ -2457,7 +2514,7 @@
           }
         ]
       },
-      "right": {
+      "to": {
         "multiple": false,
         "required": false,
         "types": [
@@ -2699,19 +2756,52 @@
   {
     "type": "switch_case",
     "named": true,
-    "fields": {},
+    "fields": {
+      "case": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "...",
+            "named": false
+          },
+          {
+            "type": "else",
+            "named": false
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "inline",
+            "named": false
+          }
+        ]
+      },
+      "then": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "assignment_expression",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
-        {
-          "type": "assignment_expression",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
         {
           "type": "payload",
           "named": true
