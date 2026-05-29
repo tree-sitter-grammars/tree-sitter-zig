@@ -47,8 +47,7 @@ const builtinTypes = [
   'c_longlong',
   'c_ulonglong',
   'c_longdouble',
-  /i[1-9][0-9]*/,
-  /u[0-9]+/,
+  /(i|u)[0-9]+/,
 ];
 
 const reservedWords = [
