@@ -83,8 +83,7 @@ const Slice = [:0]align(4) addrspace(.generic) const u8;
       (byte_alignment
         (integer))
       (address_space
-        (field_expression
-          (identifier)))
+        (enum_literal))
       (builtin_type))))
 
 ==================

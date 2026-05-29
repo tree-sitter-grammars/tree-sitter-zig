@@ -771,6 +771,7 @@ module.exports = grammar({
       $.parenthesized_expression,
       $.integer,
       $.boolean,
+      $.enum_literal,
       $.error_type,
       'anyframe',
       'unreachable',
@@ -857,8 +858,10 @@ module.exports = grammar({
       field('ok', choice($.type_expression, $.if_type_expression, $.comptime_type_expression)),
     )),
 
+    enum_literal: $ => seq('.', field('name', $._identifier)),
+
     field_expression: $ => prec(PREC.MEMBER, seq(
-      optional(field('object', $.expression)),
+      field('object', $.expression),
       '.',
       field('member', $.identifier),
     )),

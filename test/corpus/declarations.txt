@@ -25,14 +25,12 @@ pub export fn add(noalias lhs: i32, comptime rhs: i32, rest: anytype, ...) align
     (byte_alignment
       (integer))
     (address_space
-      (field_expression
-        (identifier)))
+      (enum_literal))
     (link_section
       (string
         (string_content)))
     (calling_convention
-      (field_expression
-        (identifier)))
+      (enum_literal))
     (builtin_type)
     (block
       (expression_statement
@@ -117,8 +115,7 @@ pub extern "c" threadlocal var global: [4:0]u8 align(4) addrspace(.generic) link
     (byte_alignment
       (integer))
     (address_space
-      (field_expression
-        (identifier)))
+      (enum_literal))
     (link_section
       (string
         (string_content)))

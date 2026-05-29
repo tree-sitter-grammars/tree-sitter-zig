@@ -158,3 +158,17 @@ asm volatile ("flushw" ::: .{ .memory = true });
                   (field_initializer
                     (identifier)
                     (boolean)))))))))))
+
+====================
+Enum Literal
+====================
+
+const variant: SomeKind = .literal;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (identifier)
+    (enum_literal)))

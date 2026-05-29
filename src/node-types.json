@@ -126,6 +126,10 @@
         "named": true
       },
       {
+        "type": "enum_literal",
+        "named": true
+      },
+      {
         "type": "error_type",
         "named": true
       },
@@ -1443,6 +1447,11 @@
     }
   },
   {
+    "type": "enum_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "errdefer_statement",
     "named": true,
     "fields": {},
@@ -1568,7 +1577,7 @@
       },
       "object": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "expression",
