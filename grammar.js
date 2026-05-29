@@ -787,9 +787,9 @@ module.exports = grammar({
       $.enum_literal,
       $.error_type,
       'anyframe',
-      'unreachable',
-      'undefined',
-      'null',
+      $.unreachable,
+      $.undefined,
+      $.null,
       $.string,
       $.multiline_string,
       $.builtin_type,
@@ -1033,6 +1033,12 @@ module.exports = grammar({
     },
 
     boolean: _ => choice('true', 'false'),
+
+    null: _ => 'null',
+
+    undefined: _ => 'undefined',
+
+    unreachable: _ => 'unreachable',
 
     builtin_type: _ => choice(...builtinTypes),
 

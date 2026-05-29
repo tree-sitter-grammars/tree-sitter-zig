@@ -361,6 +361,24 @@ return ret[0 .. ret.len - 1 :s];
           (identifier))))))
 
 ====================
+If else unreachable
+====================
+
+if (a) {} else unreachable;
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      (identifier)
+      (block_expression
+        (block))
+      (else_clause
+        (expression_statement
+          (unreachable))))))
+
+====================
 If With Dangling Else
 ====================
 

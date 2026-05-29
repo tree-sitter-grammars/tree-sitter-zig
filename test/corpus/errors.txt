@@ -86,14 +86,14 @@ if (maybe) |a, b| a;
 
 ---
 
-    (source_file
-      (fragment
-        (if_statement
-          (identifier)
-          (payload
-            (identifier)
-            (ERROR))
-          (identifier))))
+(source_file
+  (fragment
+    (if_statement
+      (identifier)
+      (payload
+        (identifier)
+        (ERROR))
+      (identifier))))
 
 ===========================
 While multi payload :error
@@ -103,18 +103,18 @@ while (next()) |a, b| {}
 
 ---
 
-    (source_file
-      (fragment
-        (labeled_statement
-          (while_statement
-            (call_expression
-              (identifier)
-              (arguments))
-            (payload
-              (identifier)
-              (ERROR))
-            (block_expression
-              (block))))))
+(source_file
+  (fragment
+    (labeled_statement
+      (while_statement
+        (call_expression
+          (identifier)
+          (arguments))
+        (payload
+          (identifier)
+          (ERROR))
+        (block_expression
+          (block))))))
 
 ===========================
 Errdefer pointer payload :error
@@ -124,18 +124,18 @@ errdefer |*err| handle(err);
 
 ---
 
-    (source_file
-      (fragment
-        (errdefer_statement
-          (ERROR)
-          (expression_statement
-            (binary_expression
-              (pointer_type
-                (identifier))
-              (call_expression
-                (identifier)
-                (arguments
-                  (identifier))))))))
+(source_file
+  (fragment
+    (errdefer_statement
+      (ERROR)
+      (expression_statement
+        (binary_expression
+          (pointer_type
+            (identifier))
+          (call_expression
+            (identifier)
+            (arguments
+              (identifier))))))))
 
 ===========================
 Index sentinel without slice :error
@@ -240,7 +240,6 @@ extern "c" fn f() void {}
     (builtin_type)
     (initializer_list)))
 
-
 ===========================
 Anytype value expression :error
 ===========================
@@ -255,8 +254,6 @@ const T = anytype;
     (ERROR
       (anytype))))
 
-
-
 ===========================
 Anytype type annotation :error
 ===========================
@@ -269,8 +266,8 @@ const U: anytype = undefined;
   (variable_declaration
     (identifier)
     (ERROR
-      (anytype))))
-
+      (anytype))
+    (undefined)))
 
 ===========================
 While keyword type :error
@@ -283,8 +280,8 @@ const W: while = undefined;
 (source_file
   (variable_declaration
     (identifier)
-    (ERROR)))
-
+    (ERROR)
+    (undefined)))
 
 ===========================
 Keyword field access :error
@@ -299,7 +296,6 @@ const T = foo.while;
     (identifier)
     (identifier)
     (ERROR)))
-
 
 ===========================
 Variadic function body :error
@@ -321,7 +317,6 @@ fn f(x: i32, ..., y: T) void {}
     (builtin_type)
     (block)))
 
-
 ===========================
 Empty asm lists :error
 ===========================
@@ -342,7 +337,6 @@ fn f() void { asm volatile ("" : : :); }
           (asm_output
             (asm_input))
           (ERROR))))))
-
 
 ===========================
 Standalone range expression :error

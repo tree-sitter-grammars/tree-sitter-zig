@@ -186,7 +186,8 @@ _ = .{ null, null };
     (assignment_statement
       (identifier)
       (literal_tuple_value
-        (item)
+        (item
+          (null))
         (item
           (integer))
         (item
@@ -197,5 +198,7 @@ _ = .{ null, null };
     (assignment_statement
       (identifier)
       (literal_tuple_value
-        (item)
-        (item)))))
+        (item
+          (null))
+        (item
+          (null))))))

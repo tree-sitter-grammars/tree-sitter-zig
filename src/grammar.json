@@ -5129,16 +5129,16 @@
           "value": "anyframe"
         },
         {
-          "type": "STRING",
-          "value": "unreachable"
+          "type": "SYMBOL",
+          "name": "unreachable"
         },
         {
-          "type": "STRING",
-          "value": "undefined"
+          "type": "SYMBOL",
+          "name": "undefined"
         },
         {
-          "type": "STRING",
-          "value": "null"
+          "type": "SYMBOL",
+          "name": "null"
         },
         {
           "type": "SYMBOL",
@@ -7024,6 +7024,18 @@
           "value": "false"
         }
       ]
+    },
+    "null": {
+      "type": "STRING",
+      "value": "null"
+    },
+    "undefined": {
+      "type": "STRING",
+      "value": "undefined"
+    },
+    "unreachable": {
+      "type": "STRING",
+      "value": "unreachable"
     },
     "builtin_type": {
       "type": "CHOICE",

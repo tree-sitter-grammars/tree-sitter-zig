@@ -159,7 +159,7 @@
       },
       {
         "type": "null",
-        "named": false
+        "named": true
       },
       {
         "type": "parenthesized_expression",
@@ -171,11 +171,11 @@
       },
       {
         "type": "undefined",
-        "named": false
+        "named": true
       },
       {
         "type": "unreachable",
-        "named": false
+        "named": true
       }
     ]
   },
@@ -3713,7 +3713,7 @@
   },
   {
     "type": "null",
-    "named": false
+    "named": true
   },
   {
     "type": "opaque",
@@ -3781,7 +3781,7 @@
   },
   {
     "type": "undefined",
-    "named": false
+    "named": true
   },
   {
     "type": "union",
@@ -3789,7 +3789,7 @@
   },
   {
     "type": "unreachable",
-    "named": false
+    "named": true
   },
   {
     "type": "usingnamespace",

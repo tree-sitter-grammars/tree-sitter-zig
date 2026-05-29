@@ -158,7 +158,8 @@ const Point = struct {
         (identifier)
         (nullable_type
           (pointer_type
-            (builtin_type)))))))
+            (builtin_type)))
+        (null)))))
 
 ==================
 Enum declaration

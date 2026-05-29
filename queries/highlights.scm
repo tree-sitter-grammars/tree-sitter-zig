@@ -50,9 +50,9 @@
   (#lua-match? @constant "^[A-Z][A-Z_0-9]+$"))
 
 [
-  "null"
-  "unreachable"
-  "undefined"
+  (null)
+  (unreachable)
+  (undefined)
 ] @constant.builtin
 
 (field_expression
