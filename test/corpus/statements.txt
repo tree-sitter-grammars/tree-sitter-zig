@@ -132,13 +132,12 @@ fn statements() void {
                     (break_label
                       (identifier))
                     (identifier))))
-              (else_clause
-                (block
-                  (expression_statement
-                    (continue_expression
-                      (break_label
-                        (identifier))
-                      (integer))))))))))))
+              (block
+                (expression_statement
+                  (continue_expression
+                    (break_label
+                      (identifier))
+                    (integer)))))))))))
 
 ==================
 For statement
@@ -365,9 +364,35 @@ if (a) {} else unreachable;
     (if_statement
       (identifier)
       (block)
-      (else_clause
+      (expression_statement
+        (unreachable)))))
+
+====================
+If Ok Else Error
+====================
+
+if (maybe) |value| {
+  value;
+} else |err| {
+  err;
+}
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      (identifier)
+      (payload
+        (identifier))
+      (block
         (expression_statement
-          (unreachable))))))
+          (identifier)))
+      (payload
+        (identifier))
+      (block
+        (expression_statement
+          (identifier))))))
 
 ====================
 If With Dangling Else

@@ -100,10 +100,9 @@ else
       (assignment_expression
         (identifier)
         (identifier))
-      (else_clause
-        (assignment_statement
-          (identifier)
-          (identifier))))))
+      (assignment_statement
+        (identifier)
+        (identifier)))))
 
 ===================
 If Assign w. Cascade
@@ -125,16 +124,14 @@ else if (b)
       (assignment_expression
         (identifier)
         (identifier))
-      (else_clause
-        (if_statement
+      (if_statement
+        (identifier)
+        (assignment_expression
           (identifier)
-          (assignment_expression
-            (identifier)
-            (identifier))
-          (else_clause
-            (assignment_statement
-              (identifier)
-              (identifier))))))))
+          (identifier))
+        (assignment_statement
+          (identifier)
+          (identifier))))))
 
 ====================
 Legal ASM Volatile

@@ -430,9 +430,9 @@ module.exports = grammar({
       optional(alias($._ptr_payload, $.payload)),
     ),
 
-    else_clause: $ => seq(
+    _else_clause: $ => seq(
       'else',
-      optional($.payload),
+      optional(field('else_error', $.payload)),
       field('else', $.statement),
     ),
 
@@ -498,22 +498,22 @@ module.exports = grammar({
     _while_conditional_body: $ => choice(
       seq(
         field('do', $._block_expression),
-        optional($.else_clause),
+        optional($._else_clause),
       ),
       seq(
         field('do', $._assign_expr),
-        choice(';', $.else_clause),
+        choice(';', $._else_clause),
       ),
     ),
 
     _conditional_body: $ => choice(
       seq(
         field('then', $._block_expression),
-        optional($.else_clause),
+        optional($._else_clause),
       ),
       seq(
         field('then', $._assign_expr),
-        choice(';', $.else_clause),
+        choice(';', $._else_clause),
       ),
     ),
 

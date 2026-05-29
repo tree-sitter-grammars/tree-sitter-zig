@@ -1374,16 +1374,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "payload",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1897,6 +1887,26 @@
           }
         ]
       },
+      "else": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "statement",
+            "named": true
+          }
+        ]
+      },
+      "else_error": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "payload",
+            "named": true
+          }
+        ]
+      },
       "then": {
         "multiple": true,
         "required": true,
@@ -1921,13 +1931,9 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
-        {
-          "type": "else_clause",
-          "named": true
-        },
         {
           "type": "payload",
           "named": true
@@ -3198,16 +3204,32 @@
             "named": true
           }
         ]
+      },
+      "else": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "statement",
+            "named": true
+          }
+        ]
+      },
+      "else_error": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "payload",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
-        {
-          "type": "else_clause",
-          "named": true
-        },
         {
           "type": "payload",
           "named": true
