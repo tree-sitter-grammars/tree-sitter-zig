@@ -397,3 +397,41 @@ const which = if (a)
         (identifier)
         (identifier))
       (identifier))))
+
+====================
+Labeled Switch Continue
+====================
+
+label: switch(val) {
+    .something => continue :label .something_else,
+    .yet_another => {
+        take_action();
+        continue :label .a_secret_third_thing;
+    }
+}
+
+---
+
+(source_file
+  (container_field
+    (identifier)
+    (switch_expression
+      (identifier)
+      (switch_case
+        (enum_literal)
+        (continue_expression
+          (break_label
+            (identifier))
+          (enum_literal)))
+      (switch_case
+        (enum_literal)
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments)))
+          (expression_statement
+            (continue_expression
+              (break_label
+                (identifier))
+              (enum_literal))))))))
