@@ -451,14 +451,13 @@ fn expressions(code: usize) void {
                   (string_content))
                 (identifier))
               (asm_clobbers
-                (anonymous_struct_initializer
-                  (initializer_list
-                    (field_initializer
-                      (identifier)
-                      (boolean))
-                    (field_initializer
-                      (identifier)
-                      (boolean))))))))))))
+                (literal_struct_value
+                  (pair
+                    (identifier)
+                    (boolean))
+                  (pair
+                    (identifier)
+                    (boolean)))))))))))
 
 ====================
 Errdefer Expression
@@ -516,7 +515,7 @@ var differ = if (T == u8) BytesDiffer{
       (struct_initializer
         (identifier)
         (initializer_list
-          (field_initializer
+          (pair
             (identifier)
             (identifier))))
       (struct_initializer
@@ -525,6 +524,26 @@ var differ = if (T == u8) BytesDiffer{
           (arguments
             (identifier)))
         (initializer_list
-          (field_initializer
+          (pair
             (identifier)
             (identifier)))))))
+
+====================
+Default struct value expression
+====================
+
+fn expressions() void {
+    value = .{};
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (builtin_type)
+    (block
+      (assignment_statement
+        (identifier)
+        (default_struct_value)))))

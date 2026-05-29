@@ -59,10 +59,10 @@ test "decls" {
         (struct_initializer
           (identifier)
           (initializer_list
-            (field_initializer
+            (pair
               (identifier)
               (integer))
-            (field_initializer
+            (pair
               (identifier)
               (integer))))))))
 
@@ -119,11 +119,14 @@ pub extern "c" threadlocal var global: [4:0]u8 align(4) addrspace(.generic) link
     (link_section
       (string
         (string_content)))
-    (anonymous_struct_initializer
-      (initializer_list
-        (integer)
-        (integer)
-        (integer)
+    (literal_tuple_value
+      (item
+        (integer))
+      (item
+        (integer))
+      (item
+        (integer))
+      (item
         (integer)))))
 
 ==================
@@ -257,9 +260,10 @@ fn peek() Grapheme {
     (block
       (local_variable_declaration
         (identifier)
-        (anonymous_struct_initializer
-          (initializer_list
-            (identifier)
+        (literal_tuple_value
+          (item
+            (identifier))
+          (item
             (identifier))))
       (defer_statement
         (assignment_statement

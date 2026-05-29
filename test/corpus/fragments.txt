@@ -153,11 +153,10 @@ asm volatile ("flushw" ::: .{ .memory = true });
         (asm_output
           (asm_input
             (asm_clobbers
-              (anonymous_struct_initializer
-                (initializer_list
-                  (field_initializer
-                    (identifier)
-                    (boolean)))))))))))
+              (literal_struct_value
+                (pair
+                  (identifier)
+                  (boolean))))))))))
 
 ====================
 Enum Literal
@@ -172,3 +171,31 @@ const variant: SomeKind = .literal;
     (identifier)
     (identifier)
     (enum_literal)))
+
+====================
+Anonymous List Initializer Fragment
+====================
+
+_ = .{ null, 12, foo.bar };
+_ = .{ null, null };
+
+---
+
+(source_file
+  (fragment
+    (assignment_statement
+      (identifier)
+      (literal_tuple_value
+        (item)
+        (item
+          (integer))
+        (item
+          (field_expression
+            (identifier)
+            (identifier))))))
+  (fragment
+    (assignment_statement
+      (identifier)
+      (literal_tuple_value
+        (item)
+        (item)))))

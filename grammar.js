@@ -458,7 +458,7 @@ module.exports = grammar({
     while_statement: $ => seq(
       optional('inline'),
       $._while_prefix,
-      $._conditional_body,
+      $._while_conditional_body,
     ),
 
     _while_prefix: $ => seq(
@@ -489,6 +489,17 @@ module.exports = grammar({
       $.expression,
       $.assignment_expression,
     )),
+
+    _while_conditional_body: $ => choice(
+      seq(
+        field('do', $.block_expression),
+        optional($.else_clause),
+      ),
+      seq(
+        field('do', $._assign_expr),
+        choice(';', $.else_clause),
+      ),
+    ),
 
     _conditional_body: $ => choice(
       seq(
@@ -556,7 +567,9 @@ module.exports = grammar({
       $.try_expression,
       $.catch_expression,
       $.type_expression,
-      $.anonymous_struct_initializer,
+      $.default_struct_value,
+      $.literal_tuple_value,
+      $.literal_struct_value,
       $.struct_initializer,
       $._suffix_expression,
       $.labeled_block_expression,
@@ -894,24 +907,40 @@ module.exports = grammar({
       field('arguments', $.arguments),
     )),
 
-    anonymous_struct_initializer: $ => seq('.', $.initializer_list),
+    default_struct_value: _ => seq('.', '{', '}'),
 
-    struct_initializer: $ => prec(-1, seq($.type_expression, $.initializer_list)),
+    literal_tuple_value: $ => seq(
+      '.',
+      '{',
+      optionalCommaSep1($.item),
+      '}',
+    ),
 
-    initializer_list: $ => seq(
+    item: $ => $.expression,
+
+    literal_struct_value: $ => seq(
+      '.',
+      '{',
+      optionalCommaSep1($.pair),
+      '}',
+    ),
+
+    struct_initializer: $ => prec(-1, seq($.type_expression, alias($._initializer_list, $.initializer_list))),
+
+    _initializer_list: $ => seq(
       '{',
       choice(
-        optionalCommaSep($.field_initializer),
+        optionalCommaSep($.pair),
         optionalCommaSep($.expression),
       ),
       '}',
     ),
 
-    field_initializer: $ => seq(
+    pair: $ => seq(
       '.',
-      $.identifier,
+      field('field', $.identifier),
       '=',
-      $.expression,
+      field('value', $.expression),
     ),
 
     labeled_type_expression: $ => seq($.block_label, $.block),

@@ -71,7 +71,7 @@
   (identifier) @label)
 
 ; Fields
-(field_initializer
+(pair
   .
   (identifier) @variable.member)
 
@@ -299,4 +299,3 @@
 ] @comment.documentation
 
 (comment) @comment @spell
-
