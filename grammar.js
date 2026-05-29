@@ -194,7 +194,7 @@ module.exports = grammar({
         field('type', choice($.type_expression, $.if_type_expression)),
       )),
       optional($.byte_alignment),
-      optional(seq('=', $.expression)),
+      optional(seq('=', field('default_value', $.expression))),
     ),
 
     variable_declaration: $ => seq(
@@ -428,12 +428,12 @@ module.exports = grammar({
     else_clause: $ => seq(
       'else',
       optional($.payload),
-      field('alternative', $.statement),
+      field('else', $.statement),
     ),
 
     _for_else_clause: $ => seq(
       'else',
-      field('alternative', $.statement),
+      field('else', $.statement),
     ),
 
     for_statement: $ => seq(
@@ -492,11 +492,11 @@ module.exports = grammar({
 
     _conditional_body: $ => choice(
       seq(
-        field('body', $.block_expression),
+        field('then', $.block_expression),
         optional($.else_clause),
       ),
       seq(
-        field('body', $._assign_expr),
+        field('then', $._assign_expr),
         choice(';', $.else_clause),
       ),
     ),
@@ -595,8 +595,8 @@ module.exports = grammar({
 
     if_expression: $ => prec.right(seq(
       $._if_prefix,
-      $.expression,
-      optional(seq('else', optional($.payload), $.expression)),
+      field('then', $.expression),
+      optional(seq('else', optional($.payload), field('else', $.expression))),
     )),
 
     for_expression: $ => prec.right(seq(

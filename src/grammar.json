@@ -352,8 +352,12 @@
                   "value": "="
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "expression"
+                  "type": "FIELD",
+                  "name": "default_value",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
                 }
               ]
             },
@@ -1997,7 +2001,7 @@
         },
         {
           "type": "FIELD",
-          "name": "alternative",
+          "name": "else",
           "content": {
             "type": "SYMBOL",
             "name": "statement"
@@ -2014,7 +2018,7 @@
         },
         {
           "type": "FIELD",
-          "name": "alternative",
+          "name": "else",
           "content": {
             "type": "SYMBOL",
             "name": "statement"
@@ -2316,7 +2320,7 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "body",
+              "name": "then",
               "content": {
                 "type": "SYMBOL",
                 "name": "block_expression"
@@ -2341,7 +2345,7 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "body",
+              "name": "then",
               "content": {
                 "type": "SYMBOL",
                 "name": "_assign_expr"
@@ -3086,8 +3090,12 @@
             "name": "_if_prefix"
           },
           {
-            "type": "SYMBOL",
-            "name": "expression"
+            "type": "FIELD",
+            "name": "then",
+            "content": {
+              "type": "SYMBOL",
+              "name": "expression"
+            }
           },
           {
             "type": "CHOICE",
@@ -3112,8 +3120,12 @@
                     ]
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "expression"
+                    "type": "FIELD",
+                    "name": "else",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "expression"
+                    }
                   }
                 ]
               },

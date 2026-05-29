@@ -359,3 +359,28 @@ return ret[0 .. ret.len - 1 :s];
                 (identifier))
               (integer)))
           (identifier))))))
+
+====================
+If With Dangling Else
+====================
+
+const which = if (a)
+                  if (b)
+                     c
+                  else
+                     d
+              else
+                  e;
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (if_expression
+      (identifier)
+      (if_expression
+        (identifier)
+        (identifier)
+        (identifier))
+      (identifier))))
