@@ -41,19 +41,18 @@ fn f(xs: []u8) void {
           (builtin_type))))
     (builtin_type)
     (block
-      (labeled_statement
-        (for_statement
-          (identifier)
-          (payload
-            (identifier))
-          (block)
-          (else_clause
-            (ERROR)
-            (expression_statement
-              (binary_expression
-                (identifier)
-                (block))
-              (MISSING ";"))))))))
+      (for_statement
+        (identifier)
+        (payload
+          (identifier))
+        (block)
+        (else_clause
+          (ERROR)
+          (expression_statement
+            (binary_expression
+              (identifier)
+              (block))
+            (MISSING ";")))))))
 
 ===========================
 Switch index pointer payload :error
@@ -104,15 +103,14 @@ while (next()) |a, b| {}
 
 (source_file
   (fragment
-    (labeled_statement
-      (while_statement
-        (call_expression
-          (identifier)
-          (arguments))
-        (payload
-          (identifier)
-          (ERROR))
-        (block)))))
+    (while_statement
+      (call_expression
+        (identifier)
+        (arguments))
+      (payload
+        (identifier)
+        (ERROR))
+      (block))))
 
 ===========================
 Errdefer pointer payload :error
@@ -167,13 +165,12 @@ fn f() void {
     (parameters)
     (builtin_type)
     (block
-      (labeled_statement
-        (for_statement
-          (identifier
-            (MISSING _identifier))
-          (payload
-            (identifier))
-          (block))))))
+      (for_statement
+        (identifier
+          (MISSING _identifier))
+        (payload
+          (identifier))
+        (block)))))
 
 ===========================
 Pub test declaration :error

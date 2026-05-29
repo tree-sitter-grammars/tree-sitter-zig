@@ -177,16 +177,15 @@ fn expressions(items: []u8, start: usize, end: usize, sentinel: u8) void {
             (identifier)
             (identifier))
           (identifier)))
-      (labeled_statement
-        (for_statement
-          (range_expression
-            (integer)
-            (identifier))
+      (for_statement
+        (range_expression
+          (integer)
+          (identifier))
+        (identifier)
+        (payload
           (identifier)
-          (payload
-            (identifier)
-            (identifier))
-          (block))))))
+          (identifier))
+        (block)))))
 
 ==================
 Switch expression with range

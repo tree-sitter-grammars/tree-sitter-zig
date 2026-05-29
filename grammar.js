@@ -109,6 +109,7 @@ module.exports = grammar({
     [$.expression, $._function_prototype],
     [$.expression, $.type_expression],
     [$.expression, $.if_type_expression],
+    [$.statement, $.expression],
 
     [$.comptime_type_expression, $.expression],
     [$.comptime_declaration, $._block_expression],
@@ -376,6 +377,7 @@ module.exports = grammar({
       $.for_statement,
       $.while_statement,
       $.labeled_statement,
+      $.block,
       prec(1, $.switch_expression),
     ),
 
@@ -409,7 +411,7 @@ module.exports = grammar({
     labeled_block: $ => seq($.block_label, $.block),
 
     labeled_statement: $ => prec(1, seq(
-      optional($.block_label),
+      $.block_label,
       choice($.block, $.for_statement, $.while_statement),
     )),
 

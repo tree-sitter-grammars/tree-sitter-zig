@@ -1698,6 +1698,10 @@
           "name": "labeled_statement"
         },
         {
+          "type": "SYMBOL",
+          "name": "block"
+        },
+        {
           "type": "PREC",
           "value": 1,
           "content": {
@@ -1856,16 +1860,8 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "block_label"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "block_label"
           },
           {
             "type": "CHOICE",
@@ -7276,6 +7272,10 @@
     [
       "expression",
       "if_type_expression"
+    ],
+    [
+      "statement",
+      "expression"
     ],
     [
       "comptime_type_expression",

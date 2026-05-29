@@ -133,13 +133,12 @@ fn statements() void {
                       (identifier))
                     (identifier))))
               (else_clause
-                (labeled_statement
-                  (block
-                    (expression_statement
-                      (continue_expression
-                        (break_label
-                          (identifier))
-                        (integer)))))))))))))
+                (block
+                  (expression_statement
+                    (continue_expression
+                      (break_label
+                        (identifier))
+                      (integer))))))))))))
 
 ==================
 For statement
@@ -163,23 +162,21 @@ fn statements(xs: []const i32) void {
           (builtin_type))))
     (builtin_type)
     (block
-      (labeled_statement
-        (for_statement
+      (for_statement
+        (identifier)
+        (range_expression
+          (integer))
+        (payload
           (identifier)
-          (range_expression
-            (integer))
-          (payload
+          (identifier))
+        (block
+          (assignment_statement
             (identifier)
-            (identifier))
-          (block
-            (assignment_statement
+            (binary_expression
               (identifier)
-              (binary_expression
-                (identifier)
-                (identifier))))
-          (else_clause
-            (labeled_statement
-              (block))))))))
+              (identifier))))
+        (else_clause
+          (block))))))
 
 ==================
 Labeled block statement
@@ -303,15 +300,14 @@ While with Increment
 
 (source_file
   (fragment
-    (labeled_statement
-      (while_statement
-        (boolean)
-        (continue_clause
-          (assignment_expression
-            (identifier)
-            (integer)))
-        (block
-          (comment))))))
+    (while_statement
+      (boolean)
+      (continue_clause
+        (assignment_expression
+          (identifier)
+          (integer)))
+      (block
+        (comment)))))
 
 ====================
 Assignment Expression-ish
