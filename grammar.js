@@ -467,7 +467,7 @@ module.exports = grammar({
       field('condition', $.expression),
       ')',
       optional(alias($._ptr_payload, $.payload)),
-      optional(seq(':', '(', field('continue', $.continue_clause), ')')),
+      optional(seq(':', '(', field('next', $.continue_clause), ')')),
     ),
 
     continue_clause: $ => choice(
@@ -514,11 +514,11 @@ module.exports = grammar({
 
     _for_conditional_body: $ => choice(
       seq(
-        field('body', $._block_expression),
+        field('do', $._block_expression),
         optional(alias($._for_else_clause, $.else_clause)),
       ),
       seq(
-        field('body', $._assign_expr),
+        field('do', $._assign_expr),
         choice(';', alias($._for_else_clause, $.else_clause)),
       ),
     ),
@@ -632,25 +632,25 @@ module.exports = grammar({
       choice(
         alias($.assignment_expression, 'assignment'),
         seq(
-          field('left', seq(
+          field('lvalue', seq(
             $.expression,
             repeat1(prec(1, seq(',', $.expression))),
           )),
           '=',
-          field('right', $.expression),
+          field('rvalue', $.expression),
         ),
       ),
       ';',
     )),
 
     assignment_expression: $ => seq(
-      field('left', $.expression),
+      field('lvalue', $.expression),
       field('operator', choice(
         '=', '*=', '*%=', '*|=', '/=', '%=',
         '+=', '+%=', '+|=', '-=', '-%=', '-|=',
         '<<=', '<<|=', '>>=', '&=', '^=', '|=',
       )),
-      field('right', $.expression),
+      field('rvalue', $.expression),
     ),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
@@ -871,7 +871,7 @@ module.exports = grammar({
       field('ok', choice($.type_expression, $.if_type_expression, $.comptime_type_expression)),
     )),
 
-    enum_literal: $ => seq('.', field('name', $._identifier)),
+    enum_literal: $ => seq('.', field('tag', $._identifier)),
 
     field_expression: $ => prec(PREC.MEMBER, seq(
       field('object', $.expression),
@@ -956,10 +956,10 @@ module.exports = grammar({
     parenthesized_expression: $ => seq('(', $.expression, ')'),
 
     block_label: $ => prec(-1, seq(
-      choice($.identifier, alias($.builtin_type, $.identifier)),
+      field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
       ':',
     )),
-    break_label: $ => seq(':', $.identifier),
+    break_label: $ => seq(':', field('label', $.identifier)),
 
     arguments: $ => seq('(', optionalCommaSep($.expression), ')'),
 

@@ -554,7 +554,7 @@
     "type": "assignment",
     "named": false,
     "fields": {
-      "left": {
+      "lvalue": {
         "multiple": false,
         "required": true,
         "types": [
@@ -642,7 +642,7 @@
           }
         ]
       },
-      "right": {
+      "rvalue": {
         "multiple": false,
         "required": true,
         "types": [
@@ -658,7 +658,7 @@
     "type": "assignment_expression",
     "named": true,
     "fields": {
-      "left": {
+      "lvalue": {
         "multiple": false,
         "required": true,
         "types": [
@@ -746,7 +746,7 @@
           }
         ]
       },
-      "right": {
+      "rvalue": {
         "multiple": false,
         "required": true,
         "types": [
@@ -762,7 +762,7 @@
     "type": "assignment_statement",
     "named": true,
     "fields": {
-      "left": {
+      "lvalue": {
         "multiple": true,
         "required": false,
         "types": [
@@ -776,7 +776,7 @@
           }
         ]
       },
-      "right": {
+      "rvalue": {
         "multiple": false,
         "required": false,
         "types": [
@@ -954,16 +954,17 @@
   {
     "type": "block_label",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -993,16 +994,17 @@
   {
     "type": "break_label",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1419,7 +1421,7 @@
     "type": "enum_literal",
     "named": true,
     "fields": {
-      "name": {
+      "tag": {
         "multiple": true,
         "required": false,
         "types": [
@@ -1627,7 +1629,7 @@
     "type": "for_statement",
     "named": true,
     "fields": {
-      "body": {
+      "do": {
         "multiple": true,
         "required": true,
         "types": [
@@ -3172,7 +3174,7 @@
           }
         ]
       },
-      "continue": {
+      "next": {
         "multiple": false,
         "required": false,
         "types": [
@@ -3216,16 +3218,6 @@
           }
         ]
       },
-      "continue": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "continue_clause",
-            "named": true
-          }
-        ]
-      },
       "do": {
         "multiple": true,
         "required": true,
@@ -3264,6 +3256,16 @@
         "types": [
           {
             "type": "payload",
+            "named": true
+          }
+        ]
+      },
+      "next": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "continue_clause",
             "named": true
           }
         ]
