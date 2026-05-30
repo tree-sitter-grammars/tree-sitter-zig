@@ -127,10 +127,6 @@ module.exports = grammar({
     global: _ => reservedWords,
   },
 
-  inline: $ => [
-    $._reserved_identifier,
-  ],
-
   precedences: $ => [
     [$.container_field, $.type_expression],
   ],
@@ -1052,13 +1048,7 @@ module.exports = grammar({
 
     identifier: $ => choice($._identifier, seq('@', $.string)),
     _identifier: _ => /[A-Za-z_][A-Za-z0-9_]*/,
-    _reserved_identifier: _ => choice(
-      'undefined',
-      'null',
-      'true',
-      'false',
-    ),
-
+    
     top_doc_comment: $ => repeat1($._top_doc_comment_line),
 
     _top_doc_comment_line: _ => token(seq('//!', /.*/)),
