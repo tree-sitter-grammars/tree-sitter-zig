@@ -6354,8 +6354,16 @@
               "value": "\\\\"
             },
             {
-              "type": "PATTERN",
-              "value": "[^\\n]*"
+              "type": "ALIAS",
+              "content": {
+                "type": "TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[^\\n]*"
+                }
+              },
+              "named": true,
+              "value": "string_content"
             }
           ]
         }

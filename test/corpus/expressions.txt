@@ -411,7 +411,9 @@ fn expressions() void {
           (string_content)))
       (local_variable_declaration
         (identifier)
-        (multiline_string)))))
+        (multiline_string
+          (string_content)
+          (string_content))))))
 
 ==================
 Asm expression

@@ -2214,7 +2214,17 @@
   {
     "type": "multiline_string",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string_content",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "multiple_declaration",
