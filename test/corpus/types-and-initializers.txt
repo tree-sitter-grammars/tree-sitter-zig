@@ -8,14 +8,14 @@ const Handler = fn (i32, anytype) void;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (function_signature
       (parameters
         (parameter
-          (builtin_type))
+          type: (builtin_type))
         (parameter
-          (anytype)))
-      (builtin_type))))
+          type: (anytype)))
+      type: (builtin_type))))
 
 ==================
 Anyframe type
@@ -27,7 +27,7 @@ const Frame = anyframe->void;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (anyframe_type
       (builtin_type))))
 
@@ -41,11 +41,11 @@ const ErrorUnion = error{ A }!u8;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (error_union_type
-      (error_set_declaration
+      error: (error_set_declaration
         (identifier))
-      (builtin_type))))
+      ok: (builtin_type))))
 
 ==================
 Pointer types
@@ -58,12 +58,12 @@ const ManyPtrC = [*c]allowzero volatile u8;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (pointer_type
-      (integer)
+      sentinel: (integer)
       (builtin_type)))
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (pointer_type
       (builtin_type))))
 
@@ -77,9 +77,9 @@ const Slice = [:0]align(4) addrspace(.generic) const u8;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (slice_type
-      (integer)
+      sentinel: (integer)
       (byte_alignment
         (integer))
       (address_space
@@ -96,10 +96,10 @@ const Array = [4:0]u8;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (array_type
       (integer)
-      (integer)
+      sentinel: (integer)
       (builtin_type))))
 
 ==================
@@ -112,9 +112,9 @@ const conditional_value: if (cond) u8 else u16 = 0;
 
 (source_file
   (variable_declaration
-    (identifier)
-    (if_type_expression
-      (identifier)
+    name: (identifier)
+    type: (if_type_expression
+      condition: (identifier)
       (builtin_type)
       (builtin_type))
     (integer)))
@@ -129,8 +129,8 @@ const computed_value: comptime u8 = 0;
 
 (source_file
   (variable_declaration
-    (identifier)
-    (comptime_type_expression
+    name: (identifier)
+    type: (comptime_type_expression
       (builtin_type))
     (integer)))
 
@@ -144,7 +144,7 @@ const anon = .{ 1, 2, 3 };
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (literal_tuple_value
       (item
         (integer))
@@ -163,14 +163,14 @@ const fields = .{ .x = 1, .y = 2 };
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (literal_struct_value
       (pair
-        (identifier)
-        (integer))
+        field: (identifier)
+        value: (integer))
       (pair
-        (identifier)
-        (integer)))))
+        field: (identifier)
+        value: (integer)))))
 
 ==================
 Struct field initializer
@@ -182,13 +182,13 @@ const typed = Point{ .x = 1, .y = 2 };
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (struct_initializer
       (identifier)
       (initializer_list
         (pair
-          (identifier)
-          (integer))
+          field: (identifier)
+          value: (integer))
         (pair
-          (identifier)
-          (integer))))))
+          field: (identifier)
+          value: (integer))))))

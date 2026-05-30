@@ -10,12 +10,12 @@ fn expressions() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (builtin_function
           (builtin_identifier)
           (arguments
@@ -36,30 +36,30 @@ fn expressions() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (binary_expression
-          (parenthesized_expression
+          left: (parenthesized_expression
             (binary_expression
-              (integer)
-              (integer)))
-          (integer)))
+              left: (integer)
+              right: (integer)))
+          right: (integer)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (binary_expression
-          (binary_expression
-            (identifier)
-            (identifier))
-          (identifier)))
+          left: (binary_expression
+            left: (identifier)
+            right: (identifier))
+          right: (identifier)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (binary_expression
-          (identifier)
-          (integer))))))
+          left: (identifier)
+          right: (integer))))))
 
 ==================
 Unary expressions
@@ -74,18 +74,18 @@ fn expressions() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (unary_expression
-          (identifier)))
+          argument: (identifier)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (unary_expression
-          (identifier))))))
+          argument: (identifier))))))
 
 ==================
 Call field index and postfix expressions
@@ -100,29 +100,29 @@ fn expressions() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (call_expression
-          (identifier)
-          (arguments
+          function: (identifier)
+          arguments: (arguments
             (identifier)
             (integer))))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (null_coercion_expression
           (dereference_expression
             (field_expression
-              (index_expression
-                (field_expression
-                  (identifier)
-                  (identifier))
+              object: (index_expression
+                object: (field_expression
+                  object: (identifier)
+                  member: (identifier))
                 (range_expression
-                  (integer)))
-              (identifier))))))))
+                  from: (integer)))
+              member: (identifier))))))))
 
 ==================
 Range expressions
@@ -139,53 +139,53 @@ fn expressions(items: []u8, start: usize, end: usize, sentinel: u8) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (slice_type
+        name: (identifier)
+        type: (slice_type
           (builtin_type)))
       (parameter
-        (identifier)
-        (builtin_type))
+        name: (identifier)
+        type: (builtin_type))
       (parameter
-        (identifier)
-        (builtin_type))
+        name: (identifier)
+        type: (builtin_type))
       (parameter
-        (identifier)
-        (builtin_type)))
-    (builtin_type)
-    (block
+        name: (identifier)
+        type: (builtin_type)))
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (index_expression
-          (identifier)
+          object: (identifier)
           (range_expression
-            (identifier)
-            (identifier))))
+            from: (identifier)
+            to: (identifier))))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (index_expression
-          (identifier)
+          object: (identifier)
           (range_expression
-            (identifier))))
+            from: (identifier))))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (index_expression
-          (identifier)
+          object: (identifier)
           (range_expression
-            (identifier)
-            (identifier))
-          (identifier)))
+            from: (identifier)
+            to: (identifier))
+          sentinel: (identifier)))
       (for_statement
-        (range_expression
-          (integer)
-          (identifier))
-        (identifier)
+        iterable: (range_expression
+          from: (integer)
+          to: (identifier))
+        iterable: (identifier)
         (payload
           (identifier)
           (identifier))
-        (block)))))
+        do: (block)))))
 
 ==================
 Switch expression with range
@@ -199,21 +199,21 @@ fn expressions(tag: u8) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (builtin_type)))
-    (builtin_type)
-    (block
+        name: (identifier)
+        type: (builtin_type)))
+    type: (builtin_type)
+    body: (block
       (switch_expression
         (identifier)
         (switch_case
-          (integer)
-          (integer)
-          (block))
+          case: (integer)
+          case: (integer)
+          then: (block))
         (switch_case
-          (block))))))
+          then: (block))))))
 
 ==================
 Error and fallible expressions
@@ -229,29 +229,29 @@ fn expressions() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (error_type
           (identifier)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (catch_expression
           (call_expression
-            (identifier)
-            (arguments))
+            function: (identifier)
+            arguments: (arguments))
           (payload
             (identifier))
           (integer)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (try_expression
           (call_expression
-            (identifier)
-            (arguments)))))))
+            function: (identifier)
+            arguments: (arguments)))))))
 
 ==================
 Await call, nosuspend, and comptime expressions
@@ -267,27 +267,27 @@ fn expressions(frame: anyframe) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)))
-    (builtin_type)
-    (block
+        name: (identifier)))
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (call_expression
-          (identifier)
-          (arguments
+          function: (identifier)
+          arguments: (arguments
             (identifier)
             (identifier)
             (identifier)
             (identifier))))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (nosuspend_expression
           (identifier)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (comptime_expression
           (builtin_function
             (builtin_identifier)
@@ -308,28 +308,28 @@ fn expressions(items: []const i32) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (slice_type
+        name: (identifier)
+        type: (slice_type
           (builtin_type))))
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (for_expression
-          (identifier)
+          iterable: (identifier)
           (payload
             (identifier))
           (identifier)
-          (integer)))
+          else: (integer)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (while_expression
-          (call_expression
-            (identifier)
-            (arguments))
+          condition: (call_expression
+            function: (identifier)
+            arguments: (arguments))
           (payload
             (identifier))
           (identifier)
@@ -347,20 +347,20 @@ fn expressions() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (labeled_type_expression
           (block_label
-            (identifier))
+            name: (identifier))
           (block
             (expression_statement
               (break_expression
                 (break_label
-                  (identifier))
+                  label: (identifier))
                 (integer)))))))))
 
 ==================
@@ -385,32 +385,32 @@ fn expressions() void {
 (source_file
   (comment)
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (boolean))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (float))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (character
           (character_content)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (character
           (escape_sequence)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (string
           (string_content)
           (escape_sequence)
           (string_content)))
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (multiline_string
           (string_content)
           (string_content))))))
@@ -427,13 +427,13 @@ fn expressions(code: usize) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (builtin_type)))
-    (builtin_type)
-    (block
+        name: (identifier)
+        type: (builtin_type)))
+    type: (builtin_type)
+    body: (block
       (expression_statement
         (asm_expression
           (string
@@ -453,11 +453,11 @@ fn expressions(code: usize) void {
               (asm_clobbers
                 (literal_struct_value
                   (pair
-                    (identifier)
-                    (boolean))
+                    field: (identifier)
+                    value: (boolean))
                   (pair
-                    (identifier)
-                    (boolean)))))))))))
+                    field: (identifier)
+                    value: (boolean)))))))))))
 
 ====================
 Errdefer Expression
@@ -471,27 +471,27 @@ fn finalize() (OOM || std.Io.Writer.Error)!void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (error_union_type
-      (parenthesized_expression
+    type: (error_union_type
+      error: (parenthesized_expression
         (binary_expression
-          (identifier)
-          (field_expression
-            (field_expression
-              (field_expression
-                (identifier)
-                (identifier))
-              (identifier))
-            (identifier))))
-      (builtin_type))
-    (block
+          left: (identifier)
+          right: (field_expression
+            object: (field_expression
+              object: (field_expression
+                object: (identifier)
+                member: (identifier))
+              member: (identifier))
+            member: (identifier))))
+      ok: (builtin_type))
+    body: (block
       (errdefer_statement
         (assignment_statement
-          (field_expression
-            (identifier)
-            (identifier))
-          (boolean))))))
+          lvalue: (field_expression
+            object: (identifier)
+            member: (identifier))
+          rvalue: (boolean))))))
 
 ====================
 If Suffix Else Suffix
@@ -507,26 +507,26 @@ var differ = if (T == u8) BytesDiffer{
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (if_expression
-      (binary_expression
-        (identifier)
-        (builtin_type))
-      (struct_initializer
+      condition: (binary_expression
+        left: (identifier)
+        right: (builtin_type))
+      then: (struct_initializer
         (identifier)
         (initializer_list
           (pair
-            (identifier)
-            (identifier))))
-      (struct_initializer
+            field: (identifier)
+            value: (identifier))))
+      else: (struct_initializer
         (call_expression
-          (identifier)
-          (arguments
+          function: (identifier)
+          arguments: (arguments
             (identifier)))
         (initializer_list
           (pair
-            (identifier)
-            (identifier)))))))
+            field: (identifier)
+            value: (identifier)))))))
 
 ====================
 Default struct value expression
@@ -540,10 +540,10 @@ fn expressions() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (assignment_statement
-        (identifier)
-        (default_struct_value)))))
+        lvalue: (identifier)
+        rvalue: (default_struct_value)))))

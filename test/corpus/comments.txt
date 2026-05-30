@@ -10,9 +10,9 @@ const x = 1;
 ---
 
 (source_file
-  (top_doc_comment)
+  doc: (top_doc_comment)
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (integer)))
 
 ==================

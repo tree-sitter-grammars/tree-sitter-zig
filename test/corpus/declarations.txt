@@ -10,17 +10,17 @@ pub export fn add(noalias lhs: i32, comptime rhs: i32, rest: anytype, ...) align
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (builtin_type))
+        name: (identifier)
+        type: (builtin_type))
       (parameter
-        (identifier)
-        (builtin_type))
+        name: (identifier)
+        type: (builtin_type))
       (parameter
-        (identifier)
-        (anytype))
+        name: (identifier)
+        type: (anytype))
       (parameter))
     (byte_alignment
       (integer))
@@ -31,13 +31,13 @@ pub export fn add(noalias lhs: i32, comptime rhs: i32, rest: anytype, ...) align
         (string_content)))
     (calling_convention
       (enum_literal))
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (expression_statement
         (return_expression
           (binary_expression
-            (identifier)
-            (identifier)))))))
+            left: (identifier)
+            right: (identifier)))))))
 
 ==================
 Test declaration
@@ -55,16 +55,16 @@ test "decls" {
       (string_content))
     (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (struct_initializer
           (identifier)
           (initializer_list
             (pair
-              (identifier)
-              (integer))
+              field: (identifier)
+              value: (integer))
             (pair
-              (identifier)
-              (integer))))))))
+              field: (identifier)
+              value: (integer))))))))
 
 ==================
 Using namespace declaration (deprecated)
@@ -92,7 +92,7 @@ comptime {
   (comptime_declaration
     (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (integer)))))
 
 ==================
@@ -107,10 +107,10 @@ pub extern "c" threadlocal var global: [4:0]u8 align(4) addrspace(.generic) link
   (variable_declaration
     (string
       (string_content))
-    (identifier)
-    (array_type
+    name: (identifier)
+    type: (array_type
       (integer)
-      (integer)
+      sentinel: (integer)
       (builtin_type))
     (byte_alignment
       (integer))
@@ -143,23 +143,23 @@ const Point = struct {
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (struct_declaration
       (container_field
-        (identifier)
-        (builtin_type)
+        name: (identifier)
+        type: (builtin_type)
         (byte_alignment
           (integer))
-        (integer))
+        default_value: (integer))
       (container_field
-        (identifier)
-        (builtin_type))
+        name: (identifier)
+        type: (builtin_type))
       (container_field
-        (identifier)
-        (nullable_type
+        name: (identifier)
+        type: (nullable_type
           (pointer_type
             (builtin_type)))
-        (null)))))
+        default_value: (null)))))
 
 ==================
 Enum declaration
@@ -175,16 +175,16 @@ const Color = enum(u8) {
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (enum_declaration
       (builtin_type)
       (container_field
-        (identifier))
+        name: (identifier))
       (container_field
-        (identifier)
-        (integer))
+        name: (identifier)
+        default_value: (integer))
       (container_field
-        (identifier)))))
+        name: (identifier)))))
 
 ==================
 Union declaration
@@ -199,14 +199,14 @@ const Payload = union(enum(u8)) {
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (union_declaration
       (builtin_type)
       (container_field
-        (identifier))
+        name: (identifier))
       (container_field
-        (identifier)
-        (builtin_type)))))
+        name: (identifier)
+        type: (builtin_type)))))
 
 ==================
 Opaque declaration
@@ -220,11 +220,11 @@ const Hidden = opaque {
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (opaque_declaration
       (container_field
-        (identifier)
-        (builtin_type)))))
+        name: (identifier)
+        type: (builtin_type)))))
 
 ==================
 Error set declaration
@@ -236,7 +236,7 @@ const FileError = error{ NotFound, Denied };
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (error_set_declaration
       (identifier)
       (identifier))))
@@ -255,12 +255,12 @@ fn peek() Grapheme {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (identifier)
-    (block
+    type: (identifier)
+    body: (block
       (local_variable_declaration
-        (identifier)
+        name: (identifier)
         (literal_tuple_value
           (item
             (identifier))
@@ -268,9 +268,9 @@ fn peek() Grapheme {
             (identifier))))
       (defer_statement
         (assignment_statement
-          (identifier)
-          (identifier)
-          (identifier)))
+          lvalue: (identifier)
+          lvalue: (identifier)
+          rvalue: (identifier)))
       (expression_statement
         (return_expression)))))
 
@@ -284,13 +284,13 @@ fn f(x: anytype) void {}
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (anytype)))
-    (builtin_type)
-    (block)))
+        name: (identifier)
+        type: (anytype)))
+    type: (builtin_type)
+    body: (block)))
 
 ====================
 Tuple Declaration
@@ -302,16 +302,16 @@ const Value = struct { a: asn1.Oid, b: i32 };
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (struct_declaration
       (container_field
-        (identifier)
-        (field_expression
-          (identifier)
-          (identifier)))
+        name: (identifier)
+        type: (field_expression
+          object: (identifier)
+          member: (identifier)))
       (container_field
-        (identifier)
-        (builtin_type)))))
+        name: (identifier)
+        type: (builtin_type)))))
 
 ====================
 Async Enum and Field
@@ -329,17 +329,17 @@ pub const UwTable = enum(u32) {
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (enum_declaration
       (builtin_type)
       (container_field
-        (identifier))
+        name: (identifier))
       (container_field
-        (identifier))
+        name: (identifier))
       (container_field
-        (identifier))
+        name: (identifier))
       (variable_declaration
-        (identifier)
+        name: (identifier)
         (field_expression
-          (identifier)
-          (identifier))))))
+          object: (identifier)
+          member: (identifier))))))

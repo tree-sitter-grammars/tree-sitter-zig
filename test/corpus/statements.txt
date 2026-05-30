@@ -14,18 +14,18 @@ fn statements() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (comptime_statement
         (block
           (local_variable_declaration
-            (identifier)
+            name: (identifier)
             (integer))))
       (comptime_statement
         (local_variable_declaration
-          (identifier)
+          name: (identifier)
           (integer))))))
 
 ==================
@@ -41,22 +41,22 @@ fn statements() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (defer_statement
         (expression_statement
           (call_expression
-            (identifier)
-            (arguments))))
+            function: (identifier)
+            arguments: (arguments))))
       (errdefer_statement
         (payload
           (identifier))
         (expression_statement
           (call_expression
-            (identifier)
-            (arguments
+            function: (identifier)
+            arguments: (arguments
               (identifier))))))))
 
 ==================
@@ -74,10 +74,10 @@ fn statements() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (suspend_statement
         (block))
       (nosuspend_statement
@@ -104,39 +104,39 @@ fn statements() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (labeled_statement
         (block_label
-          (identifier))
+          name: (identifier))
         (while_statement
-          (call_expression
-            (identifier)
-            (arguments))
+          condition: (call_expression
+            function: (identifier)
+            arguments: (arguments))
           (payload
             (identifier))
-          (continue_clause
+          next: (continue_clause
             (call_expression
-              (identifier)
-              (arguments)))
-          (block
+              function: (identifier)
+              arguments: (arguments)))
+          do: (block
             (if_statement
-              (binary_expression
-                (identifier)
-                (integer))
-              (block
+              condition: (binary_expression
+                left: (identifier)
+                right: (integer))
+              then: (block
                 (expression_statement
                   (break_expression
                     (break_label
-                      (identifier))
+                      label: (identifier))
                     (identifier))))
-              (block
+              else: (block
                 (expression_statement
                   (continue_expression
                     (break_label
-                      (identifier))
+                      label: (identifier))
                     (integer)))))))))))
 
 ==================
@@ -153,29 +153,29 @@ fn statements(xs: []const i32) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (slice_type
+        name: (identifier)
+        type: (slice_type
           (builtin_type))))
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (for_statement
-        (identifier)
-        (range_expression
-          (integer))
+        iterable: (identifier)
+        iterable: (range_expression
+          from: (integer))
         (payload
           (identifier)
           (identifier))
-        (block
+        do: (block
           (assignment_statement
-            (identifier)
-            (binary_expression
-              (identifier)
-              (identifier))))
+            lvalue: (identifier)
+            rvalue: (binary_expression
+              left: (identifier)
+              right: (identifier))))
         (else_clause
-          (block))))))
+          else: (block))))))
 
 ==================
 Labeled block statement
@@ -191,26 +191,26 @@ fn statements(maybe: ?i32) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (nullable_type
+        name: (identifier)
+        type: (nullable_type
           (builtin_type))))
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (labeled_statement
         (block_label
-          (identifier))
+          name: (identifier))
         (block
           (local_variable_declaration
-            (identifier)
+            name: (identifier)
             (if_expression
-              (identifier)
+              condition: (identifier)
               (payload
                 (identifier))
-              (identifier)
-              (integer))))))))
+              then: (identifier)
+              else: (integer))))))))
 
 ==================
 Switch statement expression
@@ -228,28 +228,28 @@ fn statements(b: i32) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (builtin_type)))
-    (builtin_type)
-    (block
+        name: (identifier)
+        type: (builtin_type)))
+    type: (builtin_type)
+    body: (block
       (expression_statement
         (switch_expression
           (identifier)
           (switch_case
-            (integer)
-            (integer)
-            (integer)
+            case: (integer)
+            case: (integer)
+            case: (integer)
             (payload
               (identifier))
-            (identifier))
+            then: (identifier))
           (switch_case
-            (integer)
-            (integer))
+            case: (integer)
+            then: (integer))
           (switch_case
-            (integer)))))))
+            then: (integer)))))))
 
 =========================
 Dotted Fn Signatures
@@ -261,31 +261,31 @@ fn appendU32(allocator: std.mem.Allocator, buffer: *std.ArrayList(u8), value: u3
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (field_expression
-          (field_expression
-            (identifier)
-            (identifier))
-          (identifier)))
+        name: (identifier)
+        type: (field_expression
+          object: (field_expression
+            object: (identifier)
+            member: (identifier))
+          member: (identifier)))
       (parameter
-        (identifier)
-        (call_expression
-          (field_expression
-            (pointer_type
+        name: (identifier)
+        type: (call_expression
+          function: (field_expression
+            object: (pointer_type
               (identifier))
-            (identifier))
-          (arguments
+            member: (identifier))
+          arguments: (arguments
             (builtin_type))))
       (parameter
-        (identifier)
-        (builtin_type)))
-    (error_union_type
-      (identifier)
-      (builtin_type))
-    (block)))
+        name: (identifier)
+        type: (builtin_type)))
+    type: (error_union_type
+      error: (identifier)
+      ok: (builtin_type))
+    body: (block)))
 
 ====
 While with Increment
@@ -300,12 +300,12 @@ While with Increment
 (source_file
   (fragment
     (while_statement
-      (boolean)
-      (continue_clause
+      condition: (boolean)
+      next: (continue_clause
         (assignment_expression
-          (identifier)
-          (integer)))
-      (block
+          lvalue: (identifier)
+          rvalue: (integer)))
+      do: (block
         (comment)))))
 
 ====================
@@ -323,10 +323,10 @@ switch (i) {
     (switch_expression
       (identifier)
       (switch_case
-        (integer)
-        (assignment_expression
-          (identifier)
-          (integer))))))
+        case: (integer)
+        then: (assignment_expression
+          lvalue: (identifier)
+          rvalue: (integer))))))
 
 ====================
 Sliced Sentinel Return
@@ -341,15 +341,15 @@ return ret[0 .. ret.len - 1 :s];
     (expression_statement
       (return_expression
         (index_expression
-          (identifier)
+          object: (identifier)
           (range_expression
-            (integer)
-            (binary_expression
-              (field_expression
-                (identifier)
-                (identifier))
-              (integer)))
-          (identifier))))))
+            from: (integer)
+            to: (binary_expression
+              left: (field_expression
+                object: (identifier)
+                member: (identifier))
+              right: (integer)))
+          sentinel: (identifier))))))
 
 ====================
 If else unreachable
@@ -362,9 +362,9 @@ if (a) {} else unreachable;
 (source_file
   (fragment
     (if_statement
-      (identifier)
-      (block)
-      (expression_statement
+      condition: (identifier)
+      then: (block)
+      else: (expression_statement
         (unreachable)))))
 
 ====================
@@ -382,15 +382,15 @@ if (maybe) |value| {
 (source_file
   (fragment
     (if_statement
-      (identifier)
+      condition: (identifier)
       (payload
         (identifier))
-      (block
+      then: (block
         (expression_statement
           (identifier)))
-      (payload
+      else_error: (payload
         (identifier))
-      (block
+      else: (block
         (expression_statement
           (identifier))))))
 
@@ -410,14 +410,14 @@ const which = if (a)
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (if_expression
-      (identifier)
-      (if_expression
-        (identifier)
-        (identifier)
-        (identifier))
-      (identifier))))
+      condition: (identifier)
+      then: (if_expression
+        condition: (identifier)
+        then: (identifier)
+        else: (identifier))
+      else: (identifier))))
 
 ====================
 Labeled Switch Continue
@@ -435,26 +435,26 @@ label: switch(val) {
 
 (source_file
   (container_field
-    (identifier)
-    (switch_expression
+    name: (identifier)
+    type: (switch_expression
       (identifier)
       (switch_case
-        (enum_literal)
-        (continue_expression
+        case: (enum_literal)
+        then: (continue_expression
           (break_label
-            (identifier))
+            label: (identifier))
           (enum_literal)))
       (switch_case
-        (enum_literal)
-        (block
+        case: (enum_literal)
+        then: (block
           (expression_statement
             (call_expression
-              (identifier)
-              (arguments)))
+              function: (identifier)
+              arguments: (arguments)))
           (expression_statement
             (continue_expression
               (break_label
-                (identifier))
+                label: (identifier))
               (enum_literal))))))))
 
 ====================
@@ -473,26 +473,26 @@ const cie_ptr_or_id_size: u8 = switch (section) {
 
 (source_file
   (variable_declaration
-    (identifier)
-    (builtin_type)
+    name: (identifier)
+    type: (builtin_type)
     (switch_expression
       (identifier)
       (switch_case
-        (enum_literal)
-        (integer))
+        case: (enum_literal)
+        then: (integer))
       (switch_case
-        (enum_literal)
-        (switch_expression
+        case: (enum_literal)
+        then: (switch_expression
           (field_expression
-            (identifier)
-            (identifier))
+            object: (identifier)
+            member: (identifier))
           (switch_case
-            (enum_literal
-              (string
+            case: (enum_literal
+              tag: (string
                 (string_content)))
-            (integer))
+            then: (integer))
           (switch_case
-            (enum_literal
-              (string
+            case: (enum_literal
+              tag: (string
                 (string_content)))
-            (integer)))))))
+            then: (integer)))))))

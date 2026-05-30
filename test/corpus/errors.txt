@@ -13,13 +13,13 @@ switch (x) {
     (switch_expression
       (identifier)
       (switch_case
-        (integer)
-        (identifier))
+        case: (integer)
+        then: (identifier))
       (ERROR
         (call_expression
-          (identifier)
+          function: (identifier)
           (ERROR)
-          (arguments))))))
+          arguments: (arguments))))))
 
 ===========================
 For else payload :error
@@ -33,25 +33,25 @@ fn f(xs: []u8) void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (slice_type
+        name: (identifier)
+        type: (slice_type
           (builtin_type))))
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (for_statement
-        (identifier)
+        iterable: (identifier)
         (payload
           (identifier))
-        (block)
+        do: (block)
         (else_clause
           (ERROR)
-          (expression_statement
+          else: (expression_statement
             (binary_expression
-              (identifier)
-              (block))
+              left: (identifier)
+              right: (block))
             (MISSING ";")))))))
 
 ===========================
@@ -69,12 +69,12 @@ switch (x) {
     (switch_expression
       (identifier)
       (switch_case
-        (integer)
+        case: (integer)
         (payload
           (identifier)
           (ERROR)
           (identifier))
-        (identifier)))))
+        then: (identifier)))))
 
 ===========================
 If multi payload :error
@@ -87,11 +87,11 @@ if (maybe) |a, b| a;
 (source_file
   (fragment
     (if_statement
-      (identifier)
+      condition: (identifier)
       (payload
         (identifier)
         (ERROR))
-      (identifier))))
+      then: (identifier))))
 
 ===========================
 While multi payload :error
@@ -104,13 +104,13 @@ while (next()) |a, b| {}
 (source_file
   (fragment
     (while_statement
-      (call_expression
-        (identifier)
-        (arguments))
+      condition: (call_expression
+        function: (identifier)
+        arguments: (arguments))
       (payload
         (identifier)
         (ERROR))
-      (block))))
+      do: (block))))
 
 ===========================
 Errdefer pointer payload :error
@@ -126,11 +126,11 @@ errdefer |*err| handle(err);
       (ERROR)
       (expression_statement
         (binary_expression
-          (pointer_type
+          left: (pointer_type
             (identifier))
-          (call_expression
-            (identifier)
-            (arguments
+          right: (call_expression
+            function: (identifier)
+            arguments: (arguments
               (identifier))))))))
 
 ===========================
@@ -143,10 +143,10 @@ const x = a[0:sentinel];
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (index_expression
-      (identifier)
-      (integer)
+      object: (identifier)
+      index: (integer)
       (ERROR))))
 
 ===========================
@@ -161,16 +161,16 @@ fn f() void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (for_statement
-        (identifier
+        iterable: (identifier
           (MISSING _bare_identifier))
         (payload
           (identifier))
-        (block)))))
+        do: (block)))))
 
 ===========================
 Pub test declaration :error
@@ -244,7 +244,7 @@ const T = anytype;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (ERROR
       (anytype))))
 
@@ -258,7 +258,7 @@ const U: anytype = undefined;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (ERROR
       (anytype))
     (undefined)))
@@ -273,7 +273,7 @@ const W: while = undefined;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (ERROR)
     (undefined)))
 
@@ -287,7 +287,7 @@ const T = foo.while;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (identifier)
     (ERROR)))
 
@@ -301,15 +301,15 @@ fn f(x: i32, ..., y: T) void {}
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters
       (parameter
-        (identifier)
-        (builtin_type))
+        name: (identifier)
+        type: (builtin_type))
       (parameter)
       (ERROR))
-    (builtin_type)
-    (block)))
+    type: (builtin_type)
+    body: (block)))
 
 ===========================
 Empty asm lists :error
@@ -321,10 +321,10 @@ fn f() void { asm volatile ("" : : :); }
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (parameters)
-    (builtin_type)
-    (block
+    type: (builtin_type)
+    body: (block
       (expression_statement
         (asm_expression
           (string)
@@ -342,7 +342,7 @@ const r = 0..10;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (ERROR
       (integer))
     (integer)))

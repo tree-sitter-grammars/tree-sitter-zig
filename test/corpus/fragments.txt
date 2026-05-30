@@ -23,10 +23,10 @@ if (ok) call();
 (source_file
   (fragment
     (if_statement
-      (identifier)
-      (call_expression
-        (identifier)
-        (arguments)))))
+      condition: (identifier)
+      then: (call_expression
+        function: (identifier)
+        arguments: (arguments)))))
 
 ==================
 Local declaration fragment
@@ -38,7 +38,7 @@ var x = 1;
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (integer)))
 
 ==================
@@ -55,8 +55,8 @@ return;
     (defer_statement
       (expression_statement
         (call_expression
-          (identifier)
-          (arguments)))))
+          function: (identifier)
+          arguments: (arguments)))))
   (fragment
     (expression_statement
       (return_expression))))
@@ -71,7 +71,7 @@ const values = [_]u32{ 0, 1, 0x1234_5678, 0xffff_ffff };
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (struct_initializer
       (array_type
         (identifier)
@@ -96,13 +96,13 @@ else
 (source_file
   (fragment
     (if_statement
-      (identifier)
-      (assignment_expression
-        (identifier)
-        (identifier))
-      (assignment_statement
-        (identifier)
-        (identifier)))))
+      condition: (identifier)
+      then: (assignment_expression
+        lvalue: (identifier)
+        rvalue: (identifier))
+      else: (assignment_statement
+        lvalue: (identifier)
+        rvalue: (identifier)))))
 
 ===================
 If Assign w. Cascade
@@ -120,18 +120,18 @@ else if (b)
 (source_file
   (fragment
     (if_statement
-      (identifier)
-      (assignment_expression
-        (identifier)
-        (identifier))
-      (if_statement
-        (identifier)
-        (assignment_expression
-          (identifier)
-          (identifier))
-        (assignment_statement
-          (identifier)
-          (identifier))))))
+      condition: (identifier)
+      then: (assignment_expression
+        lvalue: (identifier)
+        rvalue: (identifier))
+      else: (if_statement
+        condition: (identifier)
+        then: (assignment_expression
+          lvalue: (identifier)
+          rvalue: (identifier))
+        else: (assignment_statement
+          lvalue: (identifier)
+          rvalue: (identifier))))))
 
 ====================
 Legal ASM Volatile
@@ -152,8 +152,8 @@ asm volatile ("flushw" ::: .{ .memory = true });
             (asm_clobbers
               (literal_struct_value
                 (pair
-                  (identifier)
-                  (boolean))))))))))
+                  field: (identifier)
+                  value: (boolean))))))))))
 
 ====================
 Enum Literal
@@ -165,8 +165,8 @@ const variant: SomeKind = .literal;
 
 (source_file
   (variable_declaration
-    (identifier)
-    (identifier)
+    name: (identifier)
+    type: (identifier)
     (enum_literal)))
 
 ====================
@@ -181,20 +181,20 @@ _ = .{ null, null };
 (source_file
   (fragment
     (assignment_statement
-      (identifier)
-      (literal_tuple_value
+      lvalue: (identifier)
+      rvalue: (literal_tuple_value
         (item
           (null))
         (item
           (integer))
         (item
           (field_expression
-            (identifier)
-            (identifier))))))
+            object: (identifier)
+            member: (identifier))))))
   (fragment
     (assignment_statement
-      (identifier)
-      (literal_tuple_value
+      lvalue: (identifier)
+      rvalue: (literal_tuple_value
         (item
           (null))
         (item
