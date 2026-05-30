@@ -167,7 +167,7 @@ fn f() void {
     (block
       (for_statement
         (identifier
-          (MISSING _identifier))
+          (MISSING _bare_identifier))
         (payload
           (identifier))
         (block)))))

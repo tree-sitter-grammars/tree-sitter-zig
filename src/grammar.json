@@ -1,7 +1,7 @@
 {
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "zig",
-  "word": "_identifier",
+  "word": "_bare_identifier",
   "rules": {
     "source_file": {
       "type": "SEQ",
@@ -7140,11 +7140,15 @@
       "value": "@[A-Za-z_][A-Za-z0-9_]*"
     },
     "identifier": {
+      "type": "SYMBOL",
+      "name": "_identifier"
+    },
+    "_identifier": {
       "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_identifier"
+          "name": "_bare_identifier"
         },
         {
           "type": "SEQ",
@@ -7161,30 +7165,9 @@
         }
       ]
     },
-    "_identifier": {
+    "_bare_identifier": {
       "type": "PATTERN",
       "value": "[A-Za-z_][A-Za-z0-9_]*"
-    },
-    "_reserved_identifier": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "undefined"
-        },
-        {
-          "type": "STRING",
-          "value": "null"
-        },
-        {
-          "type": "STRING",
-          "value": "true"
-        },
-        {
-          "type": "STRING",
-          "value": "false"
-        }
-      ]
     },
     "top_doc_comment": {
       "type": "REPEAT1",
@@ -7320,9 +7303,7 @@
     ]
   ],
   "externals": [],
-  "inline": [
-    "_reserved_identifier"
-  ],
+  "inline": [],
   "supertypes": [
     "statement",
     "expression",

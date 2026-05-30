@@ -1418,7 +1418,22 @@
   {
     "type": "enum_literal",
     "named": true,
-    "fields": {}
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "@",
+            "named": false
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "errdefer_statement",

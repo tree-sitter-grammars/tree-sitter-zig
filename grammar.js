@@ -139,7 +139,7 @@ module.exports = grammar({
     $.primary_type_expression,
   ],
 
-  word: $ => $._identifier,
+  word: $ => $._bare_identifier,
 
   rules: {
     source_file: $ => seq(
@@ -1046,8 +1046,9 @@ module.exports = grammar({
 
     builtin_identifier: _ => /@[A-Za-z_][A-Za-z0-9_]*/,
 
-    identifier: $ => choice($._identifier, seq('@', $.string)),
-    _identifier: _ => /[A-Za-z_][A-Za-z0-9_]*/,
+    identifier: $ => $._identifier,
+    _identifier: $ => choice($._bare_identifier, seq('@', $.string)),
+    _bare_identifier: _ => /[A-Za-z_][A-Za-z0-9_]*/,
     
     top_doc_comment: $ => repeat1($._top_doc_comment_line),
 

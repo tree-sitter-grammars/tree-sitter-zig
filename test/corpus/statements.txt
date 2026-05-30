@@ -456,3 +456,43 @@ label: switch(val) {
               (break_label
                 (identifier))
               (enum_literal))))))))
+
+====================
+Recursive Switch
+====================
+
+const cie_ptr_or_id_size: u8 = switch (section) {
+    .eh_frame => 4,
+    .debug_frame => switch (unit_header.format) {
+        .@"32" => 4,
+        .@"64" => 8,
+    },
+};
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (builtin_type)
+    (switch_expression
+      (identifier)
+      (switch_case
+        (enum_literal)
+        (integer))
+      (switch_case
+        (enum_literal)
+        (switch_expression
+          (field_expression
+            (identifier)
+            (identifier))
+          (switch_case
+            (enum_literal
+              (string
+                (string_content)))
+            (integer))
+          (switch_case
+            (enum_literal
+              (string
+                (string_content)))
+            (integer)))))))
