@@ -223,7 +223,7 @@ module.exports = grammar({
 
     _variable_declaration_header: $ => prec(1, seq(
       choice('const', 'var'),
-      $.identifier,
+      field('name', $.identifier),
       optional(seq(
         ':',
         field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression)),

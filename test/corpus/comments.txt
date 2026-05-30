@@ -45,7 +45,7 @@ pub usingnamespace ns;
     body: (block))
   (variable_declaration
     doc: (doc_comment)
-    (identifier)
+    name: (identifier)
     (integer))
   (test_declaration
     doc: (doc_comment)
@@ -97,7 +97,7 @@ const S = struct {
 
 (source_file
   (variable_declaration
-    (identifier)
+    name: (identifier)
     (struct_declaration
       (container_field
         doc: (doc_comment)
