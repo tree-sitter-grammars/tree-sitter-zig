@@ -981,7 +981,7 @@ module.exports = grammar({
       '"',
     ),
 
-    multiline_string: _ => prec.right(repeat1(seq('\\\\', /[^\n]*/))),
+    multiline_string: $ => prec.right(repeat1(seq('\\\\', alias(token(/[^\n]*/), $.string_content)))),
 
     escape_sequence: _ => token(prec(1, seq(
       '\\',
