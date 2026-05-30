@@ -237,7 +237,7 @@ fn statements(b: i32) void {
     body: (block
       (expression_statement
         (switch_expression
-          (identifier)
+          on: (identifier)
           (switch_case
             case: (integer)
             case: (integer)
@@ -321,7 +321,7 @@ switch (i) {
 (source_file
   (fragment
     (switch_expression
-      (identifier)
+      on: (identifier)
       (switch_case
         case: (integer)
         then: (assignment_expression
@@ -437,7 +437,7 @@ label: switch(val) {
   (container_field
     name: (identifier)
     type: (switch_expression
-      (identifier)
+      on: (identifier)
       (switch_case
         case: (enum_literal)
         then: (continue_expression
@@ -476,14 +476,14 @@ const cie_ptr_or_id_size: u8 = switch (section) {
     name: (identifier)
     type: (builtin_type)
     (switch_expression
-      (identifier)
+      on: (identifier)
       (switch_case
         case: (enum_literal)
         then: (integer))
       (switch_case
         case: (enum_literal)
         then: (switch_expression
-          (field_expression
+          on: (field_expression
             object: (identifier)
             member: (identifier))
           (switch_case

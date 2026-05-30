@@ -207,7 +207,7 @@ fn expressions(tag: u8) void {
     type: (builtin_type)
     body: (block
       (switch_expression
-        (identifier)
+        on: (identifier)
         (switch_case
           case: (integer)
           case: (integer)

@@ -733,7 +733,7 @@ module.exports = grammar({
     switch_expression: $ => seq(
       optional($.block_label),
       'switch',
-      '(', $.expression, ')',
+      '(', field('on', $.expression), ')',
       '{',
       optionalCommaSep($.switch_case),
       '}',

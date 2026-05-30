@@ -2889,17 +2889,24 @@
   {
     "type": "switch_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "on": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "block_label",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         },
         {

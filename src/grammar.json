@@ -4740,8 +4740,12 @@
           "value": "("
         },
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "FIELD",
+          "name": "on",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
         },
         {
           "type": "STRING",

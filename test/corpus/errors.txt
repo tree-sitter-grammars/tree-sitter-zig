@@ -11,7 +11,7 @@ switch (x) {
 (source_file
   (fragment
     (switch_expression
-      (identifier)
+      on: (identifier)
       (switch_case
         case: (integer)
         then: (identifier))
@@ -67,7 +67,7 @@ switch (x) {
 (source_file
   (fragment
     (switch_expression
-      (identifier)
+      on: (identifier)
       (switch_case
         case: (integer)
         (payload
