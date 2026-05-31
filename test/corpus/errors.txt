@@ -1,5 +1,6 @@
 ===========================
-Multiple assignment switch :error
+Multiple assignment switch
+:error
 ===========================
 
 switch (x) {
@@ -22,7 +23,8 @@ switch (x) {
           arguments: (arguments))))))
 
 ===========================
-For else payload :error
+For else payload
+:error
 ===========================
 
 fn f(xs: []u8) void {
@@ -55,7 +57,8 @@ fn f(xs: []u8) void {
             (MISSING ";")))))))
 
 ===========================
-Switch index pointer payload :error
+Switch index pointer payload
+:error
 ===========================
 
 switch (x) {
@@ -77,7 +80,8 @@ switch (x) {
         then: (identifier)))))
 
 ===========================
-If multi payload :error
+If multi payload
+:error
 ===========================
 
 if (maybe) |a, b| a;
@@ -94,7 +98,8 @@ if (maybe) |a, b| a;
       then: (identifier))))
 
 ===========================
-While multi payload :error
+While multi payload
+:error
 ===========================
 
 while (next()) |a, b| {}
@@ -113,7 +118,8 @@ while (next()) |a, b| {}
       do: (block))))
 
 ===========================
-Errdefer pointer payload :error
+Errdefer pointer payload
+:error
 ===========================
 
 errdefer |*err| handle(err);
@@ -134,7 +140,8 @@ errdefer |*err| handle(err);
               (identifier))))))))
 
 ===========================
-Index sentinel without slice :error
+Index sentinel without slice
+:error
 ===========================
 
 const x = a[0:sentinel];
@@ -150,7 +157,8 @@ const x = a[0:sentinel];
       (ERROR))))
 
 ===========================
-Empty for input list :error
+Empty for input list
+:error
 ===========================
 
 fn f() void {
@@ -173,7 +181,8 @@ fn f() void {
         do: (block)))))
 
 ===========================
-Pub test declaration :error
+Pub test declaration
+:error
 ===========================
 
 pub test "x" {}
@@ -188,7 +197,8 @@ pub test "x" {}
     (block)))
 
 ===========================
-Pub comptime declaration :error
+Pub comptime declaration
+:error
 ===========================
 
 pub comptime {}
@@ -202,7 +212,8 @@ pub comptime {}
       (block))))
 
 ===========================
-Extern function body :error
+Extern function body
+:error
 ===========================
 
 extern fn f() void {}
@@ -218,7 +229,8 @@ extern fn f() void {}
       (initializer_list))))
 
 ===========================
-Extern string function body :error
+Extern string function body
+:error
 ===========================
 
 extern "c" fn f() void {}
@@ -235,7 +247,8 @@ extern "c" fn f() void {}
     (initializer_list)))
 
 ===========================
-Anytype value expression :error
+Anytype value expression
+:error
 ===========================
 
 const T = anytype;
@@ -249,7 +262,8 @@ const T = anytype;
       (anytype))))
 
 ===========================
-Anytype type annotation :error
+Anytype type annotation
+:error
 ===========================
 
 const U: anytype = undefined;
@@ -264,7 +278,8 @@ const U: anytype = undefined;
     value: (undefined)))
 
 ===========================
-While keyword type :error
+While keyword type
+:error
 ===========================
 
 const W: while = undefined;
@@ -278,7 +293,8 @@ const W: while = undefined;
     value: (undefined)))
 
 ===========================
-Keyword field access :error
+Keyword field access
+:error
 ===========================
 
 const T = foo.while;
@@ -292,7 +308,8 @@ const T = foo.while;
     (ERROR)))
 
 ===========================
-Variadic function body :error
+Variadic function body
+:error
 ===========================
 
 fn f(x: i32, ..., y: T) void {}
@@ -312,7 +329,8 @@ fn f(x: i32, ..., y: T) void {}
     body: (block)))
 
 ===========================
-Empty asm lists :error
+Empty asm lists
+:error
 ===========================
 
 fn f() void { asm volatile ("" : : :); }
@@ -333,7 +351,8 @@ fn f() void { asm volatile ("" : : :); }
           (ERROR))))))
 
 ===========================
-Standalone range expression :error
+Standalone range expression
+:error
 ===========================
 
 const r = 0..10;
