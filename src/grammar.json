@@ -1792,8 +1792,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "payload"
+              "type": "FIELD",
+              "name": "err",
+              "content": {
+                "type": "SYMBOL",
+                "name": "payload"
+              }
             },
             {
               "type": "BLANK"
@@ -6149,8 +6153,12 @@
                     "type": "CHOICE",
                     "members": [
                       {
-                        "type": "SYMBOL",
-                        "name": "payload"
+                        "type": "FIELD",
+                        "name": "err",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "payload"
+                        }
                       },
                       {
                         "type": "BLANK"

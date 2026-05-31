@@ -1440,9 +1440,20 @@
   {
     "type": "errdefer_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "err": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "payload",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -1459,10 +1470,6 @@
         },
         {
           "type": "labeled_block",
-          "named": true
-        },
-        {
-          "type": "payload",
           "named": true
         }
       ]
@@ -1968,6 +1975,16 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "err": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "payload",
             "named": true
           }
         ]

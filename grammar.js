@@ -283,9 +283,13 @@ module.exports = grammar({
         field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
         ':',
       )),
-      field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression, alias('anytype', $.anytype))),
+      field('type', choice($.type_expression,
+                           $.if_type_expression,
+                           $.comptime_type_expression,
+                           alias('anytype', $.anytype))),
     )),
 
+    // deprecated
     using_namespace_declaration: $ => seq(
       optional(field('doc', $.doc_comment)),
       optional('pub'),
@@ -294,10 +298,7 @@ module.exports = grammar({
       ';',
     ),
 
-    block: $ => seq(
-      '{',
-      repeat($.statement),
-      '}',
+    block: $ => seq( '{', repeat($.statement), '}',
     ),
 
     struct_declaration: $ => seq(
@@ -390,7 +391,10 @@ module.exports = grammar({
 
     defer_statement: $ => seq('defer', $._block_expr_statement),
 
-    errdefer_statement: $ => seq('errdefer', optional($.payload), $._block_expr_statement),
+    errdefer_statement: $ => seq( 
+      'errdefer',
+      optional(field('err', $.payload)),
+      $._block_expr_statement),
 
     _block_expr_statement: $ => prec(1, choice(
       $._block_expression,
@@ -703,6 +707,7 @@ module.exports = grammar({
 
     comptime_expression: $ => prec.right(seq('comptime', $.expression)),
 
+    // deprecated
     nosuspend_expression: $ => prec.right(seq('nosuspend', $.expression)),
 
     continue_expression: $ => prec.right(seq(
@@ -711,6 +716,7 @@ module.exports = grammar({
       optional($.expression),
     )),
 
+    // deprecated
     resume_expression: $ => prec.right(seq('resume', $.expression)),
 
     return_expression: $ => prec.right(seq('return', optional($.expression))),
@@ -950,7 +956,7 @@ module.exports = grammar({
     if_type_expression: $ => prec.right(seq(
       $._if_prefix,
       $.type_expression,
-      optional(seq('else', optional($.payload), $.type_expression)),
+      optional(seq('else', optional(field('err', $.payload)), $.type_expression)),
     )),
 
     parenthesized_expression: $ => seq('(', $.expression, ')'),

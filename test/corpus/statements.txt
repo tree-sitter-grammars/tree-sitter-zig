@@ -51,7 +51,7 @@ fn statements() void {
             function: (identifier)
             arguments: (arguments))))
       (errdefer_statement
-        (payload
+        err: (payload
           (identifier))
         (expression_statement
           (call_expression
