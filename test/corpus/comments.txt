@@ -25,9 +25,6 @@ fn f() void {}
 /// Variable docs.
 const x = 1;
 
-/// Test docs.
-test "name" {}
-
 /// Comptime docs.
 comptime {}
 
@@ -47,11 +44,6 @@ pub usingnamespace ns;
     doc: (doc_comment)
     name: (identifier)
     value: (integer))
-  (test_declaration
-    doc: (doc_comment)
-    (string
-      (string_content))
-    (block))
   (comptime_declaration
     doc: (doc_comment)
     (block))

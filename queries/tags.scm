@@ -63,15 +63,11 @@
 
 ; Tests
 
-(
-  (test_declaration
-    doc: (doc_comment)? @doc
-    [
-      (identifier) @name
-      (string) @name
-    ]) @definition.test
-  (#strip! @doc "(?m)^\\s*///\\s?")
-)
+(test_declaration
+  [
+    (identifier) @name
+    (string) @name
+  ]) @definition.test
 
 ; Fields and locals
 

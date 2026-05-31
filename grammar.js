@@ -166,7 +166,6 @@ module.exports = grammar({
     ),
 
     test_declaration: $ => seq(
-      optional(field('doc', $.doc_comment)),
       'test',
       optional(choice($.string, $.identifier)),
       $.block,

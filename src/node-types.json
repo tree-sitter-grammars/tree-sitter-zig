@@ -2942,18 +2942,7 @@
   {
     "type": "test_declaration",
     "named": true,
-    "fields": {
-      "doc": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "doc_comment",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
