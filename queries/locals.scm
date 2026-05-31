@@ -7,69 +7,59 @@
 
 [
   (variable_declaration
-    .
-    (identifier) @local.definition.var)
+    name: (identifier) @local.definition.var)
   (local_variable_declaration
-    .
-    (identifier) @local.definition.var)
+    name: (identifier) @local.definition.var)
 ]
 
 [
   (variable_declaration
-    .
-    (identifier) @local.definition.type
-    (enum_declaration))
+    name: (identifier) @local.definition.type
+    value: [
+      (enum_declaration)
+      (error_set_declaration)
+      (function_signature)
+      (opaque_declaration)
+      (struct_declaration)
+      (tuple_declaration)
+      (union_declaration)
+    ])
   (local_variable_declaration
-    .
-    (identifier) @local.definition.type
-    (enum_declaration))
+    name: (identifier) @local.definition.type
+    value: [
+      (enum_declaration)
+      (error_set_declaration)
+      (function_signature)
+      (opaque_declaration)
+      (struct_declaration)
+      (tuple_declaration)
+      (union_declaration)
+    ])
 ]
-
-(container_field
-  type: (identifier) @local.definition.field)
-
-(enum_declaration
-  (function_declaration
-    name: (identifier) @local.definition.method))
-
-[
-  (variable_declaration
-    .
-    (identifier) @local.definition.type
-    (struct_declaration))
-  (local_variable_declaration
-    .
-    (identifier) @local.definition.type
-    (struct_declaration))
-]
-
-(struct_declaration
-  (function_declaration
-    name: (identifier) @local.definition.method))
 
 (container_field
   name: (identifier) @local.definition.field)
 
 [
-  (variable_declaration
-    .
-    (identifier) @local.definition.type
-    (union_declaration))
-  (local_variable_declaration
-    .
-    (identifier) @local.definition.type
-    (union_declaration))
+  (enum_declaration
+    (function_declaration
+      name: (identifier) @local.definition.method))
+  (opaque_declaration
+    (function_declaration
+      name: (identifier) @local.definition.method))
+  (struct_declaration
+    (function_declaration
+      name: (identifier) @local.definition.method))
+  (union_declaration
+    (function_declaration
+      name: (identifier) @local.definition.method))
 ]
-
-(union_declaration
-  (function_declaration
-    name: (identifier) @local.definition.method))
 
 (payload
   (identifier) @local.definition.var)
 
 (block_label
-  (identifier) @local.definition)
+  name: (identifier) @local.definition)
 
 ; References
 (identifier) @local.reference
@@ -103,13 +93,17 @@
   member: (identifier) @local.reference
   (#set! reference.kind "field"))
 
+(pair
+  field: (identifier) @local.reference
+  (#set! reference.kind "field"))
+
 (call_expression
   function: (field_expression
     member: (identifier) @local.reference
     (#set! reference.kind "function")))
 
 (break_label
-  (identifier) @local.reference)
+  label: (identifier) @local.reference)
 
 [
   (for_statement)
@@ -119,5 +113,8 @@
   (block)
   (source_file)
   (enum_declaration)
+  (opaque_declaration)
   (struct_declaration)
+  (switch_case)
+  (union_declaration)
 ] @local.scope
