@@ -1,3 +1,8 @@
+;; Modified from https://github.com/nvim-treesitter/nvim-treesitter-textobjects/tree/main/queries/zig
+;;
+;; I don't have an obvious way to test these, so this is by eye.  There's room
+;; to improve it further I imagine.
+
 ; "Classes"
 [
   (variable_declaration
@@ -117,7 +122,7 @@
 
 ; comments
 (comment) @comment.outer
-(doc-comment) @comment.outer
+(doc_comment) @comment.outer
 
 ; conditionals
 (if_statement) @conditional.outer

@@ -1,20 +1,22 @@
 ; Definitions
 (function_declaration
-  name: (identifier) @local.definition.function)
+  name: (identifier) @local.definition
+  (#set! definition.kind "function"))
 
 (parameter
-  name: (identifier) @local.definition.parameter)
+  name: (identifier) @local.definition
+  (#set! definition.kind "parameter"))
 
 [
   (variable_declaration
-    name: (identifier) @local.definition.var)
+    name: (identifier) @local.definition)
   (local_variable_declaration
-    name: (identifier) @local.definition.var)
-]
+    name: (identifier) @local.definition)
+] (#set! definition.kind "var")
 
 [
   (variable_declaration
-    name: (identifier) @local.definition.type
+    name: (identifier) @local.definition
     value: [
       (enum_declaration)
       (error_set_declaration)
@@ -25,7 +27,7 @@
       (union_declaration)
     ])
   (local_variable_declaration
-    name: (identifier) @local.definition.type
+    name: (identifier) @local.definition
     value: [
       (enum_declaration)
       (error_set_declaration)
@@ -35,28 +37,30 @@
       (tuple_declaration)
       (union_declaration)
     ])
-]
+] (#set! definition.kind "type")
 
 (container_field
-  name: (identifier) @local.definition.field)
+  name: (identifier) @local.definition
+  (#set! definition.kind "field"))
 
 [
   (enum_declaration
     (function_declaration
-      name: (identifier) @local.definition.method))
+      name: (identifier) @local.definition))
   (opaque_declaration
     (function_declaration
-      name: (identifier) @local.definition.method))
+      name: (identifier) @local.definition))
   (struct_declaration
     (function_declaration
-      name: (identifier) @local.definition.method))
+      name: (identifier) @local.definition))
   (union_declaration
     (function_declaration
-      name: (identifier) @local.definition.method))
-]
+      name: (identifier) @local.definition))
+] (#set! definition.kind "method")
 
 (payload
-  (identifier) @local.definition.var)
+  (identifier) @local.definition
+  (#set! definition.kind "var"))
 
 (block_label
   name: (identifier) @local.definition)
