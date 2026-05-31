@@ -100,3 +100,60 @@
 
 (block_label
   name: (identifier) @name) @definition.label
+
+; Calls
+
+[
+  (call_expression
+    function: (identifier) @name)
+  (call_expression
+    function: (field_expression
+      member: (identifier) @name))
+  (builtin_function
+    (builtin_identifier) @name)
+] @reference.call
+
+; Type-like references
+
+[
+  (parameter
+    type: (identifier) @name)
+  (container_field
+    type: (identifier) @name)
+  (variable_declaration
+    type: (identifier) @name)
+  (local_variable_declaration
+    type: (identifier) @name)
+  (function_declaration
+    type: (identifier) @name)
+  (function_signature
+    type: (identifier) @name)
+  (struct_initializer
+    (identifier) @name)
+  (pointer_type
+    (identifier) @name)
+  (slice_type
+    (identifier) @name)
+  (array_type
+    (identifier) @name)
+  (nullable_type
+    (identifier) @name)
+  (error_union_type
+    error: (identifier) @name)
+  (error_union_type
+    ok: (identifier) @name)
+  (field_expression
+    object: (identifier) @name)
+] @reference.class
+
+; Fields and labels
+
+[
+  (field_expression
+    member: (identifier) @name)
+  (pair
+    field: (identifier) @name)
+] @reference.field
+
+(break_label
+  label: (identifier) @name) @reference.label
