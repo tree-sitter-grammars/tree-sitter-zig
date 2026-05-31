@@ -9,7 +9,7 @@ const Handler = fn (i32, anytype) void;
 (source_file
   (variable_declaration
     name: (identifier)
-    (function_signature
+    value: (function_signature
       (parameters
         (parameter
           type: (builtin_type))
@@ -28,7 +28,7 @@ const Frame = anyframe->void;
 (source_file
   (variable_declaration
     name: (identifier)
-    (anyframe_type
+    value: (anyframe_type
       (builtin_type))))
 
 ==================
@@ -42,7 +42,7 @@ const ErrorUnion = error{ A }!u8;
 (source_file
   (variable_declaration
     name: (identifier)
-    (error_union_type
+    value: (error_union_type
       error: (error_set_declaration
         (identifier))
       ok: (builtin_type))))
@@ -59,12 +59,12 @@ const ManyPtrC = [*c]allowzero volatile u8;
 (source_file
   (variable_declaration
     name: (identifier)
-    (pointer_type
+    value: (pointer_type
       sentinel: (integer)
       (builtin_type)))
   (variable_declaration
     name: (identifier)
-    (pointer_type
+    value: (pointer_type
       (builtin_type))))
 
 ==================
@@ -78,7 +78,7 @@ const Slice = [:0]align(4) addrspace(.generic) const u8;
 (source_file
   (variable_declaration
     name: (identifier)
-    (slice_type
+    value: (slice_type
       sentinel: (integer)
       (byte_alignment
         (integer))
@@ -97,7 +97,7 @@ const Array = [4:0]u8;
 (source_file
   (variable_declaration
     name: (identifier)
-    (array_type
+    value: (array_type
       (integer)
       sentinel: (integer)
       (builtin_type))))
@@ -117,7 +117,7 @@ const conditional_value: if (cond) u8 else u16 = 0;
       condition: (identifier)
       (builtin_type)
       (builtin_type))
-    (integer)))
+    value: (integer)))
 
 ==================
 Comptime type expression
@@ -132,7 +132,7 @@ const computed_value: comptime u8 = 0;
     name: (identifier)
     type: (comptime_type_expression
       (builtin_type))
-    (integer)))
+    value: (integer)))
 
 ==================
 Anonymous list initializer
@@ -145,7 +145,7 @@ const anon = .{ 1, 2, 3 };
 (source_file
   (variable_declaration
     name: (identifier)
-    (literal_tuple_value
+    value: (literal_tuple_value
       (item
         (integer))
       (item
@@ -164,7 +164,7 @@ const fields = .{ .x = 1, .y = 2 };
 (source_file
   (variable_declaration
     name: (identifier)
-    (literal_struct_value
+    value: (literal_struct_value
       (pair
         field: (identifier)
         value: (integer))
@@ -183,7 +183,7 @@ const typed = Point{ .x = 1, .y = 2 };
 (source_file
   (variable_declaration
     name: (identifier)
-    (struct_initializer
+    value: (struct_initializer
       (identifier)
       (initializer_list
         (pair

@@ -22,11 +22,11 @@ fn statements() void {
         (block
           (local_variable_declaration
             name: (identifier)
-            (integer))))
+            value: (integer))))
       (comptime_statement
         (local_variable_declaration
           name: (identifier)
-          (integer))))))
+          value: (integer))))))
 
 ==================
 Defer statements
@@ -205,7 +205,7 @@ fn statements(maybe: ?i32) void {
         (block
           (local_variable_declaration
             name: (identifier)
-            (if_expression
+            value: (if_expression
               condition: (identifier)
               (payload
                 (identifier))
@@ -411,7 +411,7 @@ const which = if (a)
 (source_file
   (variable_declaration
     name: (identifier)
-    (if_expression
+    value: (if_expression
       condition: (identifier)
       then: (if_expression
         condition: (identifier)
@@ -475,7 +475,7 @@ const cie_ptr_or_id_size: u8 = switch (section) {
   (variable_declaration
     name: (identifier)
     type: (builtin_type)
-    (switch_expression
+    value: (switch_expression
       on: (identifier)
       (switch_case
         case: (enum_literal)

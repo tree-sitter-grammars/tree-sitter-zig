@@ -39,7 +39,7 @@ var x = 1;
 (source_file
   (variable_declaration
     name: (identifier)
-    (integer)))
+    value: (integer)))
 
 ==================
 Multiple statement fragment
@@ -72,7 +72,7 @@ const values = [_]u32{ 0, 1, 0x1234_5678, 0xffff_ffff };
 (source_file
   (variable_declaration
     name: (identifier)
-    (struct_initializer
+    value: (struct_initializer
       (array_type
         (identifier)
         (builtin_type))
@@ -167,7 +167,7 @@ const variant: SomeKind = .literal;
   (variable_declaration
     name: (identifier)
     type: (identifier)
-    (enum_literal)))
+    value: (enum_literal)))
 
 ====================
 Anonymous List Initializer Fragment

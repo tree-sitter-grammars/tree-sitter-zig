@@ -2226,11 +2226,21 @@
             "named": true
           }
         ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "address_space",
@@ -2238,10 +2248,6 @@
         },
         {
           "type": "byte_alignment",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         },
         {
@@ -3155,6 +3161,16 @@
             "named": true
           }
         ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -3167,10 +3183,6 @@
         },
         {
           "type": "byte_alignment",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         },
         {

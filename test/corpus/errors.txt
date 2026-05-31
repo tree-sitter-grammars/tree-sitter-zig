@@ -144,7 +144,7 @@ const x = a[0:sentinel];
 (source_file
   (variable_declaration
     name: (identifier)
-    (index_expression
+    value: (index_expression
       object: (identifier)
       index: (integer)
       (ERROR))))
@@ -246,7 +246,7 @@ const T = anytype;
   (variable_declaration
     name: (identifier)
     (ERROR
-      (anytype))))
+     (anytype))))
 
 ===========================
 Anytype type annotation :error
@@ -261,7 +261,7 @@ const U: anytype = undefined;
     name: (identifier)
     (ERROR
       (anytype))
-    (undefined)))
+    value: (undefined)))
 
 ===========================
 While keyword type :error
@@ -275,7 +275,7 @@ const W: while = undefined;
   (variable_declaration
     name: (identifier)
     (ERROR)
-    (undefined)))
+    value: (undefined)))
 
 ===========================
 Keyword field access :error
@@ -288,7 +288,7 @@ const T = foo.while;
 (source_file
   (variable_declaration
     name: (identifier)
-    (identifier)
+    value: (identifier)
     (ERROR)))
 
 ===========================
@@ -344,5 +344,5 @@ const r = 0..10;
   (variable_declaration
     name: (identifier)
     (ERROR
-      (integer))
-    (integer)))
+    (integer))
+    value: (integer)))

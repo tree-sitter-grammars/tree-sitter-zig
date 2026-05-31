@@ -202,14 +202,14 @@ module.exports = grammar({
       )),
       optional('threadlocal'),
       $._variable_declaration_header,
-      optional(seq('=', $.expression)),
+      optional(seq('=', field('value', $.expression))),
       ';',
     ),
 
     _variable_declaration_expression_statement: $ => seq(
       $._variable_declaration_header,
       '=',
-      $.expression,
+      field('value', $.expression),
       ';',
     ),
 

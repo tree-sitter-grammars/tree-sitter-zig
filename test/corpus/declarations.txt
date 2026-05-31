@@ -56,7 +56,7 @@ test "decls" {
     (block
       (local_variable_declaration
         name: (identifier)
-        (struct_initializer
+        value: (struct_initializer
           (identifier)
           (initializer_list
             (pair
@@ -93,7 +93,7 @@ comptime {
     (block
       (local_variable_declaration
         name: (identifier)
-        (integer)))))
+        value: (integer)))))
 
 ==================
 Variable declaration
@@ -119,7 +119,7 @@ pub extern "c" threadlocal var global: [4:0]u8 align(4) addrspace(.generic) link
     (link_section
       (string
         (string_content)))
-    (literal_tuple_value
+    value: (literal_tuple_value
       (item
         (integer))
       (item
@@ -144,7 +144,7 @@ const Point = struct {
 (source_file
   (variable_declaration
     name: (identifier)
-    (struct_declaration
+    value: (struct_declaration
       (container_field
         name: (identifier)
         type: (builtin_type)
@@ -176,7 +176,7 @@ const Color = enum(u8) {
 (source_file
   (variable_declaration
     name: (identifier)
-    (enum_declaration
+    value: (enum_declaration
       (builtin_type)
       (container_field
         name: (identifier))
@@ -200,7 +200,7 @@ const Payload = union(enum(u8)) {
 (source_file
   (variable_declaration
     name: (identifier)
-    (union_declaration
+    value: (union_declaration
       (builtin_type)
       (container_field
         name: (identifier))
@@ -221,7 +221,7 @@ const Hidden = opaque {
 (source_file
   (variable_declaration
     name: (identifier)
-    (opaque_declaration
+    value: (opaque_declaration
       (container_field
         name: (identifier)
         type: (builtin_type)))))
@@ -237,7 +237,7 @@ const FileError = error{ NotFound, Denied };
 (source_file
   (variable_declaration
     name: (identifier)
-    (error_set_declaration
+    value: (error_set_declaration
       (identifier)
       (identifier))))
 
@@ -261,7 +261,7 @@ fn peek() Grapheme {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (literal_tuple_value
+        value: (literal_tuple_value
           (item
             (identifier))
           (item
@@ -303,7 +303,7 @@ const Value = struct { a: asn1.Oid, b: i32 };
 (source_file
   (variable_declaration
     name: (identifier)
-    (struct_declaration
+    value: (struct_declaration
       (container_field
         name: (identifier)
         type: (field_expression
@@ -330,7 +330,7 @@ pub const UwTable = enum(u32) {
 (source_file
   (variable_declaration
     name: (identifier)
-    (enum_declaration
+    value: (enum_declaration
       (builtin_type)
       (container_field
         name: (identifier))
@@ -340,6 +340,6 @@ pub const UwTable = enum(u32) {
         name: (identifier))
       (variable_declaration
         name: (identifier)
-        (field_expression
+        value: (field_expression
           object: (identifier)
           member: (identifier))))))

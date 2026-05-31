@@ -16,7 +16,7 @@ fn expressions() void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (builtin_function
+        value: (builtin_function
           (builtin_identifier)
           (arguments
             (builtin_type)
@@ -42,7 +42,7 @@ fn expressions() void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (binary_expression
+        value: (binary_expression
           left: (parenthesized_expression
             (binary_expression
               left: (integer)
@@ -50,14 +50,14 @@ fn expressions() void {
           right: (integer)))
       (local_variable_declaration
         name: (identifier)
-        (binary_expression
+        value: (binary_expression
           left: (binary_expression
             left: (identifier)
             right: (identifier))
           right: (identifier)))
       (local_variable_declaration
         name: (identifier)
-        (binary_expression
+        value: (binary_expression
           left: (identifier)
           right: (integer))))))
 
@@ -80,11 +80,11 @@ fn expressions() void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (unary_expression
+        value: (unary_expression
           argument: (identifier)))
       (local_variable_declaration
         name: (identifier)
-        (unary_expression
+        value: (unary_expression
           argument: (identifier))))))
 
 ==================
@@ -106,14 +106,14 @@ fn expressions() void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (call_expression
+        value: (call_expression
           function: (identifier)
           arguments: (arguments
             (identifier)
             (integer))))
       (local_variable_declaration
         name: (identifier)
-        (null_coercion_expression
+        value: (null_coercion_expression
           (dereference_expression
             (field_expression
               object: (index_expression
@@ -158,20 +158,20 @@ fn expressions(items: []u8, start: usize, end: usize, sentinel: u8) void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (index_expression
+        value: (index_expression
           object: (identifier)
           (range_expression
             from: (identifier)
             to: (identifier))))
       (local_variable_declaration
         name: (identifier)
-        (index_expression
+        value: (index_expression
           object: (identifier)
           (range_expression
             from: (identifier))))
       (local_variable_declaration
         name: (identifier)
-        (index_expression
+        value: (index_expression
           object: (identifier)
           (range_expression
             from: (identifier)
@@ -235,11 +235,11 @@ fn expressions() void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (error_type
+        value: (error_type
           (identifier)))
       (local_variable_declaration
         name: (identifier)
-        (catch_expression
+        value: (catch_expression
           (call_expression
             function: (identifier)
             arguments: (arguments))
@@ -248,7 +248,7 @@ fn expressions() void {
           (integer)))
       (local_variable_declaration
         name: (identifier)
-        (try_expression
+        value: (try_expression
           (call_expression
             function: (identifier)
             arguments: (arguments)))))))
@@ -275,7 +275,7 @@ fn expressions(frame: anyframe) void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (call_expression
+        value: (call_expression
           function: (identifier)
           arguments: (arguments
             (identifier)
@@ -284,11 +284,11 @@ fn expressions(frame: anyframe) void {
             (identifier))))
       (local_variable_declaration
         name: (identifier)
-        (nosuspend_expression
+        value: (nosuspend_expression
           (identifier)))
       (local_variable_declaration
         name: (identifier)
-        (comptime_expression
+        value: (comptime_expression
           (builtin_function
             (builtin_identifier)
             (arguments
@@ -318,7 +318,7 @@ fn expressions(items: []const i32) void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (for_expression
+        value: (for_expression
           iterable: (identifier)
           (payload
             (identifier))
@@ -326,7 +326,7 @@ fn expressions(items: []const i32) void {
           else: (integer)))
       (local_variable_declaration
         name: (identifier)
-        (while_expression
+        value: (while_expression
           condition: (call_expression
             function: (identifier)
             arguments: (arguments))
@@ -353,7 +353,7 @@ fn expressions() void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (labeled_type_expression
+        value: (labeled_type_expression
           (block_label
             name: (identifier))
           (block
@@ -391,27 +391,27 @@ fn expressions() void {
     body: (block
       (local_variable_declaration
         name: (identifier)
-        (boolean))
+        value: (boolean))
       (local_variable_declaration
         name: (identifier)
-        (float))
+        value: (float))
       (local_variable_declaration
         name: (identifier)
-        (character
+        value: (character
           (character_content)))
       (local_variable_declaration
         name: (identifier)
-        (character
+        value: (character
           (escape_sequence)))
       (local_variable_declaration
         name: (identifier)
-        (string
+        value: (string
           (string_content)
           (escape_sequence)
           (string_content)))
       (local_variable_declaration
         name: (identifier)
-        (multiline_string
+        value: (multiline_string
           (string_content)
           (string_content))))))
 
@@ -508,7 +508,7 @@ var differ = if (T == u8) BytesDiffer{
 (source_file
   (variable_declaration
     name: (identifier)
-    (if_expression
+    value: (if_expression
       condition: (binary_expression
         left: (identifier)
         right: (builtin_type))

@@ -13,7 +13,7 @@ const x = 1;
   doc: (top_doc_comment)
   (variable_declaration
     name: (identifier)
-    (integer)))
+    value: (integer)))
 
 ==================
 Declaration doc comments
@@ -46,7 +46,7 @@ pub usingnamespace ns;
   (variable_declaration
     doc: (doc_comment)
     name: (identifier)
-    (integer))
+    value: (integer))
   (test_declaration
     doc: (doc_comment)
     (string
@@ -98,7 +98,7 @@ const S = struct {
 (source_file
   (variable_declaration
     name: (identifier)
-    (struct_declaration
+    value: (struct_declaration
       (container_field
         doc: (doc_comment)
         name: (identifier)
