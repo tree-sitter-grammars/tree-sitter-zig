@@ -121,9 +121,9 @@
   (local_variable_declaration
     type: (identifier) @name)
   (function_declaration
-    type: (identifier) @name)
+    return_type: (identifier) @name)
   (function_signature
-    type: (identifier) @name)
+    return_type: (identifier) @name)
   (struct_initializer
     (identifier) @name)
   (pointer_type

@@ -17,5 +17,5 @@ fn f(x: []if (b) A else B) void {}
             condition: (identifier)
             (identifier)
             (identifier)))))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block)))

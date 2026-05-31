@@ -16,7 +16,7 @@ fn statements() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (comptime_statement
         (block
@@ -43,7 +43,7 @@ fn statements() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (defer_statement
         (expression_statement
@@ -76,7 +76,7 @@ fn statements() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (suspend_statement
         (block))
@@ -106,7 +106,7 @@ fn statements() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (labeled_statement
         (block_label
@@ -159,7 +159,7 @@ fn statements(xs: []const i32) void {
         name: (identifier)
         type: (slice_type
           (builtin_type))))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (for_statement
         iterable: (identifier)
@@ -197,7 +197,7 @@ fn statements(maybe: ?i32) void {
         name: (identifier)
         type: (nullable_type
           (builtin_type))))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (labeled_statement
         (block_label
@@ -233,7 +233,7 @@ fn statements(b: i32) void {
       (parameter
         name: (identifier)
         type: (builtin_type)))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (expression_statement
         (switch_expression
@@ -282,7 +282,7 @@ fn appendU32(allocator: std.mem.Allocator, buffer: *std.ArrayList(u8), value: u3
       (parameter
         name: (identifier)
         type: (builtin_type)))
-    type: (error_union_type
+    return_type: (error_union_type
       error: (identifier)
       ok: (builtin_type))
     body: (block)))

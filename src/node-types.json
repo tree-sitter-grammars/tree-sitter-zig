@@ -1726,7 +1726,7 @@
           }
         ]
       },
-      "type": {
+      "return_type": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1790,7 +1790,7 @@
           }
         ]
       },
-      "type": {
+      "return_type": {
         "multiple": false,
         "required": true,
         "types": [

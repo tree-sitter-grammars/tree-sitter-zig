@@ -38,7 +38,7 @@ pub usingnamespace ns;
     doc: (doc_comment)
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block))
   (variable_declaration
     doc: (doc_comment)
@@ -70,7 +70,7 @@ fn f(
         doc: (doc_comment)
         name: (identifier)
         type: (builtin_type)))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block)))
 
 ==================

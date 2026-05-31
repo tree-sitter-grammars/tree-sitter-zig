@@ -31,7 +31,7 @@ pub export fn add(noalias lhs: i32, comptime rhs: i32, rest: anytype, ...) align
         (string_content)))
     (calling_convention
       (enum_literal))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (expression_statement
         (return_expression
@@ -257,7 +257,7 @@ fn peek() Grapheme {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (identifier)
+    return_type: (identifier)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -289,7 +289,7 @@ fn f(x: anytype) void {}
       (parameter
         name: (identifier)
         type: (anytype)))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block)))
 
 ====================

@@ -15,7 +15,7 @@ const Handler = fn (i32, anytype) void;
           type: (builtin_type))
         (parameter
           type: (anytype)))
-      type: (builtin_type))))
+      return_type: (builtin_type))))
 
 ==================
 Anyframe type

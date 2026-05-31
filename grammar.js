@@ -261,7 +261,10 @@ module.exports = grammar({
       optional($.address_space),
       optional($.link_section),
       optional($.calling_convention),
-      field('type', choice($.type_expression, $.if_type_expression, $.comptime_type_expression)),
+      field('return_type', choice(
+        $.type_expression,
+        $.if_type_expression,
+        $.comptime_type_expression)),
     ),
 
     parameters: $ => seq(

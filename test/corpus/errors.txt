@@ -39,7 +39,7 @@ fn f(xs: []u8) void {
         name: (identifier)
         type: (slice_type
           (builtin_type))))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (for_statement
         iterable: (identifier)
@@ -163,7 +163,7 @@ fn f() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (for_statement
         iterable: (identifier
@@ -246,7 +246,7 @@ const T = anytype;
   (variable_declaration
     name: (identifier)
     (ERROR
-     (anytype))))
+      (anytype))))
 
 ===========================
 Anytype type annotation :error
@@ -308,7 +308,7 @@ fn f(x: i32, ..., y: T) void {}
         type: (builtin_type))
       (parameter)
       (ERROR))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block)))
 
 ===========================
@@ -323,7 +323,7 @@ fn f() void { asm volatile ("" : : :); }
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (expression_statement
         (asm_expression
@@ -344,5 +344,5 @@ const r = 0..10;
   (variable_declaration
     name: (identifier)
     (ERROR
-    (integer))
+      (integer))
     value: (integer)))

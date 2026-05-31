@@ -12,7 +12,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -38,7 +38,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -76,7 +76,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -102,7 +102,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -154,7 +154,7 @@ fn expressions(items: []u8, start: usize, end: usize, sentinel: u8) void {
       (parameter
         name: (identifier)
         type: (builtin_type)))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -204,7 +204,7 @@ fn expressions(tag: u8) void {
       (parameter
         name: (identifier)
         type: (builtin_type)))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (switch_expression
         on: (identifier)
@@ -231,7 +231,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -271,7 +271,7 @@ fn expressions(frame: anyframe) void {
     (parameters
       (parameter
         name: (identifier)))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -314,7 +314,7 @@ fn expressions(items: []const i32) void {
         name: (identifier)
         type: (slice_type
           (builtin_type))))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -349,7 +349,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -387,7 +387,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (local_variable_declaration
         name: (identifier)
@@ -432,7 +432,7 @@ fn expressions(code: usize) void {
       (parameter
         name: (identifier)
         type: (builtin_type)))
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (expression_statement
         (asm_expression
@@ -473,7 +473,7 @@ fn finalize() (OOM || std.Io.Writer.Error)!void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (error_union_type
+    return_type: (error_union_type
       error: (parenthesized_expression
         (binary_expression
           left: (identifier)
@@ -542,7 +542,7 @@ fn expressions() void {
   (function_declaration
     name: (identifier)
     (parameters)
-    type: (builtin_type)
+    return_type: (builtin_type)
     body: (block
       (assignment_statement
         lvalue: (identifier)
