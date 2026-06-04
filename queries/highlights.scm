@@ -63,6 +63,8 @@
   (container_field
     type: (identifier) @constant))
 
+(enum_literal) @constant
+
 ; Labels
 (block_label
   (identifier) @label)
