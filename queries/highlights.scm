@@ -61,9 +61,9 @@
 
 (enum_declaration
   (container_field
-    type: (identifier) @constant))
+    type: (identifier) @constant.enum))
 
-(enum_literal) @constant
+(enum_literal) @constant.enum
 
 ; Labels
 (block_label
@@ -302,6 +302,6 @@
 [
   (top_doc_comment)
   (doc_comment)
-] @comment.documentation
+] @comment.documentation @spell
 
 (comment) @comment @spell
