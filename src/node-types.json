@@ -2844,10 +2844,6 @@
     "named": false
   },
   {
-    "type": "anytype",
-    "named": false
-  },
-  {
     "type": "asm",
     "named": false
   },
@@ -2873,6 +2869,10 @@
   },
   {
     "type": "c",
+    "named": false
+  },
+  {
+    "type": "c_char",
     "named": false
   },
   {
@@ -2994,6 +2994,10 @@
   },
   {
     "type": "f64",
+    "named": false
+  },
+  {
+    "type": "f80",
     "named": false
   },
   {

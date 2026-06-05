@@ -6292,6 +6292,10 @@
         },
         {
           "type": "STRING",
+          "value": "f80"
+        },
+        {
+          "type": "STRING",
           "value": "f128"
         },
         {
@@ -6312,7 +6316,7 @@
         },
         {
           "type": "STRING",
-          "value": "anytype"
+          "value": "type"
         },
         {
           "type": "STRING",
@@ -6333,6 +6337,10 @@
         {
           "type": "STRING",
           "value": "comptime_float"
+        },
+        {
+          "type": "STRING",
+          "value": "c_char"
         },
         {
           "type": "STRING",
@@ -6372,7 +6380,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "(i|u)[1-9][0-9]*"
+          "value": "(i|u)[0-9]+"
         }
       ]
     },
