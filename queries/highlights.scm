@@ -28,6 +28,7 @@
 [
   (builtin_type)
   "anyframe"
+  "anytype"
 ] @type.builtin
 
 ; Constants
@@ -36,17 +37,12 @@
 
 [
   "null"
-  "unreachable"
   "undefined"
 ] @constant.builtin
 
+; Enum Literals
 (field_expression
-  .
   member: (identifier) @constant)
-
-(enum_declaration
-  (container_field
-    type: (identifier) @constant))
 
 ; Labels
 (block_label
@@ -56,35 +52,57 @@
   (identifier) @label)
 
 ; Fields
+(struct_declaration
+  (container_field
+    name: (identifier) @variable.member))
+
 (field_initializer
   .
   (identifier) @variable.member)
 
-(field_expression
-  (_)
-  member: (identifier) @variable.member)
+(suffix_expression
+  head: (_)
+  (field_expression
+    member: (identifier) @variable.member))
+
+(suffix_expression
+  head: (_)
+  (field_expression
+    member: (identifier) @type (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")))
+
+(suffix_expression
+  head: (_)
+  (field_expression
+    member: (identifier) @constant (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")))
 
 (container_field
   name: (identifier) @variable.member)
 
-(initializer_list
-  (assignment_expression
-    left: (field_expression
-      .
-      member: (identifier) @variable.member)))
+(enum_declaration
+  (container_field
+    name: (identifier) @constant))
+
+(union_declaration
+  (container_field
+    name: (identifier) @constant
+    !type))
 
 ; Functions
 (builtin_identifier) @function.builtin
 
-(call_expression
-  function: (identifier) @function.call)
-
-(call_expression
-  function: (field_expression
-    member: (identifier) @function.call))
+(suffix_expression
+  (field_expression
+    member: (identifier) @function.method)
+  .
+  arguments: (_))
 
 (function_declaration
   name: (identifier) @function)
+
+(suffix_expression
+  head: (identifier) @function.call
+  .
+  arguments: (_))
 
 ; Modules
 (variable_declaration
@@ -92,6 +110,39 @@
   (builtin_function
     (builtin_identifier) @keyword.import
     (#any-of? @keyword.import "@import" "@cImport")))
+
+(variable_declaration
+  (identifier) @type (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
+  (builtin_function
+    (builtin_identifier) @keyword.control.import
+    (#any-of? @keyword.control.import "@import" "@cImport")))
+
+(variable_declaration
+  (identifier) @constant (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
+  (builtin_function
+    (builtin_identifier) @keyword.control.import
+    (#any-of? @keyword.control.import "@import" "@cImport")))
+
+(variable_declaration
+  (identifier) @variable
+  (suffix_expression
+    head: (builtin_function
+      (builtin_identifier) @keyword.control.import
+      (#any-of? @keyword.control.import "@import" "@cImport"))))
+
+(variable_declaration
+  (identifier) @type (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
+  (suffix_expression
+    head: (builtin_function
+      (builtin_identifier) @keyword.control.import
+      (#any-of? @keyword.control.import "@import" "@cImport"))))
+
+(variable_declaration
+  (identifier) @constant (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
+  (suffix_expression
+    head: (builtin_function
+      (builtin_identifier) @keyword.control.import
+      (#any-of? @keyword.control.import "@import" "@cImport"))))
 
 ; Builtins
 [
@@ -108,15 +159,13 @@
 ; Keywords
 [
   "asm"
-  "defer"
-  "errdefer"
   "test"
-  "error"
-  "const"
-  "var"
 ] @keyword
 
 [
+  "error"
+  "const"
+  "var"
   "struct"
   "union"
   "enum"
@@ -139,12 +188,17 @@
   "orelse"
 ] @keyword.operator
 
-"return" @keyword.return
+[
+  "try"
+  "unreachable"
+  "return"
+] @keyword.return
 
 [
   "if"
   "else"
   "switch"
+  "catch"
 ] @keyword.conditional
 
 [
@@ -160,8 +214,8 @@
 ] @keyword.import
 
 [
-  "try"
-  "catch"
+  "defer"
+  "errdefer"
 ] @keyword.exception
 
 [
@@ -212,7 +266,6 @@
   ">="
   "<="
   "<"
-  "&"
   "^"
   "|"
   "<<"
@@ -221,7 +274,6 @@
   "+"
   "++"
   "+%"
-  "-%"
   "+|"
   "-|"
   "*"
@@ -273,11 +325,16 @@
   "->"
 ] @punctuation.delimiter
 
+(multiline_string
+  "\\\\" @punctuation.special)
+
 (payload
   "|" @punctuation.bracket)
 
 ; Comments
 (comment) @comment @spell
 
-((comment) @comment.documentation
-  (#lua-match? @comment.documentation "^//!"))
+[
+  (container_doc_comment)
+  (doc_comment)
+] @comment.documentation

@@ -14,7 +14,7 @@
   (if_type_expression)
   (function_signature)
   (parameters)
-  (call_expression)
+  (suffix_expression)
   (struct_declaration)
   (opaque_declaration)
   (enum_declaration)
