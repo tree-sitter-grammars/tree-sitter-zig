@@ -121,7 +121,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "global_variable_declaration"
+                  "name": "variable_declaration"
                 },
                 {
                   "type": "SYMBOL",
@@ -314,7 +314,7 @@
         ]
       }
     },
-    "global_variable_declaration": {
+    "variable_declaration": {
       "type": "SEQ",
       "members": [
         {

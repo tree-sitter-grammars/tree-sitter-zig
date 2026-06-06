@@ -108,7 +108,7 @@ export default grammar({
         repeat($.doc_comment),
         optional('pub'),
         choice(
-          $.global_variable_declaration,
+          $.variable_declaration,
           $.function_declaration,
           $.using_namespace_declaration, // Removed in Zig 0.15.1
         ),
@@ -142,7 +142,7 @@ export default grammar({
       optional(seq('=', $.expression)),
     )),
 
-    global_variable_declaration: $ => seq(
+    variable_declaration: $ => seq(
       optional(choice(
         'export',
         seq('extern', optional($.string)),
