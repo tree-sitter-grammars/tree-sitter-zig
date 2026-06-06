@@ -1,0 +1,367 @@
+===========================
+Multiple assignment switch
+:error
+===========================
+
+switch (x) {
+    0 => a, b = next(),
+}
+
+---
+
+(source_file
+  (fragment
+    (switch_expression
+      on: (identifier)
+      (switch_case
+        case: (integer)
+        then: (identifier))
+      (ERROR
+        (call_expression
+          function: (identifier)
+          (ERROR)
+          arguments: (arguments))))))
+
+===========================
+For else payload
+:error
+===========================
+
+fn f(xs: []u8) void {
+    for (xs) |x| {} else |bad| {}
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (slice_type
+          (builtin_type))))
+    return_type: (builtin_type)
+    body: (block
+      (for_statement
+        iterable: (identifier)
+        (payload
+          (identifier))
+        do: (block)
+        (else_clause
+          (ERROR)
+          else: (expression_statement
+            (binary_expression
+              left: (identifier)
+              right: (block))
+            (MISSING ";")))))))
+
+===========================
+Switch index pointer payload
+:error
+===========================
+
+switch (x) {
+    0 => |*value, *index| value,
+}
+
+---
+
+(source_file
+  (fragment
+    (switch_expression
+      on: (identifier)
+      (switch_case
+        case: (integer)
+        (payload
+          (identifier)
+          (ERROR)
+          (identifier))
+        then: (identifier)))))
+
+===========================
+If multi payload
+:error
+===========================
+
+if (maybe) |a, b| a;
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      condition: (identifier)
+      (payload
+        (identifier)
+        (ERROR))
+      then: (identifier))))
+
+===========================
+While multi payload
+:error
+===========================
+
+while (next()) |a, b| {}
+
+---
+
+(source_file
+  (fragment
+    (while_statement
+      condition: (call_expression
+        function: (identifier)
+        arguments: (arguments))
+      (payload
+        (identifier)
+        (ERROR))
+      do: (block))))
+
+===========================
+Errdefer pointer payload
+:error
+===========================
+
+errdefer |*err| handle(err);
+
+---
+
+(source_file
+  (fragment
+    (errdefer_statement
+      (ERROR)
+      (expression_statement
+        (binary_expression
+          left: (pointer_type
+            (identifier))
+          right: (call_expression
+            function: (identifier)
+            arguments: (arguments
+              (identifier))))))))
+
+===========================
+Index sentinel without slice
+:error
+===========================
+
+const x = a[0:sentinel];
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (index_expression
+      object: (identifier)
+      index: (integer)
+      (ERROR))))
+
+===========================
+Empty for input list
+:error
+===========================
+
+fn f() void {
+    for () |x| {}
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (for_statement
+        iterable: (identifier
+          (MISSING _bare_identifier))
+        (payload
+          (identifier))
+        do: (block)))))
+
+===========================
+Pub test declaration
+:error
+===========================
+
+pub test "x" {}
+
+---
+
+(source_file
+  (ERROR)
+  (test_declaration
+    (string
+      (string_content))
+    (block)))
+
+===========================
+Pub comptime declaration
+:error
+===========================
+
+pub comptime {}
+
+---
+
+(source_file
+  (ERROR)
+  (fragment
+    (comptime_statement
+      (block))))
+
+===========================
+Extern function body
+:error
+===========================
+
+extern fn f() void {}
+
+---
+
+(source_file
+  (ERROR
+    (identifier)
+    (parameters)
+    (struct_initializer
+      (builtin_type)
+      (initializer_list))))
+
+===========================
+Extern string function body
+:error
+===========================
+
+extern "c" fn f() void {}
+
+---
+
+(ERROR
+  (string
+    (string_content))
+  (identifier)
+  (parameters)
+  (struct_initializer
+    (builtin_type)
+    (initializer_list)))
+
+===========================
+Anytype value expression
+:error
+===========================
+
+const T = anytype;
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    (ERROR
+      (anytype))))
+
+===========================
+Anytype type annotation
+:error
+===========================
+
+const U: anytype = undefined;
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    (ERROR
+      (anytype))
+    value: (undefined)))
+
+===========================
+While keyword type
+:error
+===========================
+
+const W: while = undefined;
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    (ERROR)
+    value: (undefined)))
+
+===========================
+Keyword field access
+:error
+===========================
+
+const T = foo.while;
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (identifier)
+    (ERROR)))
+
+===========================
+Variadic function body
+:error
+===========================
+
+fn f(x: i32, ..., y: T) void {}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (builtin_type))
+      (parameter)
+      (ERROR))
+    return_type: (builtin_type)
+    body: (block)))
+
+===========================
+Empty asm lists
+:error
+===========================
+
+fn f() void { asm volatile ("" : : :); }
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (expression_statement
+        (asm_expression
+          (string)
+          (asm_output
+            (asm_input))
+          (ERROR))))))
+
+===========================
+Standalone range expression
+:error
+===========================
+
+const r = 0..10;
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    (ERROR
+      (integer))
+    value: (integer)))

@@ -10,11 +10,12 @@
       ],
       "highlights": "queries/highlights.scm",
       "injections": "queries/injections.scm",
+      "tags": "queries/tags.scm",
       "injection-regex": "^zig$"
     }
   ],
   "metadata": {
-    "version": "1.1.2",
+    "version": "2.0.0",
     "license": "MIT",
     "description": "Zig grammar for tree-sitter",
     "authors": [

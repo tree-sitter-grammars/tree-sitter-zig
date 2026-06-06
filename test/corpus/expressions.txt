@@ -1,0 +1,549 @@
+==================
+Builtin call expression
+==================
+
+fn expressions() void {
+    const builtin = @as(i32, 1);
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (builtin_function
+          (builtin_identifier)
+          (arguments
+            (builtin_type)
+            (integer)))))))
+
+==================
+Parenthesized and binary expressions
+==================
+
+fn expressions() void {
+    const grouped = (1 + 2) * 3;
+    const combined = flag and other or third;
+    const shifted = bits << 2;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (binary_expression
+          left: (parenthesized_expression
+            (binary_expression
+              left: (integer)
+              right: (integer)))
+          right: (integer)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (binary_expression
+          left: (binary_expression
+            left: (identifier)
+            right: (identifier))
+          right: (identifier)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (binary_expression
+          left: (identifier)
+          right: (integer))))))
+
+==================
+Unary expressions
+==================
+
+fn expressions() void {
+    const negated = -value;
+    const inverted = ~mask;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (unary_expression
+          argument: (identifier)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (unary_expression
+          argument: (identifier))))))
+
+==================
+Call field index and postfix expressions
+==================
+
+fn expressions() void {
+    const call = foo(bar, 1);
+    const member = call.items[0..].field.*.?;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (call_expression
+          function: (identifier)
+          arguments: (arguments
+            (identifier)
+            (integer))))
+      (local_variable_declaration
+        name: (identifier)
+        value: (null_coercion_expression
+          (dereference_expression
+            (field_expression
+              object: (index_expression
+                object: (field_expression
+                  object: (identifier)
+                  member: (identifier))
+                (range_expression
+                  from: (integer)))
+              member: (identifier))))))))
+
+==================
+Range expressions
+==================
+
+fn expressions(items: []u8, start: usize, end: usize, sentinel: u8) void {
+    const closed = items[start..end];
+    const open = items[start..];
+    const sentineled = items[start..end :sentinel];
+    for (0..end, items) |i, item| {}
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (slice_type
+          (builtin_type)))
+      (parameter
+        name: (identifier)
+        type: (builtin_type))
+      (parameter
+        name: (identifier)
+        type: (builtin_type))
+      (parameter
+        name: (identifier)
+        type: (builtin_type)))
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (index_expression
+          object: (identifier)
+          (range_expression
+            from: (identifier)
+            to: (identifier))))
+      (local_variable_declaration
+        name: (identifier)
+        value: (index_expression
+          object: (identifier)
+          (range_expression
+            from: (identifier))))
+      (local_variable_declaration
+        name: (identifier)
+        value: (index_expression
+          object: (identifier)
+          (range_expression
+            from: (identifier)
+            to: (identifier))
+          sentinel: (identifier)))
+      (for_statement
+        iterable: (range_expression
+          from: (integer)
+          to: (identifier))
+        iterable: (identifier)
+        (payload
+          (identifier)
+          (identifier))
+        do: (block)))))
+
+==================
+Switch expression with range
+==================
+
+fn expressions(tag: u8) void {
+    switch (tag) { 1...3 => {}, else => {} }
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (builtin_type)))
+    return_type: (builtin_type)
+    body: (block
+      (switch_expression
+        on: (identifier)
+        (switch_case
+          case: (integer)
+          case: (integer)
+          then: (block))
+        (switch_case
+          then: (block))))))
+
+==================
+Error and fallible expressions
+==================
+
+fn expressions() void {
+    const err = error.NotFound;
+    const recovered = fallible() catch |e| 0;
+    const tried = try fallible();
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (error_type
+          (identifier)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (catch_expression
+          (call_expression
+            function: (identifier)
+            arguments: (arguments))
+          (payload
+            (identifier))
+          (integer)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (try_expression
+          (call_expression
+            function: (identifier)
+            arguments: (arguments)))))))
+
+==================
+Await call, nosuspend, and comptime expressions
+==================
+
+fn expressions(frame: anyframe) void {
+    const done = await(ev, future, result, result_alignment);
+    const quiet = nosuspend frame;
+    const comp = comptime @as(u8, 1);
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)))
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (call_expression
+          function: (identifier)
+          arguments: (arguments
+            (identifier)
+            (identifier)
+            (identifier)
+            (identifier))))
+      (local_variable_declaration
+        name: (identifier)
+        value: (nosuspend_expression
+          (identifier)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (comptime_expression
+          (builtin_function
+            (builtin_identifier)
+            (arguments
+              (builtin_type)
+              (integer))))))))
+
+==================
+For and while expressions
+==================
+
+fn expressions(items: []const i32) void {
+    const picked = for (items) |item| item else 0;
+    const waited = while (next()) |item| item else 0;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (slice_type
+          (builtin_type))))
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (for_expression
+          iterable: (identifier)
+          (payload
+            (identifier))
+          (identifier)
+          else: (integer)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (while_expression
+          condition: (call_expression
+            function: (identifier)
+            arguments: (arguments))
+          (payload
+            (identifier))
+          (identifier)
+          (integer))))))
+
+==================
+Labeled type expression
+==================
+
+fn expressions() void {
+    const lab = label: { break :label 1; };
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (labeled_type_expression
+          (block_label
+            name: (identifier))
+          (block
+            (expression_statement
+              (break_expression
+                (break_label
+                  label: (identifier))
+                (integer)))))))))
+
+==================
+Literals
+==================
+
+// Leading comments are named extras.
+fn expressions() void {
+    const yes = true;
+    const pi = 3.14;
+    const letter = 'a';
+    const newline = '\n';
+    const quote = "a\n{b}";
+    const multi =
+        \\hello
+        \\world
+    ;
+}
+
+---
+
+(source_file
+  (comment)
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (boolean))
+      (local_variable_declaration
+        name: (identifier)
+        value: (float))
+      (local_variable_declaration
+        name: (identifier)
+        value: (character
+          (character_content)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (character
+          (escape_sequence)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (string
+          (string_content)
+          (escape_sequence)
+          (string_content)))
+      (local_variable_declaration
+        name: (identifier)
+        value: (multiline_string
+          (string_content)
+          (string_content))))))
+
+==================
+Asm expression
+==================
+
+fn expressions(code: usize) void {
+    asm volatile ("syscall" : [ret] "={rax}" (-> usize) : [number] "{rax}" (code) : .{ .rcx = true, .r11 = true });
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (builtin_type)))
+    return_type: (builtin_type)
+    body: (block
+      (expression_statement
+        (asm_expression
+          (string
+            (string_content))
+          (asm_output
+            (asm_output_item
+              (identifier)
+              (string
+                (string_content))
+              (builtin_type))
+            (asm_input
+              (asm_input_item
+                (identifier)
+                (string
+                  (string_content))
+                (identifier))
+              (asm_clobbers
+                (literal_struct_value
+                  (pair
+                    field: (identifier)
+                    value: (boolean))
+                  (pair
+                    field: (identifier)
+                    value: (boolean)))))))))))
+
+====================
+Errdefer Expression
+====================
+
+fn finalize() (OOM || std.Io.Writer.Error)!void {
+    errdefer builder.finalize_failed = true;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (error_union_type
+      error: (parenthesized_expression
+        (binary_expression
+          left: (identifier)
+          right: (field_expression
+            object: (field_expression
+              object: (field_expression
+                object: (identifier)
+                member: (identifier))
+              member: (identifier))
+            member: (identifier))))
+      ok: (builtin_type))
+    body: (block
+      (errdefer_statement
+        (assignment_statement
+          lvalue: (field_expression
+            object: (identifier)
+            member: (identifier))
+          rvalue: (boolean))))))
+
+====================
+If Suffix Else Suffix
+====================
+
+var differ = if (T == u8) BytesDiffer{
+    .terminal_mode = terminal_mode,
+} else SliceDiffer(T){
+    .terminal_mode = terminal_mode,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (if_expression
+      condition: (binary_expression
+        left: (identifier)
+        right: (builtin_type))
+      then: (struct_initializer
+        (identifier)
+        (initializer_list
+          (pair
+            field: (identifier)
+            value: (identifier))))
+      else: (struct_initializer
+        (call_expression
+          function: (identifier)
+          arguments: (arguments
+            (identifier)))
+        (initializer_list
+          (pair
+            field: (identifier)
+            value: (identifier)))))))
+
+====================
+Default struct value expression
+====================
+
+fn expressions() void {
+    value = .{};
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (assignment_statement
+        lvalue: (identifier)
+        rvalue: (default_struct_value)))))

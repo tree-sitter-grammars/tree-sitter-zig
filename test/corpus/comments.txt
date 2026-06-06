@@ -1,0 +1,101 @@
+==================
+Top doc comments
+==================
+
+//! Module docs.
+//! More module docs.
+
+const x = 1;
+
+---
+
+(source_file
+  doc: (top_doc_comment)
+  (variable_declaration
+    name: (identifier)
+    value: (integer)))
+
+==================
+Declaration doc comments
+==================
+
+/// Function docs.
+fn f() void {}
+
+/// Variable docs.
+const x = 1;
+
+/// Comptime docs.
+comptime {}
+
+/// Namespace docs.
+pub usingnamespace ns;
+
+---
+
+(source_file
+  (function_declaration
+    doc: (doc_comment)
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block))
+  (variable_declaration
+    doc: (doc_comment)
+    name: (identifier)
+    value: (integer))
+  (comptime_declaration
+    doc: (doc_comment)
+    (block))
+  (using_namespace_declaration
+    doc: (doc_comment)
+    (identifier)))
+
+==================
+Parameter doc comments
+==================
+
+fn f(
+    /// Parameter docs.
+    x: u8,
+) void {}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        doc: (doc_comment)
+        name: (identifier)
+        type: (builtin_type)))
+    return_type: (builtin_type)
+    body: (block)))
+
+==================
+Container field doc comments
+==================
+
+const S = struct {
+    /// Field docs.
+    x: u8,
+
+    /// Comptime field docs.
+    comptime y: u8,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (struct_declaration
+      (container_field
+        doc: (doc_comment)
+        name: (identifier)
+        type: (builtin_type))
+      (container_field
+        doc: (doc_comment)
+        name: (identifier)
+        type: (builtin_type)))))

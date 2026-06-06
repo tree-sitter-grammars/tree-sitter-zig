@@ -1,0 +1,498 @@
+==================
+Comptime statements
+==================
+
+fn statements() void {
+    comptime {
+        var a = 0;
+    }
+
+    comptime var b = 1;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (comptime_statement
+        (block
+          (local_variable_declaration
+            name: (identifier)
+            value: (integer))))
+      (comptime_statement
+        (local_variable_declaration
+          name: (identifier)
+          value: (integer))))))
+
+==================
+Defer statements
+==================
+
+fn statements() void {
+    defer cleanup();
+    errdefer |err| handle(err);
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (defer_statement
+        (expression_statement
+          (call_expression
+            function: (identifier)
+            arguments: (arguments))))
+      (errdefer_statement
+        err: (payload
+          (identifier))
+        (expression_statement
+          (call_expression
+            function: (identifier)
+            arguments: (arguments
+              (identifier))))))))
+
+==================
+Suspend statements
+==================
+
+fn statements() void {
+    suspend {}
+    nosuspend {
+        resume frame;
+    }
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (suspend_statement
+        (block))
+      (nosuspend_statement
+        (block
+          (expression_statement
+            (resume_expression
+              (identifier))))))))
+
+==================
+While statement
+==================
+
+fn statements() void {
+    outer: while (next()) |value| : (step()) {
+        if (value > 10) {
+            break :outer value;
+        } else {
+            continue :outer 1;
+        }
+    }
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (builtin_type)
+    body: (block
+      (labeled_statement
+        (block_label
+          name: (identifier))
+        (while_statement
+          condition: (call_expression
+            function: (identifier)
+            arguments: (arguments))
+          (payload
+            (identifier))
+          next: (continue_clause
+            (call_expression
+              function: (identifier)
+              arguments: (arguments)))
+          do: (block
+            (if_statement
+              condition: (binary_expression
+                left: (identifier)
+                right: (integer))
+              then: (block
+                (expression_statement
+                  (break_expression
+                    (break_label
+                      label: (identifier))
+                    (identifier))))
+              else: (block
+                (expression_statement
+                  (continue_expression
+                    (break_label
+                      label: (identifier))
+                    (integer)))))))))))
+
+==================
+For statement
+==================
+
+fn statements(xs: []const i32) void {
+    inline for (xs, 0..) |item, index| {
+        _ = item + index;
+    } else {}
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (slice_type
+          (builtin_type))))
+    return_type: (builtin_type)
+    body: (block
+      (for_statement
+        iterable: (identifier)
+        iterable: (range_expression
+          from: (integer))
+        (payload
+          (identifier)
+          (identifier))
+        do: (block
+          (assignment_statement
+            lvalue: (identifier)
+            rvalue: (binary_expression
+              left: (identifier)
+              right: (identifier))))
+        (else_clause
+          else: (block))))))
+
+==================
+Labeled block statement
+==================
+
+fn statements(maybe: ?i32) void {
+    label: {
+        const local = if (maybe) |v| v else 0;
+    }
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (nullable_type
+          (builtin_type))))
+    return_type: (builtin_type)
+    body: (block
+      (labeled_statement
+        (block_label
+          name: (identifier))
+        (block
+          (local_variable_declaration
+            name: (identifier)
+            value: (if_expression
+              condition: (identifier)
+              (payload
+                (identifier))
+              then: (identifier)
+              else: (integer))))))))
+
+==================
+Switch statement expression
+==================
+
+fn statements(b: i32) void {
+    switch (b) {
+        0, 1...3 => |case| case,
+        inline 4 => 4,
+        else => 0,
+    };
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (builtin_type)))
+    return_type: (builtin_type)
+    body: (block
+      (expression_statement
+        (switch_expression
+          on: (identifier)
+          (switch_case
+            case: (integer)
+            case: (integer)
+            case: (integer)
+            (payload
+              (identifier))
+            then: (identifier))
+          (switch_case
+            case: (integer)
+            then: (integer))
+          (switch_case
+            then: (integer)))))))
+
+=========================
+Dotted Fn Signatures
+=========================
+
+fn appendU32(allocator: std.mem.Allocator, buffer: *std.ArrayList(u8), value: u32) OOM!void {}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (field_expression
+          object: (field_expression
+            object: (identifier)
+            member: (identifier))
+          member: (identifier)))
+      (parameter
+        name: (identifier)
+        type: (call_expression
+          function: (field_expression
+            object: (pointer_type
+              (identifier))
+            member: (identifier))
+          arguments: (arguments
+            (builtin_type))))
+      (parameter
+        name: (identifier)
+        type: (builtin_type)))
+    return_type: (error_union_type
+      error: (identifier)
+      ok: (builtin_type))
+    body: (block)))
+
+====
+While with Increment
+====
+
+  while (true) : (len += 1) {
+      // Comment
+  }
+
+---
+
+(source_file
+  (fragment
+    (while_statement
+      condition: (boolean)
+      next: (continue_clause
+        (assignment_expression
+          lvalue: (identifier)
+          rvalue: (integer)))
+      do: (block
+        (comment)))))
+
+====================
+Assignment Expression-ish
+====================
+
+switch (i) {
+   0 => i = 2,
+}
+
+---
+
+(source_file
+  (fragment
+    (switch_expression
+      on: (identifier)
+      (switch_case
+        case: (integer)
+        then: (assignment_expression
+          lvalue: (identifier)
+          rvalue: (integer))))))
+
+====================
+Sliced Sentinel Return
+====================
+
+return ret[0 .. ret.len - 1 :s];
+
+---
+
+(source_file
+  (fragment
+    (expression_statement
+      (return_expression
+        (index_expression
+          object: (identifier)
+          (range_expression
+            from: (integer)
+            to: (binary_expression
+              left: (field_expression
+                object: (identifier)
+                member: (identifier))
+              right: (integer)))
+          sentinel: (identifier))))))
+
+====================
+If else unreachable
+====================
+
+if (a) {} else unreachable;
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      condition: (identifier)
+      then: (block)
+      else: (expression_statement
+        (unreachable)))))
+
+====================
+If Ok Else Error
+====================
+
+if (maybe) |value| {
+  value;
+} else |err| {
+  err;
+}
+
+---
+
+(source_file
+  (fragment
+    (if_statement
+      condition: (identifier)
+      (payload
+        (identifier))
+      then: (block
+        (expression_statement
+          (identifier)))
+      else_error: (payload
+        (identifier))
+      else: (block
+        (expression_statement
+          (identifier))))))
+
+====================
+If With Dangling Else
+====================
+
+const which = if (a)
+                  if (b)
+                     c
+                  else
+                     d
+              else
+                  e;
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (if_expression
+      condition: (identifier)
+      then: (if_expression
+        condition: (identifier)
+        then: (identifier)
+        else: (identifier))
+      else: (identifier))))
+
+====================
+Labeled Switch Continue
+====================
+
+label: switch(val) {
+    .something => continue :label .something_else,
+    .yet_another => {
+        take_action();
+        continue :label .a_secret_third_thing;
+    }
+}
+
+---
+
+(source_file
+  (container_field
+    name: (identifier)
+    type: (switch_expression
+      on: (identifier)
+      (switch_case
+        case: (enum_literal)
+        then: (continue_expression
+          (break_label
+            label: (identifier))
+          (enum_literal)))
+      (switch_case
+        case: (enum_literal)
+        then: (block
+          (expression_statement
+            (call_expression
+              function: (identifier)
+              arguments: (arguments)))
+          (expression_statement
+            (continue_expression
+              (break_label
+                label: (identifier))
+              (enum_literal))))))))
+
+====================
+Recursive Switch
+====================
+
+const cie_ptr_or_id_size: u8 = switch (section) {
+    .eh_frame => 4,
+    .debug_frame => switch (unit_header.format) {
+        .@"32" => 4,
+        .@"64" => 8,
+    },
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    type: (builtin_type)
+    value: (switch_expression
+      on: (identifier)
+      (switch_case
+        case: (enum_literal)
+        then: (integer))
+      (switch_case
+        case: (enum_literal)
+        then: (switch_expression
+          on: (field_expression
+            object: (identifier)
+            member: (identifier))
+          (switch_case
+            case: (enum_literal
+              tag: (string
+                (string_content)))
+            then: (integer))
+          (switch_case
+            case: (enum_literal
+              tag: (string
+                (string_content)))
+            then: (integer)))))))

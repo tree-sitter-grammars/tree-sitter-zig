@@ -1,0 +1,345 @@
+==================
+Function declaration
+==================
+
+pub export fn add(noalias lhs: i32, comptime rhs: i32, rest: anytype, ...) align(4) addrspace(.generic) linksection(".text") callconv(.C) i32 {
+    return lhs + rhs;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (builtin_type))
+      (parameter
+        name: (identifier)
+        type: (builtin_type))
+      (parameter
+        name: (identifier)
+        type: (anytype))
+      (parameter))
+    (byte_alignment
+      (integer))
+    (address_space
+      (enum_literal))
+    (link_section
+      (string
+        (string_content)))
+    (calling_convention
+      (enum_literal))
+    return_type: (builtin_type)
+    body: (block
+      (expression_statement
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))
+
+==================
+Test declaration
+==================
+
+test "decls" {
+    const p = Point{ .x = 1, .y = 2 };
+}
+
+---
+
+(source_file
+  (test_declaration
+    (string
+      (string_content))
+    (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (struct_initializer
+          (identifier)
+          (initializer_list
+            (pair
+              field: (identifier)
+              value: (integer))
+            (pair
+              field: (identifier)
+              value: (integer))))))))
+
+==================
+Using namespace declaration (deprecated)
+==================
+
+pub usingnamespace Mixin;
+
+---
+
+(source_file
+  (using_namespace_declaration
+    (identifier)))
+
+==================
+Comptime declaration
+==================
+
+comptime {
+    const n = 1;
+}
+
+---
+
+(source_file
+  (comptime_declaration
+    (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (integer)))))
+
+==================
+Variable declaration
+==================
+
+pub extern "c" threadlocal var global: [4:0]u8 align(4) addrspace(.generic) linksection(".data") = .{ 1, 2, 3, 0 };
+
+---
+
+(source_file
+  (variable_declaration
+    (string
+      (string_content))
+    name: (identifier)
+    type: (array_type
+      (integer)
+      sentinel: (integer)
+      (builtin_type))
+    (byte_alignment
+      (integer))
+    (address_space
+      (enum_literal))
+    (link_section
+      (string
+        (string_content)))
+    value: (literal_tuple_value
+      (item
+        (integer))
+      (item
+        (integer))
+      (item
+        (integer))
+      (item
+        (integer)))))
+
+==================
+Struct declaration
+==================
+
+const Point = struct {
+    x: i32 align(4) = 0,
+    y: i32,
+    comptime z: ?*const u8 = null,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (struct_declaration
+      (container_field
+        name: (identifier)
+        type: (builtin_type)
+        (byte_alignment
+          (integer))
+        default_value: (integer))
+      (container_field
+        name: (identifier)
+        type: (builtin_type))
+      (container_field
+        name: (identifier)
+        type: (nullable_type
+          (pointer_type
+            (builtin_type)))
+        default_value: (null)))))
+
+==================
+Enum declaration
+==================
+
+const Color = enum(u8) {
+    red,
+    green = 2,
+    blue,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (enum_declaration
+      (builtin_type)
+      (container_field
+        name: (identifier))
+      (container_field
+        name: (identifier)
+        default_value: (integer))
+      (container_field
+        name: (identifier)))))
+
+==================
+Union declaration
+==================
+
+const Payload = union(enum(u8)) {
+    none,
+    int: i32,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (union_declaration
+      (builtin_type)
+      (container_field
+        name: (identifier))
+      (container_field
+        name: (identifier)
+        type: (builtin_type)))))
+
+==================
+Opaque declaration
+==================
+
+const Hidden = opaque {
+    token: u8,
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (opaque_declaration
+      (container_field
+        name: (identifier)
+        type: (builtin_type)))))
+
+==================
+Error set declaration
+==================
+
+const FileError = error{ NotFound, Denied };
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (error_set_declaration
+      (identifier)
+      (identifier))))
+
+====================
+Multi Defer Stmt
+====================
+
+fn peek() Grapheme {
+    const cache = .{ buf, cp_iter};
+    defer buf, cp_iter = cache;
+    return;
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters)
+    return_type: (identifier)
+    body: (block
+      (local_variable_declaration
+        name: (identifier)
+        value: (literal_tuple_value
+          (item
+            (identifier))
+          (item
+            (identifier))))
+      (defer_statement
+        (assignment_statement
+          lvalue: (identifier)
+          lvalue: (identifier)
+          rvalue: (identifier)))
+      (expression_statement
+        (return_expression)))))
+
+==================
+Anytype parameter
+==================
+
+fn f(x: anytype) void {}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameters
+      (parameter
+        name: (identifier)
+        type: (anytype)))
+    return_type: (builtin_type)
+    body: (block)))
+
+====================
+Tuple Declaration
+====================
+
+const Value = struct { a: asn1.Oid, b: i32 };
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (struct_declaration
+      (container_field
+        name: (identifier)
+        type: (field_expression
+          object: (identifier)
+          member: (identifier)))
+      (container_field
+        name: (identifier)
+        type: (builtin_type)))))
+
+====================
+Async Enum and Field
+====================
+
+pub const UwTable = enum(u32) {
+    none,
+    sync,
+    async,
+
+    pub const default = UwTable.async;
+};
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (enum_declaration
+      (builtin_type)
+      (container_field
+        name: (identifier))
+      (container_field
+        name: (identifier))
+      (container_field
+        name: (identifier))
+      (variable_declaration
+        name: (identifier)
+        value: (field_expression
+          object: (identifier)
+          member: (identifier))))))

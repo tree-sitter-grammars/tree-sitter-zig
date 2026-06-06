@@ -15,29 +15,44 @@
 ((identifier) @type
   (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*"))
 
-(variable_declaration
-  (identifier) @type
-  "="
-  [
-    (struct_declaration)
-    (enum_declaration)
-    (union_declaration)
-    (opaque_declaration)
-  ])
+[
+  (variable_declaration
+    .
+    (identifier) @type
+    "="
+    [
+      (struct_declaration)
+      (enum_declaration)
+      (union_declaration)
+      (opaque_declaration)
+    ])
+  (local_variable_declaration
+    .
+    (identifier) @type
+    "="
+    [
+      (struct_declaration)
+      (enum_declaration)
+      (union_declaration)
+      (opaque_declaration)
+    ])
+]
 
 [
   (builtin_type)
   "anyframe"
 ] @type.builtin
 
+(anytype) @keyword
+
 ; Constants
 ((identifier) @constant
   (#lua-match? @constant "^[A-Z][A-Z_0-9]+$"))
 
 [
-  "null"
-  "unreachable"
-  "undefined"
+  (null)
+  (unreachable)
+  (undefined)
 ] @constant.builtin
 
 (field_expression
@@ -46,7 +61,9 @@
 
 (enum_declaration
   (container_field
-    type: (identifier) @constant))
+    type: (identifier) @constant.enum))
+
+(enum_literal) @constant.enum
 
 ; Labels
 (block_label
@@ -56,7 +73,7 @@
   (identifier) @label)
 
 ; Fields
-(field_initializer
+(pair
   .
   (identifier) @variable.member)
 
@@ -66,12 +83,6 @@
 
 (container_field
   name: (identifier) @variable.member)
-
-(initializer_list
-  (assignment_expression
-    left: (field_expression
-      .
-      member: (identifier) @variable.member)))
 
 ; Functions
 (builtin_identifier) @function.builtin
@@ -87,11 +98,20 @@
   name: (identifier) @function)
 
 ; Modules
-(variable_declaration
-  (identifier) @module
-  (builtin_function
-    (builtin_identifier) @keyword.import
-    (#any-of? @keyword.import "@import" "@cImport")))
+[
+  (variable_declaration
+    .
+    (identifier) @module
+    (builtin_function
+      (builtin_identifier) @keyword.import
+      (#any-of? @keyword.import "@import" "@cImport")))
+  (local_variable_declaration
+    .
+    (identifier) @module
+    (builtin_function
+      (builtin_identifier) @keyword.import
+      (#any-of? @keyword.import "@import" "@cImport")))
+]
 
 ; Builtins
 [
@@ -124,8 +144,6 @@
 ] @keyword.type
 
 [
-  "async"
-  "await"
   "suspend"
   "nosuspend"
   "resume"
@@ -254,6 +272,10 @@
 
 (escape_sequence) @string.escape
 
+("\\\\" @string.special.symbol
+ ; ZLS gets priority 125, so this lets our definition 'win'
+ (#set! "priority" 130))
+
 ; Punctuation
 [
   "["
@@ -277,7 +299,9 @@
   "|" @punctuation.bracket)
 
 ; Comments
-(comment) @comment @spell
+[
+  (top_doc_comment)
+  (doc_comment)
+] @comment.documentation
 
-((comment) @comment.documentation
-  (#lua-match? @comment.documentation "^//!"))
+(comment) @comment @spell

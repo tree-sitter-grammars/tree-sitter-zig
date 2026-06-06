@@ -1,23 +1,25 @@
 [
-  (block)
-  (switch_expression)
-  (initializer_list)
-  (asm_expression)
+  (top_doc_comment)
+  (doc_comment)
   (multiline_string)
-  (if_statement)
-  (while_statement)
-  (for_statement)
-  (if_expression)
-  (else_clause)
-  (for_expression)
-  (while_expression)
-  (if_type_expression)
-  (function_signature)
+
+  (function_declaration)
   (parameters)
-  (call_expression)
+  (arguments)
+
+  (block)
+  (labeled_block)
+
   (struct_declaration)
+  (tuple_declaration)
   (opaque_declaration)
   (enum_declaration)
   (union_declaration)
   (error_set_declaration)
+
+  (switch_expression)
+
+  (initializer_list)
+  (literal_struct_value)
+  (literal_tuple_value)
 ] @fold
