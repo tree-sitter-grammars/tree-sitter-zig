@@ -569,7 +569,7 @@ module.exports = grammar({
       optional($.expression),
     )),
 
-    try_expression: $ => prec.right(PREC.BITWISE, seq('try', $.expression)),
+    try_expression: $ => prec.left(PREC.UNARY, seq('try', $.expression)),
 
     catch_expression: $ => prec.right(PREC.BITWISE, seq(
       $.expression,

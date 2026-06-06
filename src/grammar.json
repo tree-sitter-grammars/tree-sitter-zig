@@ -4204,8 +4204,8 @@
       }
     },
     "try_expression": {
-      "type": "PREC_RIGHT",
-      "value": 4,
+      "type": "PREC_LEFT",
+      "value": 8,
       "content": {
         "type": "SEQ",
         "members": [
