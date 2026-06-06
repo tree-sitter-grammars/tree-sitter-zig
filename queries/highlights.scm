@@ -302,6 +302,6 @@
 [
   (top_doc_comment)
   (doc_comment)
-] @comment.documentation @spell
+] @comment.documentation
 
 (comment) @comment @spell
