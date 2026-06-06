@@ -110,7 +110,7 @@ export default grammar({
         choice(
           $.variable_declaration,
           $.function_declaration,
-          $.using_namespace_declaration, // Removed in Zig 0.15.1
+          $.using_namespace_declaration,
         ),
       ),
     ),
@@ -135,7 +135,7 @@ export default grammar({
         field('type', $._type_expression),
       ),
       // explicitly disallowing $.function_signature to avoid $.container_field matching when $._container_declaration should
-      // does the same to prevent $.comptime_type_expression from matching as well
+      // selecting only these also prevents $.comptime_type_expression from matching
       field('name', choice($.type_expression, $.if_type_expression, $._loop_type_expression)),
       ),
       optional($.byte_alignment),
@@ -242,7 +242,6 @@ export default grammar({
       '...',
     ),
 
-    // removed in zig 0.15.1
     using_namespace_declaration: $ => seq(
       'usingnamespace',
       $.expression,
@@ -457,13 +456,13 @@ export default grammar({
       $.comptime_expression,
       $.nosuspend_expression,
       $.continue_expression,
-      $.async_expression, // Removed in Zig 0.15.1
-      $.await_expression, // Removed in Zig 0.15.1
+      $.async_expression,
+      $.await_expression,
       $.resume_expression,
       $.return_expression,
       $.for_expression,
       $.while_expression,
-      $.braced_expression, // TypeExpr InitList
+      $.braced_expression,
       $.type_expression,
       $.block,
     )),
@@ -542,7 +541,7 @@ export default grammar({
     ),
 
     _destructure_assignment_expression: $ => prec.right(seq(
-      field('left', $._expression_list), // XXX: check to see if this worked right
+      field('left', $._expression_list),
       field('operator', '='),
       field('right', $.expression),
     )),
@@ -642,7 +641,7 @@ export default grammar({
     // SwitchProng
     switch_case: $ => seq(
       optional('inline'),
-      $._switch_case_exp, // SwitchCase
+      $._switch_case_exp,
       '=>',
       optional($.payload),
       // SingleAssignExpr
@@ -652,7 +651,6 @@ export default grammar({
       ),
     ),
 
-    // SwitchCase
     _switch_case_exp: $ => seq(
       choice(
         optionalCommaSep1(seq($.expression, optional(seq('...', $.expression)))),
@@ -682,7 +680,7 @@ export default grammar({
       $.if_type_expression,
       $._loop_type_expression,
       $.function_signature,
-      $.comptime_type_expression, // KEYWORD_comptime TypeExpr
+      $.comptime_type_expression,
     ),
 
     suffix_expression: $ => prec.right(PREC.MEMBER, seq(
@@ -708,7 +706,7 @@ export default grammar({
       $.union_declaration,
       $.anonymous_struct_initializer, // DOT InitList
       $.error_set_declaration,
-      $.parenthesized_expression, // GroupedExpr
+      $.parenthesized_expression,
       $.labeled_block_expression,
       $.switch_expression,
       alias($._field_suffix, $.field_expression), // DOT IDENTIFIER
