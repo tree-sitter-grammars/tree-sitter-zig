@@ -6417,8 +6417,13 @@
               "value": "@"
             },
             {
-              "type": "SYMBOL",
-              "name": "string"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "string"
+              },
+              "named": true,
+              "value": "_string"
             }
           ]
         }

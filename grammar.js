@@ -851,7 +851,7 @@ module.exports = grammar({
 
     builtin_identifier: _ => /@[A-Za-z_][A-Za-z0-9_]*/,
 
-    identifier: $ => choice($._identifier, seq('@', $.string)),
+    identifier: $ => choice($._identifier, seq('@', alias($.string, $._string))),
     _identifier: _ => /[A-Za-z_][A-Za-z0-9_]*/,
     _reserved_identifier: _ => choice(
       'undefined',

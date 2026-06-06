@@ -300,6 +300,25 @@
     ]
   },
   {
+    "type": "_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "string_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "address_space",
     "named": true,
     "fields": {},
@@ -1597,7 +1616,7 @@
       "required": false,
       "types": [
         {
-          "type": "string",
+          "type": "_string",
           "named": true
         }
       ]
