@@ -56,6 +56,8 @@ const builtinTypes = [
 module.exports = grammar({
   name: 'zig',
 
+  externals: ($) => [$.doc_comment_content, $._error_sentinel],
+
   conflicts: $ => [
     [$.for_expression],
     [$.while_expression],
@@ -92,19 +94,22 @@ module.exports = grammar({
   rules: {
     source_file: $ => optional($._container_members),
 
-    _container_members: $ => choice(
-      seq(
-        repeat1(choice(
-          $.test_declaration,
-          $.comptime_declaration,
-          $.variable_declaration,
-          $.function_declaration,
-          $.using_namespace_declaration,
-          seq($.container_field, ','),
-        )),
-        optional($.container_field),
+    _container_members: $ => seq(
+      repeat($.container_doc_comment),
+      choice(
+        seq(
+          repeat1(choice(
+            $.test_declaration,
+            $.comptime_declaration,
+            $.variable_declaration,
+            $.function_declaration,
+            $.using_namespace_declaration,
+            seq($.container_field, ','),
+          )),
+          optional($.container_field),
+        ),
+        $.container_field,
       ),
-      $.container_field,
     ),
 
     test_declaration: $ => seq(
@@ -121,6 +126,7 @@ module.exports = grammar({
     )),
 
     container_field: $ => prec.right(prec.dynamic(1, seq(
+      repeat($.doc_comment),
       optional('comptime'),
       choice(
         seq(
@@ -217,6 +223,7 @@ module.exports = grammar({
 
     parameter: $ => choice(
       seq(
+        repeat($.doc_comment),
         optional(choice('noalias', 'comptime')),
         optional(seq(
           field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
@@ -860,7 +867,15 @@ module.exports = grammar({
       'false',
     ),
 
-    comment: _ => token(seq('//', /.*/)),
+    container_doc_comment: $ => prec(3, seq('//!', $.doc_comment_content)),
+
+    doc_comment: $ => prec(2, seq('///', $.doc_comment_content)),
+
+    comment: _ => choice(
+      prec(1, seq('//', /.*/)),
+      // `//// ...` looks like a `doc_comment`, but it is not
+      prec(4, seq('////', /.*/)),
+    ),
   },
 });
 

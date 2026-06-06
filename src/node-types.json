@@ -1012,6 +1012,12 @@
     }
   },
   {
+    "type": "comment",
+    "named": true,
+    "extra": true,
+    "fields": {}
+  },
+  {
     "type": "comptime_declaration",
     "named": true,
     "fields": {},
@@ -1084,6 +1090,21 @@
     }
   },
   {
+    "type": "container_doc_comment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "doc_comment_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "container_field",
     "named": true,
     "fields": {
@@ -1138,6 +1159,10 @@
       "types": [
         {
           "type": "byte_alignment",
+          "named": true
+        },
+        {
+          "type": "doc_comment",
           "named": true
         },
         {
@@ -1205,6 +1230,21 @@
     }
   },
   {
+    "type": "doc_comment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "doc_comment_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "else_clause",
     "named": true,
     "fields": {
@@ -1240,6 +1280,10 @@
       "types": [
         {
           "type": "comptime_declaration",
+          "named": true
+        },
+        {
+          "type": "container_doc_comment",
           "named": true
         },
         {
@@ -1936,6 +1980,10 @@
           "named": true
         },
         {
+          "type": "container_doc_comment",
+          "named": true
+        },
+        {
           "type": "container_field",
           "named": true
         },
@@ -1990,6 +2038,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "doc_comment",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2160,6 +2218,10 @@
           "named": true
         },
         {
+          "type": "container_doc_comment",
+          "named": true
+        },
+        {
           "type": "container_field",
           "named": true
         },
@@ -2211,6 +2273,10 @@
       "types": [
         {
           "type": "comptime_declaration",
+          "named": true
+        },
+        {
+          "type": "container_doc_comment",
           "named": true
         },
         {
@@ -2414,6 +2480,10 @@
       "types": [
         {
           "type": "comptime_declaration",
+          "named": true
+        },
+        {
+          "type": "container_doc_comment",
           "named": true
         },
         {
@@ -2747,6 +2817,22 @@
     "named": false
   },
   {
+    "type": "//",
+    "named": false
+  },
+  {
+    "type": "//!",
+    "named": false
+  },
+  {
+    "type": "///",
+    "named": false
+  },
+  {
+    "type": "////",
+    "named": false
+  },
+  {
     "type": "/=",
     "named": false
   },
@@ -2947,11 +3033,6 @@
     "named": true
   },
   {
-    "type": "comment",
-    "named": true,
-    "extra": true
-  },
-  {
     "type": "comptime",
     "named": false
   },
@@ -2974,6 +3055,10 @@
   {
     "type": "defer",
     "named": false
+  },
+  {
+    "type": "doc_comment_content",
+    "named": true
   },
   {
     "type": "else",
