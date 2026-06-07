@@ -865,7 +865,14 @@ export default grammar({
 
     break_label: $ => seq(':', $.identifier),
 
-    arguments: $ => seq('(', optionalCommaSep($.expression), ')'),
+    arguments: $ => seq(
+      '(',
+      optionalCommaSep(choice(
+        $.expression,
+        $._special_primary_type_expression,
+      )),
+      ')',
+    ),
 
     builtin_function: $ => seq(
       $.builtin_identifier,
