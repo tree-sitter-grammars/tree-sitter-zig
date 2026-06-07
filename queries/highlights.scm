@@ -68,12 +68,14 @@
 (suffix_expression
   head: (_)
   (field_expression
-    member: (identifier) @type (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")))
+    member: (identifier) @type
+    (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")))
 
 (suffix_expression
   head: (_)
   (field_expression
-    member: (identifier) @constant (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")))
+    member: (identifier) @constant
+    (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")))
 
 (container_field
   name: (identifier) @variable.member)
@@ -112,13 +114,15 @@
     (#any-of? @keyword.import "@import" "@cImport")))
 
 (variable_declaration
-  (identifier) @type (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
+  (identifier) @type
+  (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
   (builtin_function
     (builtin_identifier) @keyword.control.import
     (#any-of? @keyword.control.import "@import" "@cImport")))
 
 (variable_declaration
-  (identifier) @constant (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
+  (identifier) @constant
+  (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
   (builtin_function
     (builtin_identifier) @keyword.control.import
     (#any-of? @keyword.control.import "@import" "@cImport")))
@@ -131,14 +135,16 @@
       (#any-of? @keyword.control.import "@import" "@cImport"))))
 
 (variable_declaration
-  (identifier) @type (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
+  (identifier) @type
+  (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
   (suffix_expression
     head: (builtin_function
       (builtin_identifier) @keyword.control.import
       (#any-of? @keyword.control.import "@import" "@cImport"))))
 
 (variable_declaration
-  (identifier) @constant (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
+  (identifier) @constant
+  (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
   (suffix_expression
     head: (builtin_function
       (builtin_identifier) @keyword.control.import
