@@ -387,7 +387,7 @@ export default grammar({
       '(',
       optionalCommaSep(seq(
         $.expression,
-        optional(seq('..', $.expression)),
+        optional(seq('..', optional($.expression))),
       )),
       ')',
       $.payload,
