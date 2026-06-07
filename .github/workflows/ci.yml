@@ -36,7 +36,7 @@ jobs:
           test-swift: false
       - name: Set up examples
         run: |-
-          git clone https://github.com/ziglang/zig examples/zig --branch 0.15.1 --single-branch --depth=1 --filter=blob:none
+          git clone https://codeberg.org/ziglang/zig examples/zig --branch 0.16.0 --single-branch --depth=1 --filter=blob:none
       - name: Parse examples
         uses: tree-sitter/parse-action@v4
         with:
