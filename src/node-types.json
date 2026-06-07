@@ -2449,6 +2449,16 @@
             "named": true
           }
         ]
+      },
+      "sentinel": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
       }
     }
   },

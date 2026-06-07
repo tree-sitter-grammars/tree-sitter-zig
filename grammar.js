@@ -803,6 +803,7 @@ export default grammar({
       field('left', $.expression),
       '..',
       optional(field('right', $.expression)),
+      optional(seq(':', field('sentinel', $.expression))),
       ']',
     ),
 
