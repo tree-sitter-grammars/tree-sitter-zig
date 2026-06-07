@@ -79,7 +79,6 @@ export default grammar({
   ],
 
   supertypes: $ => [
-    $.statement,
     $.expression,
     $.primary_expression,
     $.type_expression,
@@ -153,23 +152,19 @@ export default grammar({
       ';',
     ),
 
-    _variable_declaration_expression_statement: $ => choice(
-      alias($.variable_declaration_list, $.variable_declaration),
-      alias($.variable_destructure_statement, $.variable_declaration),
-      $._assignment_or_expression_statement,
-    ),
-
-    variable_declaration_list: $ => seq(
-      $._variable_declaration_header,
-      repeat(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))),
-      '=',
-      $.expression,
-      ';',
-    ),
-
-    variable_destructure_statement: $ => seq(
-      $.expression,
-      repeat1(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))),
+    // VarAssignStatement
+    // assignment or destructure whose LHS are all lvalue expressions or variable declarations
+    variable_assignment_statement: $ => seq(
+      choice(
+        seq(
+          $._variable_declaration_header,
+          repeat(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))),
+        ),
+        seq(
+          $.expression,
+          repeat1(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))), 
+        ),
+      ),
       '=',
       $.expression,
       ';',
@@ -250,7 +245,7 @@ export default grammar({
 
     block: $ => seq(
       '{',
-      repeat($._statement),
+      repeat($._block_statement),
       '}',
     ),
 
@@ -303,30 +298,25 @@ export default grammar({
       '}',
     ),
 
-    statement: $ => choice(
-      $.comptime_statement,
-      $.nosuspend_statement,
-      $.suspend_statement,
+    _block_statement: $ => choice(
+      $._statement,
       $.defer_statement,
       $.errdefer_statement,
+      seq(optional('comptime'), alias($.variable_assignment_statement, $.variable_declaration)),
+    ),
+
+    _statement: $ => prec(3, choice(
       $.if_statement,
-    ),
-
-    _statement: $ => choice(
-      $.statement,
       $._labeled_statement,
-      $._variable_declaration_expression_statement,
-    ),
+      $.nosuspend_statement,
+      $.comptime_statement,
+      $.suspend_statement,
+      seq(optional('comptime'), $._assignment_expression, ';'),
+    )),
 
-    comptime_statement: $ => seq(
-      'comptime',
-      choice(
-        $._block_expression,
-        $._variable_declaration_expression_statement,
-      ),
-    ),
+    comptime_statement: $ => prec(2, seq('comptime', $._block_expression)),
 
-    nosuspend_statement: $ => seq('nosuspend', $._block_expr_statement),
+    nosuspend_statement: $ => prec(3, seq('nosuspend', $._block_expr_statement)),
 
     suspend_statement: $ => seq('suspend', $._block_expr_statement),
 
@@ -336,22 +326,20 @@ export default grammar({
 
     _block_expr_statement: $ => prec(1, choice(
       $._block_expression,
-      $._assignment_or_expression_statement,
+      seq($._assignment_expression, ';'),
     )),
 
     _block_expression: $ => prec(1, seq(optional($.block_label), $.block)),
 
-    _labeled_statement: $ => prec(1, seq(
+    _labeled_statement: $ => prec(4, seq(
       optional($.block_label),
       choice($.block, $._loop_statement, $.switch_expression),
     )),
 
-    _assignment_or_expression_statement: $ => seq($._general_expression, ';'),
-
-    if_statement: $ => seq(
+    if_statement: $ => prec(5, seq(
       $._if_prefix,
       $._conditional_body_else_payload,
-    ),
+    )),
 
     _if_prefix: $ => seq(
       'if',
@@ -404,30 +392,32 @@ export default grammar({
       field('condition', $.expression),
       ')',
       optional($.payload),
-      optional(seq(':', '(', $.expression, ')')),
+      optional(seq(':', '(', $._assignment_expression, ')')),
     ),
 
-    _conditional_body: $ => choice(
+    _conditional_body: $ => prec.left(5, choice(
       seq(
         field('body', $._block_expression),
         optional($.else_clause),
       ),
       seq(
-        field('body', $._general_expression),
+        // force a conflict with $.if_expression
+        field('body', choice($._assignment_expression, $.expression)),
         choice(';', $.else_clause),
       ),
-    ),
+    )),
 
-    _conditional_body_else_payload: $ => choice(
+    _conditional_body_else_payload: $ => prec.left(5, choice(
       seq(
         field('body', $._block_expression),
         optional(alias($._else_clause_payload, $.else_clause)),
       ),
       seq(
-        field('body', $._general_expression),
+        // force a conflict with $.if_expression
+        field('body', choice($._assignment_expression, $.expression)),
         choice(';', alias($._else_clause_payload, $.else_clause)),
       ),
-    ),
+    )),
 
     payload: $ => seq('|', optionalCommaSep1(seq(optional('*'), $.identifier)), '|'),
 
@@ -502,13 +492,14 @@ export default grammar({
     ),
     asm_clobbers: $ => seq(':', optionalCommaSep(choice($.string, $.multiline_string))),
 
-    if_expression: $ => prec.right(1, seq(
+    if_expression: $ => prec.left(2, seq(
       $._if_prefix,
-      $.expression,
+      // force a conflict with $.if_type_expression
+      choice($.expression, $._type_expression),
       optional(seq('else', optional($.payload), $.expression)),
     )),
 
-    for_expression: $ => prec.right(1, seq(
+    for_expression: $ => prec.right(2, seq(
       optional($.block_label),
       optional('inline'),
       $._for_prefix,
@@ -516,7 +507,7 @@ export default grammar({
       optional(seq('else', $.expression)),
     )),
 
-    while_expression: $ => prec.right(1, seq(
+    while_expression: $ => prec.right(2, seq(
       optional($.block_label),
       optional('inline'),
       $._while_prefix,
@@ -524,7 +515,7 @@ export default grammar({
       optional(seq('else', optional($.payload), $.expression)),
     )),
 
-    _general_expression: $ => prec.right(choice(
+    _assignment_expression: $ => prec(1, choice(
       $.expression,
       alias($._simple_assignment_expression, $.assignment_expression),
       alias($._destructure_assignment_expression, $.assignment_expression),
@@ -540,11 +531,11 @@ export default grammar({
       field('right', $.expression),
     ),
 
-    _destructure_assignment_expression: $ => prec.right(seq(
+    _destructure_assignment_expression: $ => seq(
       field('left', $._expression_list),
       field('operator', '='),
       field('right', $.expression),
-    )),
+    ),
 
     _expression_list: $ => seq($.expression, repeat1(seq(',', $.expression))),
 
@@ -596,13 +587,13 @@ export default grammar({
       }));
     },
 
-    comptime_expression: $ => prec.right(1, seq('comptime', $.expression)),
+    comptime_expression: $ => prec.right(seq('comptime', $.expression)),
 
     async_expression: $ => prec.right(1, seq('async', $.expression)),
 
     await_expression: $ => prec.right(1, seq('await', $.expression)),
 
-    nosuspend_expression: $ => prec.right(1, seq('nosuspend', $.expression)),
+    nosuspend_expression: $ => prec.right(seq('nosuspend', $.expression)),
 
     continue_expression: $ => prec.right(1, seq(
       'continue',

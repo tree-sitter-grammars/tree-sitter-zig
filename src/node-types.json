@@ -194,36 +194,6 @@
     ]
   },
   {
-    "type": "statement",
-    "named": true,
-    "subtypes": [
-      {
-        "type": "comptime_statement",
-        "named": true
-      },
-      {
-        "type": "defer_statement",
-        "named": true
-      },
-      {
-        "type": "errdefer_statement",
-        "named": true
-      },
-      {
-        "type": "if_statement",
-        "named": true
-      },
-      {
-        "type": "nosuspend_statement",
-        "named": true
-      },
-      {
-        "type": "suspend_statement",
-        "named": true
-      }
-    ]
-  },
-  {
     "type": "type_expression",
     "named": true,
     "subtypes": [
@@ -863,6 +833,18 @@
           "named": true
         },
         {
+          "type": "comptime_statement",
+          "named": true
+        },
+        {
+          "type": "defer_statement",
+          "named": true
+        },
+        {
+          "type": "errdefer_statement",
+          "named": true
+        },
+        {
           "type": "expression",
           "named": true
         },
@@ -871,7 +853,15 @@
           "named": true
         },
         {
-          "type": "statement",
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "nosuspend_statement",
+          "named": true
+        },
+        {
+          "type": "suspend_statement",
           "named": true
         },
         {
@@ -1116,26 +1106,14 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
-        {
-          "type": "assignment_expression",
-          "named": true
-        },
         {
           "type": "block",
           "named": true
         },
         {
           "type": "block_label",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -1369,6 +1347,14 @@
             "named": true
           },
           {
+            "type": "comptime",
+            "named": false
+          },
+          {
+            "type": "comptime_statement",
+            "named": true
+          },
+          {
             "type": "expression",
             "named": true
           },
@@ -1377,19 +1363,23 @@
             "named": true
           },
           {
+            "type": "if_statement",
+            "named": true
+          },
+          {
             "type": "inline",
             "named": false
           },
           {
-            "type": "statement",
+            "type": "nosuspend_statement",
+            "named": true
+          },
+          {
+            "type": "suspend_statement",
             "named": true
           },
           {
             "type": "switch_expression",
-            "named": true
-          },
-          {
-            "type": "variable_declaration",
             "named": true
           },
           {
@@ -1912,11 +1902,35 @@
       "required": true,
       "types": [
         {
+          "type": "comptime_type_expression",
+          "named": true
+        },
+        {
           "type": "expression",
           "named": true
         },
         {
+          "type": "for_type_expression",
+          "named": true
+        },
+        {
+          "type": "function_signature",
+          "named": true
+        },
+        {
+          "type": "if_type_expression",
+          "named": true
+        },
+        {
           "type": "payload",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        },
+        {
+          "type": "while_type_expression",
           "named": true
         }
       ]
@@ -2977,6 +2991,10 @@
       "required": true,
       "types": [
         {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
           "type": "block_label",
           "named": true
         },
@@ -3033,6 +3051,10 @@
       "required": false,
       "types": [
         {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
           "type": "else_clause",
           "named": true
         },
@@ -3066,6 +3088,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
         {
           "type": "block_label",
           "named": true
