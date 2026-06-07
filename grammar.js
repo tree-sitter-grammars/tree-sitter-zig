@@ -350,7 +350,7 @@ export default grammar({
 
     if_statement: $ => seq(
       $._if_prefix,
-      $._conditional_body,
+      $._conditional_body_else_payload,
     ),
 
     _if_prefix: $ => seq(
@@ -421,7 +421,7 @@ export default grammar({
     _conditional_body_else_payload: $ => choice(
       seq(
         field('body', $._block_expression),
-        optional($.else_clause),
+        optional(alias($._else_clause_payload, $.else_clause)),
       ),
       seq(
         field('body', $._general_expression),

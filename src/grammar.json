@@ -1606,7 +1606,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_conditional_body"
+          "name": "_conditional_body_else_payload"
         }
       ]
     },
@@ -2012,8 +2012,13 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "else_clause"
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_else_clause_payload"
+                  },
+                  "named": true,
+                  "value": "else_clause"
                 },
                 {
                   "type": "BLANK"
