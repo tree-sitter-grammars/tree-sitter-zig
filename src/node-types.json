@@ -34,14 +34,6 @@
         "named": true
       },
       {
-        "type": "async_expression",
-        "named": true
-      },
-      {
-        "type": "await_expression",
-        "named": true
-      },
-      {
         "type": "block",
         "named": true
       },
@@ -705,36 +697,6 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "async_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "await_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1436,10 +1398,6 @@
         },
         {
           "type": "test_declaration",
-          "named": true
-        },
-        {
-          "type": "using_namespace_declaration",
           "named": true
         },
         {
@@ -2456,10 +2414,6 @@
           "named": true
         },
         {
-          "type": "using_namespace_declaration",
-          "named": true
-        },
-        {
           "type": "variable_declaration",
           "named": true
         }
@@ -2820,10 +2774,6 @@
           "named": true
         },
         {
-          "type": "using_namespace_declaration",
-          "named": true
-        },
-        {
           "type": "variable_declaration",
           "named": true
         }
@@ -2883,10 +2833,6 @@
         },
         {
           "type": "test_declaration",
-          "named": true
-        },
-        {
-          "type": "using_namespace_declaration",
           "named": true
         },
         {
@@ -3130,26 +3076,7 @@
           "named": true
         },
         {
-          "type": "using_namespace_declaration",
-          "named": true
-        },
-        {
           "type": "variable_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "using_namespace_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
           "named": true
         }
       ]
@@ -3802,14 +3729,6 @@
     "named": false
   },
   {
-    "type": "async",
-    "named": false
-  },
-  {
-    "type": "await",
-    "named": false
-  },
-  {
     "type": "bool",
     "named": false
   },
@@ -4083,10 +4002,6 @@
   },
   {
     "type": "unreachable",
-    "named": false
-  },
-  {
-    "type": "usingnamespace",
     "named": false
   },
   {

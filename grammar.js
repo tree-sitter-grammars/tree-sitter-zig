@@ -106,7 +106,6 @@ export default grammar({
         choice(
           $.variable_declaration,
           $.function_declaration,
-          $.using_namespace_declaration,
         ),
       ),
     ),
@@ -238,11 +237,14 @@ export default grammar({
       '...', // TODO: make this only valid if it's the last parameter
     ),
 
-    using_namespace_declaration: $ => seq(
-      'usingnamespace',
-      $.expression,
-      ';',
-    ),
+    // using_namespace was deprecated and then removed in 0.15.1
+    // due to the need to remove async and await expressions, it also makes sense to remove this
+
+    // using_namespace_declaration: $ => seq(
+    //   'usingnamespace',
+    //   $.expression,
+    //   ';',
+    // ),
 
     block: $ => seq(
       '{',
@@ -455,8 +457,6 @@ export default grammar({
       $.comptime_expression,
       $.nosuspend_expression,
       $.continue_expression,
-      $.async_expression,
-      $.await_expression,
       $.resume_expression,
       $.return_expression,
       $.for_expression,
@@ -626,9 +626,13 @@ export default grammar({
 
     comptime_expression: $ => prec.right(seq('comptime', $.expression)),
 
-    async_expression: $ => prec.right(1, seq('async', $.expression)),
+    // async and await expressions were deprecated and then removed in 0.15.1
+    // because of this, they are no longer keywords in the language
+    // if these are left in, then a function named await() would cause an error
 
-    await_expression: $ => prec.right(1, seq('await', $.expression)),
+    // async_expression: $ => prec.right(1, seq('async', $.expression)),
+
+    // await_expression: $ => prec.right(1, seq('await', $.expression)),
 
     nosuspend_expression: $ => prec.right(seq('nosuspend', $.expression)),
 
