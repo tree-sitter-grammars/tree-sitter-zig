@@ -840,7 +840,31 @@
         "required": true,
         "types": [
           {
+            "type": "comptime_type_expression",
+            "named": true
+          },
+          {
             "type": "expression",
+            "named": true
+          },
+          {
+            "type": "for_type_expression",
+            "named": true
+          },
+          {
+            "type": "function_signature",
+            "named": true
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "while_type_expression",
             "named": true
           }
         ]
@@ -1230,6 +1254,10 @@
           {
             "type": "null",
             "named": false
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
           },
           {
             "type": "type_expression",
@@ -2479,6 +2507,10 @@
       "types": [
         {
           "type": "doc_comment",
+          "named": true
+        },
+        {
+          "type": "function_signature",
           "named": true
         },
         {

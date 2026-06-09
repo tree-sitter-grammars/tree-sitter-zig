@@ -130,9 +130,14 @@ export default grammar({
           ':',
           field('type', $._type_expression),
         ),
-        // explicitly disallowing $.function_signature to accommodate PEG !KEYWORD_fn
+        // explicitly disallowing bare $.function_signature to accommodate PEG !KEYWORD_fn
         // selecting only these also prevents $.comptime_type_expression from causing a conflict
-        field('name', choice($.type_expression, $.if_type_expression, $._loop_type_expression)),
+        field('name', choice(
+          $.type_expression,
+          $.if_type_expression,
+          $._loop_type_expression,
+          alias($._parenthesized_type_expression, $.parenthesized_expression),
+        )),
       ),
       optional($.byte_alignment),
       optional(seq('=', choice($.expression, $.function_signature))),
@@ -232,7 +237,8 @@ export default grammar({
       ),
       seq(
         repeat($.doc_comment),
-        choice($.type_expression, 'anytype'),
+        optional(choice('noalias', 'comptime')),
+        choice($.type_expression, $.function_signature, 'anytype'),
       ),
       '...', // TODO: make this only valid if it's the last parameter
     ),
@@ -501,17 +507,17 @@ export default grammar({
     ),
     asm_clobbers: $ => seq(':', optionalCommaSep(choice($.expression, $._special_primary_type_expression))),
 
-    if_expression: $ => prec.right(2, seq(
+    if_expression: $ => prec.right(1, seq(
       $._if_prefix,
       $._conditional_expression_else_payload,
     )),
 
-    _conditional_expression: $ => prec.right(2, seq(
+    _conditional_expression: $ => prec.right(1, seq(
       field('body', $.expression),
       optional($._else_expression),
     )),
 
-    _conditional_expression_else_payload: $ => prec.right(2, seq(
+    _conditional_expression_else_payload: $ => prec.right(1, seq(
       field('body', $.expression),
       optional($._else_expression_payload),
     )),
@@ -527,14 +533,14 @@ export default grammar({
       field('alternative', $.expression),
     ),
 
-    for_expression: $ => prec.right(2, seq(
+    for_expression: $ => prec.right(1, seq(
       optional($.block_label),
       optional('inline'),
       $._for_prefix,
       $._conditional_expression,
     )),
 
-    while_expression: $ => prec.right(2, seq(
+    while_expression: $ => prec.right(1, seq(
       optional($.block_label),
       optional('inline'),
       $._while_prefix,
@@ -619,7 +625,9 @@ export default grammar({
           field('left', $.expression),
           // @ts-ignore:
           field('operator', operator),
-          field('right', $.expression),
+          // function prototypes and other special TypeExpr cannot be followed by binary operators
+          // so they will only be allowed on the right of binary expressions
+          field('right', choice($.expression, $._special_primary_type_expression)),
         ));
       }));
     },
@@ -876,17 +884,17 @@ export default grammar({
 
     comptime_type_expression: $ => prec.right(1, seq('comptime', $._type_expression)),
 
-    if_type_expression: $ => prec.right(3, seq(
+    if_type_expression: $ => prec.right(1, seq(
       $._if_prefix,
       $._conditional_type_expression_else_payload,
     )),
 
-    _conditional_type_expression: $ => prec.right(3, seq(
+    _conditional_type_expression: $ => prec.right(1, seq(
       field('body', $._type_expression),
       optional($._else_type_expression),
     )),
 
-    _conditional_type_expression_else_payload: $ => prec.right(3, seq(
+    _conditional_type_expression_else_payload: $ => prec.right(1, seq(
       field('body', $._type_expression),
       optional($._else_type_expression_payload),
     )),
@@ -902,14 +910,14 @@ export default grammar({
       $._type_expression,
     )),
 
-    for_type_expression: $ => prec.right(3, seq(
+    for_type_expression: $ => prec.right(1, seq(
       optional($.block_label),
       optional('inline'),
       $._for_prefix,
       $._conditional_type_expression,
     )),
 
-    while_type_expression: $ => prec.right(3, seq(
+    while_type_expression: $ => prec.right(1, seq(
       optional($.block_label),
       optional('inline'),
       $._while_prefix,
