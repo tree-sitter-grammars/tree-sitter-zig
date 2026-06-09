@@ -212,9 +212,7 @@
   "continue"
 ] @keyword.repeat
 
-[
-  "export"
-] @keyword.import
+"export" @keyword.import
 
 [
   "defer"
