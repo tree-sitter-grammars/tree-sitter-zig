@@ -179,8 +179,6 @@
 ] @keyword.type
 
 [
-  "async"
-  "await"
   "suspend"
   "nosuspend"
   "resume"
@@ -215,7 +213,6 @@
 ] @keyword.repeat
 
 [
-  "usingnamespace"
   "export"
 ] @keyword.import
 

@@ -8,7 +8,6 @@
   (while_statement)
   (for_statement)
   (if_expression)
-  (else_clause)
   (for_expression)
   (while_expression)
   (if_type_expression)
