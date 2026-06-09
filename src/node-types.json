@@ -410,11 +410,31 @@
       "required": false,
       "types": [
         {
-          "type": "multiline_string",
+          "type": "comptime_type_expression",
           "named": true
         },
         {
-          "type": "string",
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "for_type_expression",
+          "named": true
+        },
+        {
+          "type": "function_signature",
+          "named": true
+        },
+        {
+          "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "while_type_expression",
           "named": true
         }
       ]
@@ -467,7 +487,19 @@
       "required": true,
       "types": [
         {
+          "type": "comptime_type_expression",
+          "named": true
+        },
+        {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "for_type_expression",
+          "named": true
+        },
+        {
+          "type": "function_signature",
           "named": true
         },
         {
@@ -475,7 +507,19 @@
           "named": true
         },
         {
+          "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "while_type_expression",
           "named": true
         }
       ]

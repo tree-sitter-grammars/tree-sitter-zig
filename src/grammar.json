@@ -2745,8 +2745,17 @@
           "value": "("
         },
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_special_primary_type_expression"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -2775,11 +2784,11 @@
                       "members": [
                         {
                           "type": "SYMBOL",
-                          "name": "string"
+                          "name": "expression"
                         },
                         {
                           "type": "SYMBOL",
-                          "name": "multiline_string"
+                          "name": "_special_primary_type_expression"
                         }
                       ]
                     },
@@ -2797,11 +2806,11 @@
                             "members": [
                               {
                                 "type": "SYMBOL",
-                                "name": "string"
+                                "name": "expression"
                               },
                               {
                                 "type": "SYMBOL",
-                                "name": "multiline_string"
+                                "name": "_special_primary_type_expression"
                               }
                             ]
                           }

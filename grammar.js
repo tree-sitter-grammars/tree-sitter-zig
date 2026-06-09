@@ -496,10 +496,10 @@ export default grammar({
       ']',
       $.string,
       '(',
-      $.expression,
+      choice($.expression, $._special_primary_type_expression),
       ')',
     ),
-    asm_clobbers: $ => seq(':', optionalCommaSep(choice($.string, $.multiline_string))),
+    asm_clobbers: $ => seq(':', optionalCommaSep(choice($.expression, $._special_primary_type_expression))),
 
     if_expression: $ => prec.right(2, seq(
       $._if_prefix,
