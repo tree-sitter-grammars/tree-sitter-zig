@@ -305,6 +305,10 @@
           "named": true
         },
         {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
           "type": "type_expression",
           "named": true
         },
@@ -344,6 +348,10 @@
           "named": true
         },
         {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
           "type": "while_type_expression",
           "named": true
         }
@@ -376,6 +384,10 @@
         },
         {
           "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -517,6 +529,10 @@
           "named": true
         },
         {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
@@ -544,7 +560,11 @@
             "named": false
           },
           {
-            "type": "expression",
+            "type": "primary_type_expression",
+            "named": true
+          },
+          {
+            "type": "suffix_expression",
             "named": true
           }
         ]
@@ -633,6 +653,10 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          },
+          {
+            "type": "function_signature",
             "named": true
           }
         ]
@@ -928,31 +952,11 @@
       "required": true,
       "types": [
         {
-          "type": "comptime_type_expression",
-          "named": true
-        },
-        {
-          "type": "for_type_expression",
-          "named": true
-        },
-        {
-          "type": "function_signature",
-          "named": true
-        },
-        {
-          "type": "if_type_expression",
-          "named": true
-        },
-        {
           "type": "initializer_list",
           "named": true
         },
         {
           "type": "type_expression",
-          "named": true
-        },
-        {
-          "type": "while_type_expression",
           "named": true
         }
       ]
@@ -1164,6 +1168,10 @@
           "named": true
         },
         {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
           "type": "type_expression",
           "named": true
         },
@@ -1252,6 +1260,10 @@
             "named": true
           },
           {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "type_expression",
             "named": true
           },
@@ -1276,6 +1288,10 @@
         },
         {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "function_signature",
           "named": true
         }
       ]
@@ -1337,84 +1353,6 @@
       "types": [
         {
           "type": "doc_comment_content",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "else_clause",
-    "named": true,
-    "fields": {
-      "alternative": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ";",
-            "named": false
-          },
-          {
-            "type": "assignment_expression",
-            "named": true
-          },
-          {
-            "type": "block",
-            "named": true
-          },
-          {
-            "type": "block_label",
-            "named": true
-          },
-          {
-            "type": "comptime",
-            "named": false
-          },
-          {
-            "type": "comptime_statement",
-            "named": true
-          },
-          {
-            "type": "expression",
-            "named": true
-          },
-          {
-            "type": "for_statement",
-            "named": true
-          },
-          {
-            "type": "if_statement",
-            "named": true
-          },
-          {
-            "type": "inline",
-            "named": false
-          },
-          {
-            "type": "nosuspend_statement",
-            "named": true
-          },
-          {
-            "type": "suspend_statement",
-            "named": true
-          },
-          {
-            "type": "switch_expression",
-            "named": true
-          },
-          {
-            "type": "while_statement",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "payload",
           "named": true
         }
       ]
@@ -1567,6 +1505,10 @@
             "named": true
           },
           {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "type_expression",
             "named": true
           },
@@ -1616,7 +1558,28 @@
   {
     "type": "for_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1640,6 +1603,68 @@
     "type": "for_statement",
     "named": true,
     "fields": {
+      "alternative": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "assignment_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "block_label",
+            "named": true
+          },
+          {
+            "type": "comptime",
+            "named": false
+          },
+          {
+            "type": "comptime_statement",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "for_statement",
+            "named": true
+          },
+          {
+            "type": "if_statement",
+            "named": true
+          },
+          {
+            "type": "inline",
+            "named": false
+          },
+          {
+            "type": "nosuspend_statement",
+            "named": true
+          },
+          {
+            "type": "suspend_statement",
+            "named": true
+          },
+          {
+            "type": "switch_expression",
+            "named": true
+          },
+          {
+            "type": "while_statement",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": true,
         "required": true,
@@ -1668,10 +1693,6 @@
       "required": true,
       "types": [
         {
-          "type": "else_clause",
-          "named": true
-        },
-        {
           "type": "expression",
           "named": true
         },
@@ -1685,7 +1706,42 @@
   {
     "type": "for_type_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "comptime_type_expression",
+            "named": true
+          },
+          {
+            "type": "for_type_expression",
+            "named": true
+          },
+          {
+            "type": "function_signature",
+            "named": true
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "type_expression",
+            "named": true
+          },
+          {
+            "type": "while_type_expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1712,6 +1768,10 @@
         },
         {
           "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -1771,6 +1831,10 @@
           },
           {
             "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
             "named": true
           },
           {
@@ -1850,6 +1914,10 @@
             "named": true
           },
           {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "type_expression",
             "named": true
           },
@@ -1906,6 +1974,26 @@
     "type": "if_expression",
     "named": true,
     "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -1919,38 +2007,10 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "comptime_type_expression",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "for_type_expression",
-          "named": true
-        },
-        {
-          "type": "function_signature",
-          "named": true
-        },
-        {
-          "type": "if_type_expression",
-          "named": true
-        },
-        {
           "type": "payload",
-          "named": true
-        },
-        {
-          "type": "type_expression",
-          "named": true
-        },
-        {
-          "type": "while_type_expression",
           "named": true
         }
       ]
@@ -1960,6 +2020,68 @@
     "type": "if_statement",
     "named": true,
     "fields": {
+      "alternative": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "assignment_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "block_label",
+            "named": true
+          },
+          {
+            "type": "comptime",
+            "named": false
+          },
+          {
+            "type": "comptime_statement",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "for_statement",
+            "named": true
+          },
+          {
+            "type": "if_statement",
+            "named": true
+          },
+          {
+            "type": "inline",
+            "named": false
+          },
+          {
+            "type": "nosuspend_statement",
+            "named": true
+          },
+          {
+            "type": "suspend_statement",
+            "named": true
+          },
+          {
+            "type": "switch_expression",
+            "named": true
+          },
+          {
+            "type": "while_statement",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": true,
         "required": true,
@@ -1998,10 +2120,6 @@
       "required": false,
       "types": [
         {
-          "type": "else_clause",
-          "named": true
-        },
-        {
           "type": "payload",
           "named": true
         }
@@ -2012,6 +2130,40 @@
     "type": "if_type_expression",
     "named": true,
     "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "comptime_type_expression",
+            "named": true
+          },
+          {
+            "type": "for_type_expression",
+            "named": true
+          },
+          {
+            "type": "function_signature",
+            "named": true
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "type_expression",
+            "named": true
+          },
+          {
+            "type": "while_type_expression",
+            "named": true
+          }
+        ]
+      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -2025,7 +2177,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "comptime_type_expression",
@@ -2041,6 +2193,10 @@
         },
         {
           "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -2209,6 +2365,10 @@
           "named": true
         },
         {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
           "type": "type_expression",
           "named": true
         },
@@ -2271,35 +2431,7 @@
         "required": false,
         "types": [
           {
-            "type": "anytype",
-            "named": false
-          },
-          {
-            "type": "comptime_type_expression",
-            "named": true
-          },
-          {
-            "type": "for_type_expression",
-            "named": true
-          },
-          {
-            "type": "function_signature",
-            "named": true
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if_type_expression",
-            "named": true
-          },
-          {
-            "type": "type_expression",
-            "named": true
-          },
-          {
-            "type": "while_type_expression",
             "named": true
           }
         ]
@@ -2329,6 +2461,10 @@
             "named": true
           },
           {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "type_expression",
             "named": true
           },
@@ -2345,6 +2481,10 @@
       "types": [
         {
           "type": "doc_comment",
+          "named": true
+        },
+        {
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -2374,7 +2514,35 @@
       "required": true,
       "types": [
         {
+          "type": "comptime_type_expression",
+          "named": true
+        },
+        {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "for_type_expression",
+          "named": true
+        },
+        {
+          "type": "function_signature",
+          "named": true
+        },
+        {
+          "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        },
+        {
+          "type": "while_type_expression",
           "named": true
         }
       ]
@@ -2433,6 +2601,10 @@
         },
         {
           "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -2553,6 +2725,10 @@
         },
         {
           "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -2960,6 +3136,10 @@
             "named": true
           },
           {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
             "type": "type_expression",
             "named": true
           },
@@ -2987,6 +3167,10 @@
           "named": true
         },
         {
+          "type": "function_signature",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -3005,6 +3189,26 @@
     "type": "while_expression",
     "named": true,
     "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -3018,7 +3222,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "assignment_expression",
@@ -3043,6 +3247,68 @@
     "type": "while_statement",
     "named": true,
     "fields": {
+      "alternative": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "assignment_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "block_label",
+            "named": true
+          },
+          {
+            "type": "comptime",
+            "named": false
+          },
+          {
+            "type": "comptime_statement",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "for_statement",
+            "named": true
+          },
+          {
+            "type": "if_statement",
+            "named": true
+          },
+          {
+            "type": "inline",
+            "named": false
+          },
+          {
+            "type": "nosuspend_statement",
+            "named": true
+          },
+          {
+            "type": "suspend_statement",
+            "named": true
+          },
+          {
+            "type": "switch_expression",
+            "named": true
+          },
+          {
+            "type": "while_statement",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": true,
         "required": true,
@@ -3085,10 +3351,6 @@
           "named": true
         },
         {
-          "type": "else_clause",
-          "named": true
-        },
-        {
           "type": "expression",
           "named": true
         },
@@ -3103,6 +3365,40 @@
     "type": "while_type_expression",
     "named": true,
     "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "comptime_type_expression",
+            "named": true
+          },
+          {
+            "type": "for_type_expression",
+            "named": true
+          },
+          {
+            "type": "function_signature",
+            "named": true
+          },
+          {
+            "type": "if_type_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "type_expression",
+            "named": true
+          },
+          {
+            "type": "while_type_expression",
+            "named": true
+          }
+        ]
+      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -3116,7 +3412,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "assignment_expression",
@@ -3144,6 +3440,10 @@
         },
         {
           "type": "if_type_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
           "named": true
         },
         {

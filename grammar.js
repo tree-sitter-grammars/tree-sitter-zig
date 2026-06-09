@@ -63,9 +63,6 @@ export default grammar({
     [$.for_expression],
     [$.while_expression],
     [$.switch_expression],
-    [$.for_type_expression],
-    [$.while_type_expression],
-    [$.parameter, $._type_expression],
     [$.primary_expression, $._type_expression],
   ],
 
@@ -128,19 +125,21 @@ export default grammar({
     container_field: $ => prec.right(2, seq(
       repeat($.doc_comment),
       optional('comptime'),
-      choice(seq(
-        field('name', choice($.identifier, $.primitive_value, alias($.builtin_type, $.identifier))),
-        ':',
-        field('type', $._type_expression),
-      ),
-      // explicitly disallowing $.function_signature to avoid $.container_field matching when $._container_declaration should
-      // selecting only these also prevents $.comptime_type_expression from matching
-      field('name', choice($.type_expression, $.if_type_expression, $._loop_type_expression)),
+      choice(
+        seq(
+          field('name', choice($.identifier, $.primitive_value, alias($.builtin_type, $.identifier))),
+          ':',
+          field('type', $._type_expression),
+        ),
+        // explicitly disallowing $.function_signature to accommodate PEG !KEYWORD_fn
+        // selecting only these also prevents $.comptime_type_expression from causing a conflict
+        field('name', choice($.type_expression, $.if_type_expression, $._loop_type_expression)),
       ),
       optional($.byte_alignment),
-      optional(seq('=', $.expression)),
+      optional(seq('=', choice($.expression, $.function_signature))),
     )),
 
+    // GlobalVarDecl
     variable_declaration: $ => seq(
       optional(choice(
         'export',
@@ -148,7 +147,7 @@ export default grammar({
       )),
       optional('threadlocal'),
       $._variable_declaration_header, // VarDeclProto
-      optional(seq('=', $.expression)),
+      optional(seq('=', choice($.expression, $.function_signature))),
       ';',
     ),
 
@@ -162,14 +161,15 @@ export default grammar({
         ),
         seq(
           $.expression,
-          repeat1(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))), 
+          repeat1(prec(1, seq(',', choice($._variable_declaration_header, $.expression)))),
         ),
       ),
       '=',
-      $.expression,
+      choice($.expression, $.function_signature),
       ';',
     ),
 
+    // VarDeclProto
     _variable_declaration_header: $ => prec(1, seq(
       choice('const', 'var'),
       $.identifier,
@@ -225,16 +225,17 @@ export default grammar({
       seq(
         repeat($.doc_comment),
         optional(choice('noalias', 'comptime')),
-        choice(
-          seq(
-            field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
-            ':',
-            field('type', choice($.type_expression, $._special_primary_type_expression, 'anytype')),
-          ),
-          field('name', choice($.type_expression, $._special_primary_type_expression, 'anytype')),
+        seq(
+          field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
+          ':',
+          field('type', choice($._type_expression, 'anytype')),
         ),
       ),
-      '...',
+      seq(
+        repeat($.doc_comment),
+        choice($.type_expression, 'anytype'),
+      ),
+      '...', // TODO: make this only valid if it's the last parameter
     ),
 
     using_namespace_declaration: $ => seq(
@@ -311,7 +312,15 @@ export default grammar({
       $.nosuspend_statement,
       $.comptime_statement,
       $.suspend_statement,
-      seq(optional('comptime'), $._assignment_expression, ';'),
+      seq(
+        optional('comptime'),
+        // disallow $._destructure_assignment_expression to not conflict with $.variable_assignment_statement
+        choice(
+          $.expression,
+          alias($._simple_assignment_expression, $.assignment_expression),
+        ),
+        ';',
+      ),
     )),
 
     comptime_statement: $ => prec(2, seq('comptime', $._block_expression)),
@@ -338,7 +347,7 @@ export default grammar({
 
     if_statement: $ => prec(5, seq(
       $._if_prefix,
-      $._conditional_body_else_payload,
+      $._conditional_statement_else_payload,
     )),
 
     _if_prefix: $ => seq(
@@ -349,7 +358,31 @@ export default grammar({
       optional($.payload),
     ),
 
-    else_clause: $ => seq(
+    _conditional_statement: $ => prec.right(5, choice(
+      seq(
+        field('body', $._block_expression),
+        optional($._else_clause),
+      ),
+      seq(
+        // force a conflict with $._conditional_expression
+        field('body', choice($._assignment_expression, $.expression)),
+        choice(';', $._else_clause),
+      ),
+    )),
+
+    _conditional_statement_else_payload: $ => prec.right(5, choice(
+      seq(
+        field('body', $._block_expression),
+        optional($._else_clause_payload),
+      ),
+      seq(
+        // force a conflict with $._conditional_expression_else_payload
+        field('body', choice($._assignment_expression, $.expression)),
+        choice(';', $._else_clause_payload),
+      ),
+    )),
+
+    _else_clause: $ => seq(
       'else',
       field('alternative', $._statement),
     ),
@@ -367,7 +400,7 @@ export default grammar({
 
     for_statement: $ => seq(
       $._for_prefix,
-      $._conditional_body,
+      $._conditional_statement,
     ),
 
     _for_prefix: $ => seq(
@@ -383,7 +416,7 @@ export default grammar({
 
     while_statement: $ => seq(
       $._while_prefix,
-      $._conditional_body_else_payload,
+      $._conditional_statement_else_payload,
     ),
 
     _while_prefix: $ => seq(
@@ -394,30 +427,6 @@ export default grammar({
       optional($.payload),
       optional(seq(':', '(', $._assignment_expression, ')')),
     ),
-
-    _conditional_body: $ => prec.left(5, choice(
-      seq(
-        field('body', $._block_expression),
-        optional($.else_clause),
-      ),
-      seq(
-        // force a conflict with $.if_expression
-        field('body', choice($._assignment_expression, $.expression)),
-        choice(';', $.else_clause),
-      ),
-    )),
-
-    _conditional_body_else_payload: $ => prec.left(5, choice(
-      seq(
-        field('body', $._block_expression),
-        optional(alias($._else_clause_payload, $.else_clause)),
-      ),
-      seq(
-        // force a conflict with $.if_expression
-        field('body', choice($._assignment_expression, $.expression)),
-        choice(';', alias($._else_clause_payload, $.else_clause)),
-      ),
-    )),
 
     payload: $ => seq('|', optionalCommaSep1(seq(optional('*'), $.identifier)), '|'),
 
@@ -458,7 +467,7 @@ export default grammar({
     )),
 
     braced_expression: $ => seq(
-      $._type_expression,
+      $.type_expression,
       $.initializer_list,
     ),
 
@@ -492,27 +501,44 @@ export default grammar({
     ),
     asm_clobbers: $ => seq(':', optionalCommaSep(choice($.string, $.multiline_string))),
 
-    if_expression: $ => prec.left(2, seq(
+    if_expression: $ => prec.right(2, seq(
       $._if_prefix,
-      // force a conflict with $.if_type_expression
-      choice($.expression, $._type_expression),
-      optional(seq('else', optional($.payload), $.expression)),
+      $._conditional_expression_else_payload,
     )),
+
+    _conditional_expression: $ => prec.right(2, seq(
+      field('body', $.expression),
+      optional($._else_expression),
+    )),
+
+    _conditional_expression_else_payload: $ => prec.right(2, seq(
+      field('body', $.expression),
+      optional($._else_expression_payload),
+    )),
+
+    _else_expression: $ => seq(
+      'else',
+      field('alternative', $.expression),
+    ),
+
+    _else_expression_payload: $ => seq(
+      'else',
+      optional($.payload),
+      field('alternative', $.expression),
+    ),
 
     for_expression: $ => prec.right(2, seq(
       optional($.block_label),
       optional('inline'),
       $._for_prefix,
-      $.expression,
-      optional(seq('else', $.expression)),
+      $._conditional_expression,
     )),
 
     while_expression: $ => prec.right(2, seq(
       optional($.block_label),
       optional('inline'),
       $._while_prefix,
-      $.expression,
-      optional(seq('else', optional($.payload), $.expression)),
+      $._conditional_expression_else_payload,
     )),
 
     _assignment_expression: $ => prec(1, choice(
@@ -522,22 +548,33 @@ export default grammar({
     )),
 
     _simple_assignment_expression: $ => seq(
-      field('left', $.expression),
-      field('operator', choice(
-        '=', '*=', '*%=', '*|=', '/=', '%=',
-        '+=', '+%=', '+|=', '-=', '-%=', '-|=',
-        '<<=', '<<|=', '>>=', '&=', '^=', '|=',
-      )),
-      field('right', $.expression),
+      field('left', choice($.suffix_expression, $.primary_type_expression)),
+      choice(
+        seq(
+          field('operator', choice(
+            '*=', '*%=', '*|=', '/=', '%=',
+            '+=', '+%=', '+|=', '-=', '-%=', '-|=',
+            '<<=', '<<|=', '>>=', '&=', '^=', '|=',
+          )),
+          field('right', $.expression),
+        ),
+        seq(
+          field('operator', '='),
+          field('right', choice($.expression, $.function_signature)),
+        ),
+      ),
     ),
 
     _destructure_assignment_expression: $ => seq(
       field('left', $._expression_list),
       field('operator', '='),
-      field('right', $.expression),
+      field('right', choice($.expression, $.function_signature)),
     ),
 
-    _expression_list: $ => seq($.expression, repeat1(seq(',', $.expression))),
+    _expression_list: $ => seq(
+      choice($.suffix_expression, $.primary_type_expression),
+      repeat1(seq(',', choice($.suffix_expression, $.primary_type_expression))),
+    ),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', choice('!', '~', '-', '-%', '&')),
@@ -672,6 +709,7 @@ export default grammar({
       $._loop_type_expression,
       $.function_signature,
       $.comptime_type_expression,
+      alias($._parenthesized_type_expression, $.parenthesized_expression),
     ),
 
     suffix_expression: $ => prec.right(PREC.MEMBER, seq(
@@ -834,29 +872,49 @@ export default grammar({
 
     comptime_type_expression: $ => prec.right(1, seq('comptime', $._type_expression)),
 
-    if_type_expression: $ => prec.right(1, seq(
+    if_type_expression: $ => prec.right(3, seq(
       $._if_prefix,
-      $._type_expression,
-      optional(seq('else', optional($.payload), $._type_expression)),
+      $._conditional_type_expression_else_payload,
     )),
 
-    for_type_expression: $ => prec.right(1, seq(
+    _conditional_type_expression: $ => prec.right(3, seq(
+      field('body', $._type_expression),
+      optional($._else_type_expression),
+    )),
+
+    _conditional_type_expression_else_payload: $ => prec.right(3, seq(
+      field('body', $._type_expression),
+      optional($._else_type_expression_payload),
+    )),
+
+    _else_type_expression: $ => prec.left(seq(
+      'else',
+      $._type_expression,
+    )),
+
+    _else_type_expression_payload: $ => prec.left(seq(
+      'else',
+      optional($.payload),
+      $._type_expression,
+    )),
+
+    for_type_expression: $ => prec.right(3, seq(
       optional($.block_label),
       optional('inline'),
       $._for_prefix,
-      $._type_expression,
-      optional(seq('else', $._type_expression)),
+      $._conditional_type_expression,
     )),
 
-    while_type_expression: $ => prec.right(1, seq(
+    while_type_expression: $ => prec.right(3, seq(
       optional($.block_label),
       optional('inline'),
       $._while_prefix,
-      $._type_expression,
-      optional(seq('else', optional($.payload), $._type_expression)),
+      $._conditional_type_expression_else_payload,
     )),
 
     parenthesized_expression: $ => seq('(', $.expression, ')'),
+
+    _parenthesized_type_expression: $ => seq('(', $._type_expression, ')'),
 
     block_label: $ => prec(-1, seq(
       choice($.identifier, alias($.builtin_type, $.identifier)),
