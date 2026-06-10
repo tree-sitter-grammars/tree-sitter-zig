@@ -42,50 +42,10 @@ jobs:
         with:
           files: |
             examples/**/*.zig
-            !examples/zig/doc/langref/Assembly Syntax Explained.zig
-            !examples/zig/doc/langref/inline_assembly.zig
-            !examples/zig/doc/langref/var_must_be_initialized.zig
-            !examples/zig/lib/compiler_rt/aarch64_outline_atomics.zig
-            !examples/zig/lib/compiler_rt/arm.zig
-            !examples/zig/lib/compiler_rt/atomics.zig
-            !examples/zig/lib/compiler_rt/clear_cache.zig
-            !examples/zig/lib/std/Thread.zig
-            !examples/zig/lib/std/builtin.zig
-            !examples/zig/lib/std/debug/SelfInfo.zig
-            !examples/zig/lib/std/debug.zig
-            !examples/zig/lib/std/mem.zig
-            !examples/zig/lib/std/os/linux/aarch64.zig
-            !examples/zig/lib/std/os/linux/arm.zig
-            !examples/zig/lib/std/os/linux/hexagon.zig
-            !examples/zig/lib/std/os/linux/loongarch64.zig
-            !examples/zig/lib/std/os/linux/m68k.zig
-            !examples/zig/lib/std/os/linux/mips.zig
-            !examples/zig/lib/std/os/linux/mips64.zig
-            !examples/zig/lib/std/os/linux/powerpc.zig
-            !examples/zig/lib/std/os/linux/powerpc64.zig
-            !examples/zig/lib/std/os/linux/riscv32.zig
-            !examples/zig/lib/std/os/linux/riscv64.zig
-            !examples/zig/lib/std/os/linux/s390x.zig
-            !examples/zig/lib/std/os/linux/sparc64.zig
-            !examples/zig/lib/std/os/linux/thumb.zig
-            !examples/zig/lib/std/os/linux/tls.zig
-            !examples/zig/lib/std/os/linux/x86.zig
-            !examples/zig/lib/std/os/linux/x86_64.zig
-            !examples/zig/lib/std/os/plan9/x86_64.zig
-            !examples/zig/lib/std/pie.zig
-            !examples/zig/lib/std/valgrind.zig
-            !examples/zig/lib/std/zig/llvm/Builder.zig
-            !examples/zig/lib/std/zig/system/x86.zig
-            !examples/zig/lib/std/zon/Serializer.zig
-            !examples/zig/lib/std/zon/parse.zig
-            !examples/zig/src/Compilation.zig
-            !examples/zig/test/behavior/asm.zig
-            !examples/zig/test/cases/llvm/f_segment_address_space_reading_and_writing.zig
-            !examples/zig/test/standalone/stack_iterator/unwind.zig
-            !examples/zig/test/standalone/stack_iterator/unwind_freestanding.zig
           invalid-files: |
-            examples/zig/test/cases/compile_errors/@import_zon_bad_type.zig
+            examples/zig/doc/langref/var_must_be_initialized.zig
             examples/zig/test/cases/compile_errors/const_is_a_statement_not_an_expression.zig
+            examples/zig/test/cases/compile_errors/declaration_between_fields.zig
             examples/zig/test/cases/compile_errors/empty_char_lit.zig
             examples/zig/test/cases/compile_errors/implicit_semicolon-block_expr.zig
             examples/zig/test/cases/compile_errors/implicit_semicolon-block_statement.zig
@@ -108,6 +68,7 @@ jobs:
             examples/zig/test/cases/compile_errors/implicit_semicolon-while-continue_statement.zig
             examples/zig/test/cases/compile_errors/implicit_semicolon-while_expression.zig
             examples/zig/test/cases/compile_errors/implicit_semicolon-while_statement.zig
+            examples/zig/test/cases/compile_errors/invalid_assignments.zig
             examples/zig/test/cases/compile_errors/invalid_empty_unicode_escape.zig
             examples/zig/test/cases/compile_errors/invalid_exponent_in_float_literal-1.zig
             examples/zig/test/cases/compile_errors/invalid_exponent_in_float_literal-2.zig
@@ -135,6 +96,7 @@ jobs:
             examples/zig/test/cases/compile_errors/missing_digit_after_base.zig
             examples/zig/test/cases/compile_errors/non-extern_function_with_var_args.zig
             examples/zig/test/cases/compile_errors/normal_string_with_newline.zig
+            examples/zig/test/cases/compile_errors/reject_externs_function_definitions_with_body.zig
 
   query:
     name: Validate queries
