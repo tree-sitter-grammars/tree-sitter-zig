@@ -96,7 +96,7 @@ jobs:
             examples/zig/test/cases/compile_errors/missing_digit_after_base.zig
             examples/zig/test/cases/compile_errors/non-extern_function_with_var_args.zig
             examples/zig/test/cases/compile_errors/normal_string_with_newline.zig
-            examples/zig/test/cases/compile_errors/reject_externs_function_definitions_with_body.zig
+            examples/zig/test/cases/compile_errors/reject_extern_function_definitions_with_body.zig
 
   query:
     name: Validate queries
