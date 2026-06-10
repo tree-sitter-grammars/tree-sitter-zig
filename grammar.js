@@ -647,17 +647,20 @@ export default grammar({
     continue_expression: $ => prec.right(1, seq(
       'continue',
       optional($.break_label),
-      optional($.expression),
+      optional(choice($.expression, $._special_primary_type_expression)),
     )),
 
     resume_expression: $ => prec.right(1, seq('resume', $.expression)),
 
-    return_expression: $ => prec.right(1, seq('return', optional($.expression))),
+    return_expression: $ => prec.right(1, seq(
+      'return',
+      optional(choice($.expression, $._special_primary_type_expression))),
+    ),
 
     break_expression: $ => prec.right(1, seq(
       'break',
       optional($.break_label),
-      optional($.expression),
+      optional(choice($.expression, $._special_primary_type_expression)),
     )),
 
     try_expression: $ => prec.left(PREC.UNARY, seq('try', $.expression)),
