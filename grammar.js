@@ -124,9 +124,9 @@ module.exports = grammar({
         seq(
           field('name', choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier))),
           ':',
-          field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+          field('type', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression, $.error_set_declaration)),
         ),
-        field('name', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression)),
+        field('name', choice($.primary_type_expression, $.if_type_expression, $.comptime_type_expression, $.error_set_declaration)),
       ),
       optional($.byte_alignment),
       optional(seq('=', $.expression)),
@@ -290,7 +290,6 @@ module.exports = grammar({
     statement: $ => choice(
       $.comptime_statement,
       $.nosuspend_statement,
-      $.suspend_statement,
       $.defer_statement,
       $.errdefer_statement,
       $.expression_statement,
@@ -311,8 +310,6 @@ module.exports = grammar({
     ),
 
     nosuspend_statement: $ => seq('nosuspend', $._block_expr_statement),
-
-    suspend_statement: $ => seq('suspend', $._block_expr_statement),
 
     defer_statement: $ => seq('defer', $._block_expr_statement),
 
@@ -413,11 +410,8 @@ module.exports = grammar({
       $.unary_expression,
       $.binary_expression,
       $.comptime_expression,
-      $.async_expression,
-      $.await_expression,
       $.nosuspend_expression,
       $.continue_expression,
-      $.resume_expression,
       $.return_expression,
       $.break_expression,
       $.try_expression,
@@ -454,7 +448,13 @@ module.exports = grammar({
       $.expression,
       ')',
     ),
-    asm_clobbers: $ => seq(':', optionalCommaSep(choice($.string, $.multiline_string))),
+    // Zig 0.16 changed inline-asm clobbers from a string list (`: "rax", "rcx"`)
+    // to an anonymous struct literal (`: .{ .rax = true, .memory = true }`).
+    // Accept both so older and current sources parse.
+    asm_clobbers: $ => seq(':', choice(
+      optionalCommaSep(choice($.string, $.multiline_string)),
+      $.anonymous_struct_initializer,
+    )),
 
     if_expression: $ => prec.right(seq(
       $._if_prefix,
@@ -538,10 +538,6 @@ module.exports = grammar({
 
     comptime_expression: $ => prec.right(seq('comptime', $.expression)),
 
-    async_expression: $ => prec.right(seq('async', $.expression)),
-
-    await_expression: $ => prec.right(seq('await', $.expression)),
-
     nosuspend_expression: $ => prec.right(seq('nosuspend', $.expression)),
 
     continue_expression: $ => prec.right(seq(
@@ -549,8 +545,6 @@ module.exports = grammar({
       optional($.break_label),
       optional($.expression),
     )),
-
-    resume_expression: $ => prec.right(seq('resume', $.expression)),
 
     return_expression: $ => prec.right(seq('return', optional($.expression))),
 
@@ -660,7 +654,7 @@ module.exports = grammar({
         'volatile',
         'allowzero',
       )),
-      $.type_expression,
+      choice($.type_expression, $.if_type_expression),
     )),
 
     pointer_type: $ => prec.right(1, seq(
@@ -686,7 +680,7 @@ module.exports = grammar({
         'volatile',
         'allowzero',
       )),
-      $.type_expression,
+      choice($.type_expression, $.if_type_expression),
     )),
 
     array_type: $ => prec(1, seq(
@@ -765,10 +759,10 @@ module.exports = grammar({
     parenthesized_expression: $ => seq('(', $.expression, ')'),
 
     block_label: $ => prec(-1, seq(
-      choice($.identifier, alias($.builtin_type, $.identifier)),
+      choice($.identifier, $._reserved_identifier, alias($.builtin_type, $.identifier)),
       ':',
     )),
-    break_label: $ => seq(':', $.identifier),
+    break_label: $ => seq(':', choice($.identifier, $._reserved_identifier)),
 
     arguments: $ => seq('(', optionalCommaSep($.expression), ')'),
 
