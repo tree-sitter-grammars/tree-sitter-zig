@@ -1,10 +1,11 @@
 .{
+    .fingerprint = 0xb3d00960f1407525,
     .name = .tree_sitter_zig,
     .version = "1.1.2",
     .dependencies = .{
         .tree_sitter = .{
-            .url = "git+https://github.com/tree-sitter/zig-tree-sitter#b4b72c903e69998fc88e27e154a5e3cc9166551b",
-            .hash = "tree_sitter-0.25.0-8heIf51vAQConvVIgvm-9mVIbqh7yabZYqPXfOpS3YoG",
+            .url = "git+https://github.com/tree-sitter/zig-tree-sitter.git#b562510b5563dcf3b7fcac4a5fe9d60834c84667",
+            .hash = "tree_sitter-0.26.0-8heIf-vDAQDh0HhAAUVwVZFmLrwSKMZl5gRaVFqtas0W",
             .lazy = true,
         },
     },
