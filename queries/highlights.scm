@@ -123,13 +123,7 @@
   "opaque"
 ] @keyword.type
 
-[
-  "async"
-  "await"
-  "suspend"
-  "nosuspend"
-  "resume"
-] @keyword.coroutine
+"nosuspend" @keyword.coroutine
 
 "fn" @keyword.function
 
