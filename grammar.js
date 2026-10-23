@@ -56,7 +56,7 @@ const builtinTypes = [
 export default grammar({
   name: 'zig',
 
-  externals: ($) => [$.doc_comment_content, $._error_sentinel],
+  externals: $ => [$.doc_comment_content, $._error_sentinel],
 
   conflicts: $ => [
     [$._container_members],
@@ -454,7 +454,9 @@ export default grammar({
 
     byte_alignment: $ => seq('align', '(', $.expression, ')'),
 
-    bit_alignment: $ => seq('align', '(', $.expression, optional(seq(':', $.expression, ':', $.expression)), ')'),
+    bit_alignment: $ => seq('align',
+      '(', $.expression, optional(seq(':', $.expression, ':', $.expression)), ')',
+    ),
 
     address_space: $ => seq('addrspace', '(', $.expression, ')'),
 
@@ -721,7 +723,7 @@ export default grammar({
           seq(
             choice($.expression, $.builtin_type),
             optional(seq('...', choice($.expression, $.builtin_type))),
-          )
+          ),
         ),
         'else',
       ),
