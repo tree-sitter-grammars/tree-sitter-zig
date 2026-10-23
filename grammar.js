@@ -844,7 +844,7 @@ export default grammar({
     )),
 
     error_union_type: $ => prec.right(seq(
-      field('error', choice($.suffix_expression, $.primary_type_expression)),
+      field('error', choice($.builtin_type, $.suffix_expression, $.primary_type_expression)),
       '!',
       field('ok', $._type_expression),
     )),

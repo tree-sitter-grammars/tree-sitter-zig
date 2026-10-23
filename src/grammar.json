@@ -5254,6 +5254,10 @@
               "members": [
                 {
                   "type": "SYMBOL",
+                  "name": "builtin_type"
+                },
+                {
+                  "type": "SYMBOL",
                   "name": "suffix_expression"
                 },
                 {
