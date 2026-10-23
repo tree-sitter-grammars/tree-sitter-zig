@@ -44,6 +44,9 @@ jobs:
             examples/**/*.zig
           invalid-files: |
             examples/zig/doc/langref/var_must_be_initialized.zig
+            examples/zig/test/cases/compile_errors/alignment_of_enum_field_specified.zig
+            examples/zig/test/cases/compile_errors/array_access_of_type.zig
+            examples/zig/test/cases/compile_errors/bad_void_initializer.zig
             examples/zig/test/cases/compile_errors/const_is_a_statement_not_an_expression.zig
             examples/zig/test/cases/compile_errors/declaration_between_fields.zig
             examples/zig/test/cases/compile_errors/empty_char_lit.zig
@@ -94,6 +97,7 @@ jobs:
             examples/zig/test/cases/compile_errors/invalid_underscore_placement_in_int_literal-4.zig
             examples/zig/test/cases/compile_errors/invalid_unicode_escape.zig
             examples/zig/test/cases/compile_errors/missing_digit_after_base.zig
+            examples/zig/test/cases/compile_errors/missing_result_type_for_phi_node.zig
             examples/zig/test/cases/compile_errors/non-extern_function_with_var_args.zig
             examples/zig/test/cases/compile_errors/normal_string_with_newline.zig
             examples/zig/test/cases/compile_errors/reject_extern_function_definitions_with_body.zig
