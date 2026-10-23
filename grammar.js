@@ -949,7 +949,7 @@ export default grammar({
     _parenthesized_type_expression: $ => seq('(', $._type_expression, ')'),
 
     block_label: $ => prec(-1, seq(
-      $.identifier,
+      choice($.identifier, alias($.builtin_type, $.identifier)),
       ':',
     )),
 
