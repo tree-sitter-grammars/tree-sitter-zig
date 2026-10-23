@@ -229,6 +229,15 @@
                           },
                           "named": true,
                           "value": "identifier"
+                        },
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "SYMBOL",
+                            "name": "primitive_value"
+                          },
+                          "named": true,
+                          "value": "identifier"
                         }
                       ]
                     }
@@ -898,6 +907,15 @@
                         "content": {
                           "type": "SYMBOL",
                           "name": "builtin_type"
+                        },
+                        "named": true,
+                        "value": "identifier"
+                      },
+                      {
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "primitive_value"
                         },
                         "named": true,
                         "value": "identifier"
@@ -5937,6 +5955,15 @@
                 "content": {
                   "type": "SYMBOL",
                   "name": "builtin_type"
+                },
+                "named": true,
+                "value": "identifier"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "primitive_value"
                 },
                 "named": true,
                 "value": "identifier"

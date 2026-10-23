@@ -127,7 +127,11 @@ export default grammar({
       choice(
         seq(
           // HACK: this alias is necessary because tree-sitter will match $.builtin_type below before $.identifier here
-          field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
+          field('name', choice(
+            $.identifier,
+            alias($.builtin_type, $.identifier),
+            alias($.primitive_value, $.identifier),
+          )),
           ':',
           field('type', $._type_expression),
         ),
@@ -232,7 +236,11 @@ export default grammar({
         repeat($.doc_comment),
         optional(choice('noalias', 'comptime')),
         seq(
-          field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
+          field('name', choice(
+            $.identifier,
+            alias($.builtin_type, $.identifier),
+            alias($.primitive_value, $.identifier),
+          )),
           ':',
           field('type', choice($._type_expression, 'anytype')),
         ),
@@ -949,7 +957,11 @@ export default grammar({
     _parenthesized_type_expression: $ => seq('(', $._type_expression, ')'),
 
     block_label: $ => prec(-1, seq(
-      choice($.identifier, alias($.builtin_type, $.identifier)),
+      choice(
+        $.identifier,
+        alias($.builtin_type, $.identifier),
+        alias($.primitive_value, $.identifier),
+      ),
       ':',
     )),
 
