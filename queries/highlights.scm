@@ -1,16 +1,13 @@
 ; Variables
 (identifier) @variable
 
-; Parameters
-(parameter
-  name: (identifier) @variable.parameter)
-
-(payload
-  (identifier) @variable.parameter)
-
 ; Types
-(parameter
+(_
   type: (identifier) @type)
+
+(_
+  type: (pointer_type
+    (identifier) @type))
 
 ((identifier) @type
   (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*"))
@@ -23,6 +20,7 @@
     (enum_declaration)
     (union_declaration)
     (opaque_declaration)
+    (error_set_declaration)
   ])
 
 [
@@ -40,6 +38,13 @@
   "undefined"
 ] @constant.builtin
 
+; Parameters
+(parameter
+  name: (identifier) @variable.parameter)
+
+(payload
+  (identifier) @variable.parameter)
+
 ; Enum Literals
 (field_expression
   member: (identifier) @constant)
@@ -52,16 +57,11 @@
   (identifier) @label)
 
 ; Fields
-(struct_declaration
-  (container_field
-    name: (identifier) @variable.member))
-
 (field_initializer
   .
   (identifier) @variable.member)
 
 (suffix_expression
-  head: (_)
   (field_expression
     member: (identifier) @variable.member))
 
@@ -80,10 +80,15 @@
 (container_field
   name: (identifier) @variable.member)
 
+(struct_declaration
+  (container_field
+    name: (identifier) @variable.member))
+
 (enum_declaration
   (container_field
     name: (identifier) @constant))
 
+; highlight fields in a union that are just an identifier as an enum variant
 (union_declaration
   (container_field
     name: (identifier) @constant
@@ -91,12 +96,6 @@
 
 ; Functions
 (builtin_identifier) @function.builtin
-
-(suffix_expression
-  (field_expression
-    member: (identifier) @function.method)
-  .
-  arguments: (_))
 
 (function_declaration
   name: (identifier) @function)
@@ -106,7 +105,18 @@
   .
   arguments: (_))
 
-; Modules
+(suffix_expression
+  (field_expression
+    member: (identifier) @function.method)
+  .
+  arguments: (_))
+
+; Modules / Imports
+
+(builtin_function
+  (builtin_identifier) @keyword.import
+  (#any-of? @keyword.import "@import" "@cImport"))
+
 (variable_declaration
   (identifier) @module
   (builtin_function
@@ -170,8 +180,6 @@
 
 [
   "error"
-  "const"
-  "var"
   "struct"
   "union"
   "enum"
@@ -189,6 +197,7 @@
 [
   "and"
   "or"
+  "catch"
   "orelse"
 ] @keyword.operator
 
@@ -202,7 +211,6 @@
   "if"
   "else"
   "switch"
-  "catch"
 ] @keyword.conditional
 
 [
@@ -220,6 +228,8 @@
 ] @keyword.exception
 
 [
+  "const"
+  "var"
   "volatile"
   "allowzero"
   "noalias"

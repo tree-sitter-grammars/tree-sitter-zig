@@ -1,3 +1,14 @@
+; Scopes
+[
+  (function_declaration)
+  (struct_declaration)
+  (opaque_declaration)
+  (enum_declaration)
+  (union_declaration)
+  (switch_case)
+  (block)
+] @local.scope
+
 ; Definitions
 (function_declaration
   name: (identifier) @local.definition.function)
@@ -91,13 +102,3 @@
 
 (break_label
   (identifier) @local.reference)
-
-; Scopes
-[
-  (function_declaration)
-  (struct_declaration)
-  (opaque_declaration)
-  (enum_declaration)
-  (union_declaration)
-  (block)
-] @local.scope
