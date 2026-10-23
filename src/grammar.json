@@ -4585,6 +4585,10 @@
               "name": "expression"
             },
             {
+              "type": "SYMBOL",
+              "name": "builtin_type"
+            },
+            {
               "type": "ALIAS",
               "content": {
                 "type": "SYMBOL",

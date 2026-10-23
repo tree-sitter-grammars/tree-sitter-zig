@@ -701,6 +701,7 @@ export default grammar({
       // SingleAssignExpr
       choice(
         $.expression,
+        $.builtin_type,
         alias($._simple_assignment_expression, $.assignment_expression),
       ),
     ),

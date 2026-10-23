@@ -3558,6 +3558,10 @@
           "named": true
         },
         {
+          "type": "builtin_type",
+          "named": true
+        },
+        {
           "type": "expression",
           "named": true
         },
