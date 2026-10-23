@@ -4607,6 +4607,10 @@
               "name": "builtin_type"
             },
             {
+              "type": "SYMBOL",
+              "name": "if_type_expression"
+            },
+            {
               "type": "ALIAS",
               "content": {
                 "type": "SYMBOL",

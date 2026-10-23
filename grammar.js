@@ -710,6 +710,7 @@ export default grammar({
       choice(
         $.expression,
         $.builtin_type,
+        $.if_type_expression,
         alias($._simple_assignment_expression, $.assignment_expression),
       ),
     ),

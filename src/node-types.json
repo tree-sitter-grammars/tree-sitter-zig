@@ -3566,6 +3566,10 @@
           "named": true
         },
         {
+          "type": "if_type_expression",
+          "named": true
+        },
+        {
           "type": "payload",
           "named": true
         }
