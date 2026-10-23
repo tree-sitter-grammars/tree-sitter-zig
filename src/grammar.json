@@ -4617,8 +4617,17 @@
                       "type": "SEQ",
                       "members": [
                         {
-                          "type": "SYMBOL",
-                          "name": "expression"
+                          "type": "CHOICE",
+                          "members": [
+                            {
+                              "type": "SYMBOL",
+                              "name": "expression"
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "builtin_type"
+                            }
+                          ]
                         },
                         {
                           "type": "CHOICE",
@@ -4631,8 +4640,17 @@
                                   "value": "..."
                                 },
                                 {
-                                  "type": "SYMBOL",
-                                  "name": "expression"
+                                  "type": "CHOICE",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "expression"
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "builtin_type"
+                                    }
+                                  ]
                                 }
                               ]
                             },
@@ -4656,8 +4674,17 @@
                             "type": "SEQ",
                             "members": [
                               {
-                                "type": "SYMBOL",
-                                "name": "expression"
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SYMBOL",
+                                    "name": "expression"
+                                  },
+                                  {
+                                    "type": "SYMBOL",
+                                    "name": "builtin_type"
+                                  }
+                                ]
                               },
                               {
                                 "type": "CHOICE",
@@ -4670,8 +4697,17 @@
                                         "value": "..."
                                       },
                                       {
-                                        "type": "SYMBOL",
-                                        "name": "expression"
+                                        "type": "CHOICE",
+                                        "members": [
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "expression"
+                                          },
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "builtin_type"
+                                          }
+                                        ]
                                       }
                                     ]
                                   },

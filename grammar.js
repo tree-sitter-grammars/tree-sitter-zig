@@ -708,7 +708,12 @@ export default grammar({
 
     _switch_case_exp: $ => seq(
       choice(
-        optionalCommaSep1(seq($.expression, optional(seq('...', $.expression)))),
+        optionalCommaSep1(
+          seq(
+            choice($.expression, $.builtin_type),
+            optional(seq('...', choice($.expression, $.builtin_type))),
+          )
+        ),
         'else',
       ),
     ),
