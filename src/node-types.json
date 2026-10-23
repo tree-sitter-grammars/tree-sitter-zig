@@ -752,6 +752,10 @@
         "required": true,
         "types": [
           {
+            "type": "builtin_type",
+            "named": true
+          },
+          {
             "type": "expression",
             "named": true
           }
@@ -3673,6 +3677,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "builtin_type",
+            "named": true
+          },
           {
             "type": "expression",
             "named": true

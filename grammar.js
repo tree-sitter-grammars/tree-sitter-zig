@@ -603,7 +603,7 @@ export default grammar({
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', choice('!', '~', '-', '-%', '&')),
-      field('argument', $.expression),
+      field('argument', choice($.expression, $.builtin_type)),
     )),
 
     binary_expression: $ => {
@@ -641,7 +641,7 @@ export default grammar({
 
       return choice(...table.map(([operator, precedence]) => {
         return prec.left(precedence, seq(
-          field('left', $.expression),
+          field('left', choice($.expression, $.builtin_type)),
           // @ts-ignore:
           field('operator', operator),
           // function prototypes and other special TypeExpr cannot be followed by binary operators
