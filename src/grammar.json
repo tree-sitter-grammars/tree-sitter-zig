@@ -215,26 +215,8 @@
                     "type": "FIELD",
                     "name": "name",
                     "content": {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "identifier"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "primitive_value"
-                        },
-                        {
-                          "type": "ALIAS",
-                          "content": {
-                            "type": "SYMBOL",
-                            "name": "builtin_type"
-                          },
-                          "named": true,
-                          "value": "identifier"
-                        }
-                      ]
+                      "type": "SYMBOL",
+                      "name": "identifier"
                     }
                   },
                   {
@@ -1555,18 +1537,6 @@
         {
           "type": "STRING",
           "value": "errdefer"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "payload"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
         },
         {
           "type": "SYMBOL",
@@ -4425,48 +4395,6 @@
                 "name": "operator",
                 "content": {
                   "type": "STRING",
-                  "value": "**"
-                }
-              },
-              {
-                "type": "FIELD",
-                "name": "right",
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "expression"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_special_primary_type_expression"
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "PREC_LEFT",
-          "value": 7,
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "left",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "expression"
-                }
-              },
-              {
-                "type": "FIELD",
-                "name": "operator",
-                "content": {
-                  "type": "STRING",
                   "value": "*%"
                 }
               },
@@ -7171,7 +7099,11 @@
         },
         {
           "type": "PATTERN",
-          "value": "(i|u)[0-9]+"
+          "value": "i[1-9][0-9]*"
+        },
+        {
+          "type": "PATTERN",
+          "value": "u[0-9]+"
         }
       ]
     },

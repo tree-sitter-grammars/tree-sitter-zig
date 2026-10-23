@@ -738,10 +738,6 @@
             "named": false
           },
           {
-            "type": "**",
-            "named": false
-          },
-          {
             "type": "*|",
             "named": false
           },
@@ -1260,10 +1256,6 @@
         "required": true,
         "types": [
           {
-            "type": "boolean",
-            "named": true
-          },
-          {
             "type": "for_type_expression",
             "named": true
           },
@@ -1276,20 +1268,12 @@
             "named": true
           },
           {
-            "type": "null",
-            "named": false
-          },
-          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "type_expression",
             "named": true
-          },
-          {
-            "type": "undefined",
-            "named": false
           },
           {
             "type": "while_type_expression",
@@ -1505,10 +1489,6 @@
         },
         {
           "type": "expression",
-          "named": true
-        },
-        {
-          "type": "payload",
           "named": true
         }
       ]

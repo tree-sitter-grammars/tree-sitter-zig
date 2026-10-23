@@ -50,7 +50,8 @@ const builtinTypes = [
   'c_longlong',
   'c_ulonglong',
   'c_longdouble',
-  /(i|u)[0-9]+/,
+  /i[1-9][0-9]*/, // i0 was removed as a possible builtin type in 0.17.0
+  /u[0-9]+/,
 ];
 
 export default grammar({
@@ -126,7 +127,7 @@ export default grammar({
       optional('comptime'),
       choice(
         seq(
-          field('name', choice($.identifier, $.primitive_value, alias($.builtin_type, $.identifier))),
+          field('name', $.identifier),
           ':',
           field('type', $._type_expression),
         ),
@@ -339,7 +340,11 @@ export default grammar({
 
     defer_statement: $ => seq('defer', $._block_expr_statement),
 
-    errdefer_statement: $ => seq('errdefer', optional($.payload), $._block_expr_statement),
+    errdefer_statement: $ => seq(
+      'errdefer',
+      // optional($.payload), removed in 0.17.0
+      $._block_expr_statement,
+    ),
 
     _block_expr_statement: $ => prec(1, choice(
       $._block_expression,
@@ -614,7 +619,7 @@ export default grammar({
         ['*', PREC.MULTIPLY],
         ['/', PREC.MULTIPLY],
         ['%', PREC.MULTIPLY],
-        ['**', PREC.MULTIPLY],
+        // ['**', PREC.MULTIPLY], removed in 0.17.0
         ['*%', PREC.MULTIPLY],
         ['*|', PREC.MULTIPLY],
         ['||', PREC.MULTIPLY],
