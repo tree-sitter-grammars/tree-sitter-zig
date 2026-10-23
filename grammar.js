@@ -264,7 +264,7 @@ export default grammar({
       'struct',
       optional(seq('(', $.expression, ')')),
       '{',
-      $._container_members,
+      optional($._container_members),
       '}',
     ),
 
@@ -272,7 +272,7 @@ export default grammar({
       optional(choice('extern', 'packed')),
       'opaque',
       '{',
-      $._container_members,
+      optional($._container_members),
       '}',
     ),
 
@@ -281,7 +281,7 @@ export default grammar({
       'enum',
       optional(seq('(', $.expression, ')')),
       '{',
-      $._container_members,
+      optional($._container_members),
       '}',
     ),
 
@@ -297,7 +297,7 @@ export default grammar({
         ')',
       )),
       '{',
-      $._container_members,
+      optional($._container_members),
       '}',
     ),
 
