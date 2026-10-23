@@ -112,7 +112,6 @@
   arguments: (_))
 
 ; Modules / Imports
-
 (builtin_function
   (builtin_identifier) @keyword.import
   (#any-of? @keyword.import "@import" "@cImport"))

@@ -34,7 +34,6 @@ const builtinTypes = [
   'type',
   'anyerror',
   'anyopaque',
-  'type',
   'noreturn',
   'isize',
   'usize',
@@ -133,6 +132,7 @@ export default grammar({
         ),
         // explicitly disallowing bare $.function_signature to accommodate PEG !KEYWORD_fn
         // selecting only these also prevents $.comptime_type_expression from causing a conflict
+        // and prevents a builtin type from matching before $.identifier
         field('name', choice(
           $.type_expression,
           $.if_type_expression,
@@ -141,7 +141,7 @@ export default grammar({
         )),
       ),
       optional($.byte_alignment),
-      optional(seq('=', choice($.expression, $.function_signature))),
+      optional(seq('=', $._full_expression)),
     )),
 
     // GlobalVarDecl
@@ -152,7 +152,7 @@ export default grammar({
       )),
       optional('threadlocal'),
       $._variable_declaration_header, // VarDeclProto
-      optional(seq('=', choice($.expression, $.function_signature))),
+      optional(seq('=', $._full_expression)),
       ';',
     ),
 
@@ -170,7 +170,7 @@ export default grammar({
         ),
       ),
       '=',
-      choice($.expression, $.function_signature),
+      $._full_expression,
       ';',
     ),
 
@@ -231,7 +231,7 @@ export default grammar({
         repeat($.doc_comment),
         optional(choice('noalias', 'comptime')),
         seq(
-          field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
+          field('name', $.identifier),
           ':',
           field('type', choice($._type_expression, 'anytype')),
         ),
@@ -239,7 +239,7 @@ export default grammar({
       seq(
         repeat($.doc_comment),
         optional(choice('noalias', 'comptime')),
-        choice($.type_expression, $.function_signature, 'anytype'),
+        choice($.type_expression, $.builtin_type, $.function_signature, 'anytype'),
       ),
       '...', // TODO: make this only valid if it's the last parameter
     ),
@@ -262,7 +262,7 @@ export default grammar({
     struct_declaration: $ => seq(
       optional(choice('extern', 'packed')),
       'struct',
-      optional(seq('(', $.expression, ')')),
+      optional(seq('(', $._full_expression, ')')),
       '{',
       optional($._container_members),
       '}',
@@ -279,7 +279,7 @@ export default grammar({
     enum_declaration: $ => seq(
       optional(choice('extern', 'packed')),
       'enum',
-      optional(seq('(', $.expression, ')')),
+      optional(seq('(', $._full_expression, ')')),
       '{',
       optional($._container_members),
       '}',
@@ -291,8 +291,8 @@ export default grammar({
       optional(seq(
         '(',
         choice(
-          seq('enum', optional(seq('(', $.expression, ')'))),
-          $.expression,
+          seq('enum', optional(seq('(', $._full_expression, ')'))),
+          $._full_expression,
         ),
         ')',
       )),
@@ -366,7 +366,7 @@ export default grammar({
     _if_prefix: $ => seq(
       'if',
       '(',
-      field('condition', $.expression),
+      field('condition', $._full_expression),
       ')',
       optional($.payload),
     ),
@@ -435,7 +435,7 @@ export default grammar({
     _while_prefix: $ => seq(
       'while',
       '(',
-      field('condition', $.expression),
+      field('condition', $._full_expression),
       ')',
       optional($.payload),
       optional(seq(':', '(', $._assignment_expression, ')')),
@@ -460,6 +460,11 @@ export default grammar({
       $.catch_expression, // special case of binary expression
       $.primary_expression,
     )),
+
+    _full_expression: $ => choice(
+      $.expression,
+      $._special_primary_type_expression,
+    ),
 
     primary_expression: $ => prec.right(choice(
       $.asm_expression,
@@ -507,10 +512,10 @@ export default grammar({
       ']',
       $.string,
       '(',
-      choice($.expression, $._special_primary_type_expression),
+      $._full_expression,
       ')',
     ),
-    asm_clobbers: $ => seq(':', optionalCommaSep(choice($.expression, $._special_primary_type_expression))),
+    asm_clobbers: $ => seq(':', optionalCommaSep($._full_expression)),
 
     if_expression: $ => prec.right(1, seq(
       $._if_prefix,
@@ -553,7 +558,7 @@ export default grammar({
     )),
 
     _assignment_expression: $ => prec(1, choice(
-      $.expression,
+      $._full_expression,
       alias($._simple_assignment_expression, $.assignment_expression),
       alias($._destructure_assignment_expression, $.assignment_expression),
     )),
@@ -567,11 +572,11 @@ export default grammar({
             '+=', '+%=', '+|=', '-=', '-%=', '-|=',
             '<<=', '<<|=', '>>=', '&=', '^=', '|=',
           )),
-          field('right', $.expression),
+          field('right', $._full_expression),
         ),
         seq(
           field('operator', '='),
-          field('right', choice($.expression, $.function_signature)),
+          field('right', $._full_expression),
         ),
       ),
     ),
@@ -579,7 +584,7 @@ export default grammar({
     _destructure_assignment_expression: $ => seq(
       field('left', $._expression_list),
       field('operator', '='),
-      field('right', choice($.expression, $.function_signature)),
+      field('right', $._full_expression),
     ),
 
     _expression_list: $ => seq(
@@ -632,7 +637,7 @@ export default grammar({
           field('operator', operator),
           // function prototypes and other special TypeExpr cannot be followed by binary operators
           // so they will only be allowed on the right of binary expressions
-          field('right', choice($.expression, $._special_primary_type_expression)),
+          field('right', $._full_expression),
         ));
       }));
     },
@@ -647,25 +652,25 @@ export default grammar({
 
     // await_expression: $ => prec.right(1, seq('await', $.expression)),
 
-    nosuspend_expression: $ => prec.right(seq('nosuspend', $.expression)),
+    nosuspend_expression: $ => prec.right(1, seq('nosuspend', $.expression)),
 
     continue_expression: $ => prec.right(1, seq(
       'continue',
       optional($.break_label),
-      optional(choice($.expression, $._special_primary_type_expression)),
+      optional($._full_expression),
     )),
 
     resume_expression: $ => prec.right(1, seq('resume', $.expression)),
 
     return_expression: $ => prec.right(1, seq(
       'return',
-      optional(choice($.expression, $._special_primary_type_expression))),
+      optional($._full_expression)),
     ),
 
     break_expression: $ => prec.right(1, seq(
       'break',
       optional($.break_label),
-      optional(choice($.expression, $._special_primary_type_expression)),
+      optional($._full_expression),
     )),
 
     try_expression: $ => prec.left(PREC.UNARY, seq('try', $.expression)),
@@ -674,13 +679,13 @@ export default grammar({
       $.expression,
       'catch',
       optional($.payload),
-      $.expression,
+      $._full_expression,
     )),
 
     switch_expression: $ => seq(
       optional($.block_label),
       'switch',
-      '(', $.expression, ')',
+      '(', $._full_expression, ')',
       '{',
       optionalCommaSep($.switch_case), // SwtichProngList
       '}',
@@ -725,6 +730,7 @@ export default grammar({
     ),
 
     _special_primary_type_expression: $ => choice(
+      $.builtin_type,
       $.if_type_expression,
       $._loop_type_expression,
       $.function_signature,
@@ -768,7 +774,6 @@ export default grammar({
       'unreachable',
       $.string,
       $.multiline_string,
-      $.builtin_type,
     ),
 
     function_signature: $ => prec.right($._function_prototype),
@@ -871,7 +876,7 @@ export default grammar({
       '{',
       choice(
         optionalCommaSep($.field_initializer),
-        optionalCommaSep($.expression),
+        optionalCommaSep($._full_expression),
       ),
       '}',
     ),
@@ -880,7 +885,7 @@ export default grammar({
       '.',
       $.identifier,
       '=',
-      $.expression,
+      $._full_expression,
     ),
 
     labeled_block_expression: $ => seq($.block_label, $.block),
@@ -937,7 +942,7 @@ export default grammar({
     _parenthesized_type_expression: $ => seq('(', $._type_expression, ')'),
 
     block_label: $ => prec(-1, seq(
-      choice($.identifier, alias($.builtin_type, $.identifier)),
+      $.identifier,
       ':',
     )),
 
@@ -945,10 +950,7 @@ export default grammar({
 
     arguments: $ => seq(
       '(',
-      optionalCommaSep(choice(
-        $.expression,
-        $._special_primary_type_expression,
-      )),
+      optionalCommaSep($._full_expression),
       ')',
     ),
 
