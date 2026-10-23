@@ -1,16 +1,13 @@
 ; Variables
 (identifier) @variable
 
-; Parameters
-(parameter
-  name: (identifier) @variable.parameter)
-
-(payload
-  (identifier) @variable.parameter)
-
 ; Types
-(parameter
+(_
   type: (identifier) @type)
+
+(_
+  type: (pointer_type
+    (identifier) @type))
 
 ((identifier) @type
   (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*"))
@@ -23,11 +20,13 @@
     (enum_declaration)
     (union_declaration)
     (opaque_declaration)
+    (error_set_declaration)
   ])
 
 [
   (builtin_type)
   "anyframe"
+  "anytype"
 ] @type.builtin
 
 ; Constants
@@ -36,17 +35,19 @@
 
 [
   "null"
-  "unreachable"
   "undefined"
 ] @constant.builtin
 
-(field_expression
-  .
-  member: (identifier) @constant)
+; Parameters
+(parameter
+  name: (identifier) @variable.parameter)
 
-(enum_declaration
-  (container_field
-    type: (identifier) @constant))
+(payload
+  (identifier) @variable.parameter)
+
+; Enum Literals
+(field_expression
+  member: (identifier) @constant)
 
 ; Labels
 (block_label
@@ -60,38 +61,103 @@
   .
   (identifier) @variable.member)
 
-(field_expression
-  (_)
-  member: (identifier) @variable.member)
+(suffix_expression
+  (field_expression
+    member: (identifier) @variable.member))
+
+(suffix_expression
+  head: (_)
+  (field_expression
+    member: (identifier) @type
+    (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")))
+
+(suffix_expression
+  head: (_)
+  (field_expression
+    member: (identifier) @constant
+    (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")))
 
 (container_field
   name: (identifier) @variable.member)
 
-(initializer_list
-  (assignment_expression
-    left: (field_expression
-      .
-      member: (identifier) @variable.member)))
+(struct_declaration
+  (container_field
+    name: (identifier) @variable.member))
+
+(enum_declaration
+  (container_field
+    name: (identifier) @constant))
+
+; highlight fields in a union that are just an identifier as an enum variant
+(union_declaration
+  (container_field
+    name: (identifier) @constant
+    !type))
 
 ; Functions
 (builtin_identifier) @function.builtin
 
-(call_expression
-  function: (identifier) @function.call)
-
-(call_expression
-  function: (field_expression
-    member: (identifier) @function.call))
-
 (function_declaration
   name: (identifier) @function)
 
-; Modules
+(suffix_expression
+  head: (identifier) @function.call
+  .
+  arguments: (_))
+
+(suffix_expression
+  (field_expression
+    member: (identifier) @function.method)
+  .
+  arguments: (_))
+
+; Modules / Imports
+(builtin_function
+  (builtin_identifier) @keyword.import
+  (#any-of? @keyword.import "@import" "@cImport"))
+
 (variable_declaration
   (identifier) @module
   (builtin_function
     (builtin_identifier) @keyword.import
     (#any-of? @keyword.import "@import" "@cImport")))
+
+(variable_declaration
+  (identifier) @type
+  (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
+  (builtin_function
+    (builtin_identifier) @keyword.control.import
+    (#any-of? @keyword.control.import "@import" "@cImport")))
+
+(variable_declaration
+  (identifier) @constant
+  (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
+  (builtin_function
+    (builtin_identifier) @keyword.control.import
+    (#any-of? @keyword.control.import "@import" "@cImport")))
+
+(variable_declaration
+  (identifier) @variable
+  (suffix_expression
+    head: (builtin_function
+      (builtin_identifier) @keyword.control.import
+      (#any-of? @keyword.control.import "@import" "@cImport"))))
+
+(variable_declaration
+  (identifier) @type
+  (#lua-match? @type "^[A-Z_][a-zA-Z0-9_]*")
+  (suffix_expression
+    head: (builtin_function
+      (builtin_identifier) @keyword.control.import
+      (#any-of? @keyword.control.import "@import" "@cImport"))))
+
+(variable_declaration
+  (identifier) @constant
+  (#lua-match? @constant "^[A-Z][A-Z_0-9]+$")
+  (suffix_expression
+    head: (builtin_function
+      (builtin_identifier) @keyword.control.import
+      (#any-of? @keyword.control.import "@import" "@cImport"))))
 
 ; Builtins
 [
@@ -108,15 +174,11 @@
 ; Keywords
 [
   "asm"
-  "defer"
-  "errdefer"
   "test"
-  "error"
-  "const"
-  "var"
 ] @keyword
 
 [
+  "error"
   "struct"
   "union"
   "enum"
@@ -124,8 +186,6 @@
 ] @keyword.type
 
 [
-  "async"
-  "await"
   "suspend"
   "nosuspend"
   "resume"
@@ -136,10 +196,15 @@
 [
   "and"
   "or"
+  "catch"
   "orelse"
 ] @keyword.operator
 
-"return" @keyword.return
+[
+  "try"
+  "unreachable"
+  "return"
+] @keyword.return
 
 [
   "if"
@@ -154,17 +219,16 @@
   "continue"
 ] @keyword.repeat
 
-[
-  "usingnamespace"
-  "export"
-] @keyword.import
+"export" @keyword.import
 
 [
-  "try"
-  "catch"
+  "defer"
+  "errdefer"
 ] @keyword.exception
 
 [
+  "const"
+  "var"
   "volatile"
   "allowzero"
   "noalias"
@@ -212,7 +276,6 @@
   ">="
   "<="
   "<"
-  "&"
   "^"
   "|"
   "<<"
@@ -221,13 +284,11 @@
   "+"
   "++"
   "+%"
-  "-%"
   "+|"
   "-|"
   "*"
   "/"
   "%"
-  "**"
   "*%"
   "*|"
   "||"
@@ -273,11 +334,16 @@
   "->"
 ] @punctuation.delimiter
 
+(multiline_string
+  "\\\\" @punctuation.special)
+
 (payload
   "|" @punctuation.bracket)
 
 ; Comments
 (comment) @comment @spell
 
-((comment) @comment.documentation
-  (#lua-match? @comment.documentation "^//!"))
+[
+  (container_doc_comment)
+  (doc_comment)
+] @comment.documentation

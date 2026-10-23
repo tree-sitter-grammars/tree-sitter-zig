@@ -185,7 +185,7 @@ checksum = "c4013970217383f67b18aef68f6fb2e8d409bc5755227092d32efb0422ba24b8"
 
 [[package]]
 name = "tree-sitter-zig"
-version = "1.1.2"
+version = "2.0.0"
 dependencies = [
  "cc",
  "tree-sitter",

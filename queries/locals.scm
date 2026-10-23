@@ -1,3 +1,14 @@
+; Scopes
+[
+  (function_declaration)
+  (struct_declaration)
+  (opaque_declaration)
+  (enum_declaration)
+  (union_declaration)
+  (switch_case)
+  (block)
+] @local.scope
+
 ; Definitions
 (function_declaration
   name: (identifier) @local.definition.function)
@@ -5,8 +16,8 @@
 (parameter
   name: (identifier) @local.definition.parameter)
 
-(variable_declaration
-  (identifier) @local.definition.var)
+(payload
+  (identifier) @local.definition.parameter)
 
 (variable_declaration
   (identifier) @local.definition.type
@@ -59,7 +70,7 @@
   (identifier) @local.reference
   (#set! reference.kind "type"))
 
-(struct_initializer
+(struct_declaration
   (identifier) @local.reference
   (#set! reference.kind "type"))
 
@@ -76,21 +87,18 @@
   member: (identifier) @local.reference
   (#set! reference.kind "field"))
 
-(call_expression
-  function: (field_expression
+(suffix_expression
+  (field_expression
     member: (identifier) @local.reference
-    (#set! reference.kind "function")))
+    (#set! reference.kind "function"))
+  .
+  arguments: (_))
+
+(suffix_expression
+  head: (identifier) @local.reference
+  (#set! reference.kind "function")
+  .
+  arguments: (_))
 
 (break_label
   (identifier) @local.reference)
-
-[
-  (for_statement)
-  (if_statement)
-  (while_statement)
-  (function_declaration)
-  (block)
-  (source_file)
-  (enum_declaration)
-  (struct_declaration)
-] @local.scope
