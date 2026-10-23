@@ -126,17 +126,18 @@ export default grammar({
       optional('comptime'),
       choice(
         seq(
-          field('name', $.identifier),
+          // HACK: this alias is necessary because tree-sitter will match $.builtin_type below before $.identifier here
+          field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
           ':',
           field('type', $._type_expression),
         ),
-        // explicitly disallowing bare $.function_signature to accommodate PEG !KEYWORD_fn
-        // selecting only these also prevents $.comptime_type_expression from causing a conflict
-        // and prevents a builtin type from matching before $.identifier
+        // selecting only these prevents $.comptime_type_expression from causing a conflict
         field('name', choice(
+          $.builtin_type,
           $.type_expression,
           $.if_type_expression,
           $._loop_type_expression,
+          $.function_signature,
           alias($._parenthesized_type_expression, $.parenthesized_expression),
         )),
       ),
@@ -231,7 +232,7 @@ export default grammar({
         repeat($.doc_comment),
         optional(choice('noalias', 'comptime')),
         seq(
-          field('name', $.identifier),
+          field('name', choice($.identifier, alias($.builtin_type, $.identifier))),
           ':',
           field('type', choice($._type_expression, 'anytype')),
         ),

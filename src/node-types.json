@@ -1340,7 +1340,15 @@
         "required": true,
         "types": [
           {
+            "type": "builtin_type",
+            "named": true
+          },
+          {
             "type": "for_type_expression",
+            "named": true
+          },
+          {
+            "type": "function_signature",
             "named": true
           },
           {

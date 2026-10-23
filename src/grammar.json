@@ -215,8 +215,22 @@
                     "type": "FIELD",
                     "name": "name",
                     "content": {
-                      "type": "SYMBOL",
-                      "name": "identifier"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "identifier"
+                        },
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "SYMBOL",
+                            "name": "builtin_type"
+                          },
+                          "named": true,
+                          "value": "identifier"
+                        }
+                      ]
                     }
                   },
                   {
@@ -241,6 +255,10 @@
                   "members": [
                     {
                       "type": "SYMBOL",
+                      "name": "builtin_type"
+                    },
+                    {
+                      "type": "SYMBOL",
                       "name": "type_expression"
                     },
                     {
@@ -250,6 +268,10 @@
                     {
                       "type": "SYMBOL",
                       "name": "_loop_type_expression"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "function_signature"
                     },
                     {
                       "type": "ALIAS",
@@ -865,8 +887,22 @@
                   "type": "FIELD",
                   "name": "name",
                   "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      },
+                      {
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "builtin_type"
+                        },
+                        "named": true,
+                        "value": "identifier"
+                      }
+                    ]
                   }
                 },
                 {
