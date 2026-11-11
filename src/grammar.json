@@ -1099,6 +1099,10 @@
                 {
                   "type": "STRING",
                   "value": "packed"
+                },
+                {
+                  "type": "STRING",
+                  "value": "bitpack"
                 }
               ]
             },
@@ -1166,6 +1170,10 @@
                 {
                   "type": "STRING",
                   "value": "packed"
+                },
+                {
+                  "type": "STRING",
+                  "value": "bitpack"
                 }
               ]
             },
@@ -1208,6 +1216,10 @@
                 {
                   "type": "STRING",
                   "value": "packed"
+                },
+                {
+                  "type": "STRING",
+                  "value": "bitpack"
                 }
               ]
             },
@@ -1275,6 +1287,10 @@
                 {
                   "type": "STRING",
                   "value": "packed"
+                },
+                {
+                  "type": "STRING",
+                  "value": "bitpack"
                 }
               ]
             },

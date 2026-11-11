@@ -239,7 +239,7 @@ module.exports = grammar({
     ),
 
     struct_declaration: $ => seq(
-      optional(choice('extern', 'packed')),
+      optional(choice('extern', 'packed', 'bitpack')),
       'struct',
       optional(seq('(', $.expression, ')')),
       '{',
@@ -248,7 +248,7 @@ module.exports = grammar({
     ),
 
     opaque_declaration: $ => seq(
-      optional(choice('extern', 'packed')),
+      optional(choice('extern', 'packed', 'bitpack')),
       'opaque',
       '{',
       $._container_members,
@@ -256,7 +256,7 @@ module.exports = grammar({
     ),
 
     enum_declaration: $ => seq(
-      optional(choice('extern', 'packed')),
+      optional(choice('extern', 'packed', 'bitpack')),
       'enum',
       optional(seq('(', $.expression, ')')),
       '{',
@@ -265,7 +265,7 @@ module.exports = grammar({
     ),
 
     union_declaration: $ => seq(
-      optional(choice('extern', 'packed')),
+      optional(choice('extern', 'packed', 'bitpack')),
       'union',
       optional(seq(
         '(',
