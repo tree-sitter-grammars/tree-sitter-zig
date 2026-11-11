@@ -178,6 +178,7 @@
   "extern"
   "comptime"
   "packed"
+  "bitpack"
   "threadlocal"
 ] @keyword.modifier
 
@@ -212,7 +213,6 @@
   ">="
   "<="
   "<"
-  "&"
   "^"
   "|"
   "<<"
@@ -221,7 +221,6 @@
   "+"
   "++"
   "+%"
-  "-%"
   "+|"
   "-|"
   "*"
